@@ -167,6 +167,7 @@
   .floor ul { list-style: none; padding: 0; margin: 0 0 24px; display: flex; flex-wrap: wrap; gap: 8px; }
   .floor li { font-size: 12px; letter-spacing: .06em; border: 1px solid rgba(255,255,255,.18); border-radius: 999px; padding: 6px 12px; color: rgba(255,255,255,.85); }
   .floor .btn { align-self: flex-start; }
+  .floor .fbtns { display: flex; flex-wrap: wrap; gap: 10px; }
   .floor.hunter { background: linear-gradient(135deg, #1a0d10, #2a1015); border-color: rgba(180,40,40,.35); }
   .floor.hunter .lvl { color: #e0574a; }
   .floor.hunter h3 { font-family: var(--serif); letter-spacing: .04em; }
@@ -240,6 +241,18 @@
   .veg.nv::after { background: #c2412d; }
   .menu-note { text-align: center; color: rgba(255,255,255,.55); font-size: 13px; margin-top: 40px; }
   @media (max-width: 760px) { .menu-panel { grid-template-columns: 1fr; } .menu-item .n { font-size: 19px; } }
+  /* Phones: tighter start, and the category tabs become one swipeable row that sticks under the quick links */
+  @media (max-width: 920px) {
+    .signature.section { padding-bottom: 48px; }
+    .menu.section { padding-top: 40px; }
+    .menu .section-head { margin-bottom: 14px; }
+    .menu .section-head h2 { margin-top: 8px; }
+    .menu .section-head p { margin-top: 10px; }
+    .order-hint { margin-top: 12px; padding: 8px 14px; font-size: 13px; }
+    .tabs { position: sticky; top: var(--stick, 128px); z-index: 20; flex-wrap: nowrap; justify-content: flex-start; overflow-x: auto; scrollbar-width: none; margin: 0 -16px 6px; padding: 10px 16px; gap: 8px; background: var(--ink); border-bottom: 1px solid rgba(255,255,255,.08); }
+    .tabs::-webkit-scrollbar { display: none; }
+    .tabs button { flex: none; padding: 9px 14px; }
+  }
 
   /* ---------- Order on WhatsApp ---------- */
   .order-hint { display: inline-flex; align-items: center; gap: 10px; margin-top: 18px; padding: 10px 18px; border: 1px solid rgba(201,164,92,.4); border-radius: 999px; font-size: 14px; color: var(--gold-soft); }
@@ -528,7 +541,7 @@
           <h3>Family Dining</h3>
           <p>Bright, spacious and easy-going. Walk in for lunch with the family, a quick bite with friends or a relaxed dinner.</p>
           <ul><li>Walk-ins welcome</li><li>Family seating</li><li>Couples &amp; friends</li></ul>
-          <a class="btn btn-gold" href="#menu">See the Menu</a>
+          <div class="fbtns"><a class="btn btn-gold" href="#book" data-floor="Ground Floor · Family Dining">Book a Table</a><a class="btn btn-ghost" href="#menu">See the Menu</a></div>
         </div>
       </article>
       <article class="floor reveal">
@@ -538,7 +551,7 @@
           <h3>The Party Floor</h3>
           <p>Our liveliest space, with bold murals, chandeliers and a décor wall made for photos. Most of our birthdays, anniversaries, meetings and get-togethers happen here.</p>
           <ul><li>Birthdays</li><li>Anniversaries</li><li>Meetings</li><li>Group bookings</li></ul>
-          <a class="btn btn-gold" href="#celebrate">Book a Celebration</a>
+          <a class="btn btn-gold" href="#book" data-floor="First Floor · Party Floor">Book a Table</a>
         </div>
       </article>
       <article class="floor hunter reveal">
@@ -548,7 +561,7 @@
           <h3>Hunter House</h3>
           <p>Our horror-themed floor. Dim lights, eerie décor and a dinner you won't forget. Perfect for friends who like a scare with their starters.</p>
           <ul><li>Horror theme</li><li>Friends &amp; groups</li><li>Theme birthdays</li></ul>
-          <a class="btn btn-gold" href="#celebrate">Book Hunter House</a>
+          <a class="btn btn-gold" href="#book" data-floor="Hunter House · Horror theme">Book a Table</a>
         </div>
       </article>
     </div>
@@ -647,7 +660,7 @@
       <div class="occ reveal"><img loading="lazy" src="images/celeb-group.webp" alt="Large group gathering at a long table" style="object-position:center 55%"><div><h3>Meetings &amp; Gatherings</h3><p>Team lunches, reunions, kitty parties and get-togethers.</p></div></div>
     </div>
 
-    <div class="book reveal">
+    <div class="book reveal" id="book">
       <div class="left">
         <div class="eyebrow">Plan with us</div>
         <h3>Book your celebration</h3>
@@ -665,7 +678,7 @@
       <form id="bookForm">
         <label>Your name<input name="name" required autocomplete="name"></label>
         <label>Occasion
-          <select name="occasion"><option>Birthday</option><option>Anniversary</option><option>Meeting</option><option>Get-together</option><option>Other</option></select>
+          <select name="occasion"><option>Birthday</option><option>Anniversary</option><option>Meeting</option><option>Get-together</option><option>Table booking</option><option>Other</option></select>
         </label>
         <label>Date<input type="date" name="date" required></label>
         <label>Guests<input type="number" name="guests" min="1" max="200" value="10" required></label>
@@ -950,7 +963,14 @@ function show(cat) {
 Object.keys(MENU).forEach(cat => {
   const b = document.createElement('button');
   b.type = 'button'; b.setAttribute('role', 'tab'); b.textContent = cat; b.dataset.cat = cat;
-  b.onclick = () => show(cat);
+  b.onclick = () => {
+    show(cat); centerChip(b);
+    // If the tabs are stuck at the top (you'd scrolled down a long list), jump back to the start of the new list
+    const cs = getComputedStyle(tabs);
+    if (cs.position !== 'sticky') return;
+    const listStart = scrollY + panel.getBoundingClientRect().top - parseFloat(cs.top) - tabs.offsetHeight - 8;
+    if (scrollY > listStart) scrollTo({ top: listStart, behavior: 'instant' });
+  };
   tabs.appendChild(b);
 });
 // ===================== ORDER ON WHATSAPP (cart) =====================
@@ -1139,6 +1159,11 @@ setStatus();
 
 // ===================== BOOKING → WHATSAPP =====================
 const bookForm = document.getElementById('bookForm');
+// "Book a Table" on a floor card pre-selects that floor in the booking form
+document.querySelectorAll('[data-floor]').forEach(a => a.addEventListener('click', () => {
+  bookForm.floor.value = a.dataset.floor;
+  bookForm.occasion.value = 'Table booking';
+}));
 bookForm.date.min = new Date().toISOString().slice(0, 10);
 bookForm.addEventListener('submit', e => {
   e.preventDefault();
@@ -1174,14 +1199,26 @@ const nav = document.getElementById('nav');
 const onScroll = () => nav.classList.toggle('solid', scrollY > 40);
 addEventListener('scroll', onScroll, { passive: true }); onScroll();
 
+// Sticky menu tabs sit right under the nav + quick links on phones
+const setStick = () => document.documentElement.style.setProperty('--stick', (72 + document.querySelector('.qnav').offsetHeight - 1) + 'px');
+addEventListener('resize', setStick); setStick();
+
+// Scroll a horizontal row (quick links, menu tabs) so the given item sits in the middle, without moving the page
+function centerChip(el) {
+  const row = el.parentElement;
+  if (row.scrollWidth <= row.clientWidth) return;
+  row.scrollTo({ left: el.offsetLeft - (row.clientWidth - el.offsetWidth) / 2, behavior: 'smooth' });
+}
+
 // Highlight the section you're in, in the top menu and the quick links
 const spyLinks = [...document.querySelectorAll('.nav ul a, .qnav a:not(.hot)')];
 const spyIds = [...new Set(spyLinks.map(a => a.getAttribute('href').slice(1)))];
 const spy = new IntersectionObserver(es => es.forEach(e => {
   if (!e.isIntersecting) return;
   spyLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + e.target.id));
+  // Slide the chip row sideways only. scrollIntoView would also scroll the page and cut short a jump like "Order Online" → Menu.
   const on = document.querySelector('.qnav a.active');
-  if (on && matchMedia('(max-width: 920px)').matches) on.scrollIntoView({ block: 'nearest', inline: 'center', behavior: 'smooth' });
+  if (on) centerChip(on);
 }), { rootMargin: '-45% 0px -50% 0px' });
 spyIds.forEach(id => { const s = document.getElementById(id); if (s) spy.observe(s); });
 
@@ -1221,7 +1258,7 @@ const BN = [
     'আমাদের সবচেয়ে প্রাণবন্ত জায়গা — রঙিন ম্যুরাল, ঝাড়বাতি আর ছবি তোলার জন্য সাজানো ডেকর ওয়াল। বেশিরভাগ জন্মদিন, বিবাহবার্ষিকী, মিটিং আর গেট-টুগেদার এখানেই হয়।',
     'আমাদের হরর-থিমের ফ্লোর। আবছা আলো, গা-ছমছমে সাজ আর এমন এক ডিনার যা ভুলবেন না। যে বন্ধুরা স্টার্টারের সঙ্গে একটু ভয়ও চান, তাঁদের জন্য একদম ঠিক।'], 't'],
   ['.floor ul', ['<li>সরাসরি চলে আসুন</li><li>ফ্যামিলি সিটিং</li><li>কাপল ও বন্ধুরা</li>', '<li>জন্মদিন</li><li>বিবাহবার্ষিকী</li><li>মিটিং</li><li>গ্রুপ বুকিং</li>', '<li>হরর থিম</li><li>বন্ধু ও গ্রুপ</li><li>থিম জন্মদিন</li>'], 'h'],
-  ['.floor .btn', ['মেনু দেখুন', 'উৎসব বুক করুন', 'হান্টার হাউস বুক করুন'], 't'],
+  ['.floor .btn', ['টেবিল বুক করুন', 'মেনু দেখুন', 'টেবিল বুক করুন', 'টেবিল বুক করুন'], 't'],
   ['.floor .note', 'প্রতীকী ছবি', 't'],
 
   ['#signature .eyebrow', 'শেফের সেরা পদ', 't'],
