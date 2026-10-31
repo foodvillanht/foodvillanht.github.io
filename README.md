@@ -11,6 +11,12 @@ It's a single static page (`index.html` plus the `images/` folder) served by Git
 
 Edit right on GitHub (open the file → pencil icon → Commit). The site updates in about a minute.
 
+## WhatsApp ordering
+Guests tap **Add** / **+** on any dish in the menu, then **View order → Send order on WhatsApp**.
+WhatsApp opens with the items, quantities, prices, total, order type (dine-in table, takeaway pickup time or delivery address), name and notes filled in.
+Orders go to `ORDER_PHONE` in `index.html` (currently 89428 04671). Change that one line to send them elsewhere.
+Prices come from the `MENU` list, so a price change there updates ordering too.
+
 ## Live Google rating
 The rating and review count show fixed fallback numbers (`FALLBACK` in `index.html`) until you add a key:
 1. In [Google Cloud Console](https://console.cloud.google.com/), create a project, enable **Places API (New)**, and create an **API key**.

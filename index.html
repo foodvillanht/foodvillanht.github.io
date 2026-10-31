@@ -241,6 +241,60 @@
   .menu-note { text-align: center; color: rgba(255,255,255,.55); font-size: 13px; margin-top: 40px; }
   @media (max-width: 760px) { .menu-panel { grid-template-columns: 1fr; } .menu-item .n { font-size: 19px; } }
 
+  /* ---------- Order on WhatsApp ---------- */
+  .order-hint { display: inline-flex; align-items: center; gap: 10px; margin-top: 18px; padding: 10px 18px; border: 1px solid rgba(201,164,92,.4); border-radius: 999px; font-size: 14px; color: var(--gold-soft); }
+  .order-hint svg { width: 18px; height: 18px; color: #4cc46e; }
+  .menu-item { align-items: center; }
+  .menu-item .n, .menu-item .p { align-self: baseline; }
+  .qty { flex: none; display: inline-flex; align-items: center; border: 1px solid rgba(201,164,92,.55); border-radius: 999px; overflow: hidden; height: 32px; }
+  .qty button { width: 32px; height: 32px; border: 0; background: transparent; color: var(--gold-soft); font: 600 18px/1 var(--sans); cursor: pointer; display: grid; place-items: center; }
+  .qty button:hover { background: rgba(201,164,92,.18); }
+  .qty .q { min-width: 22px; text-align: center; font: 600 14px/1 var(--sans); color: #fff; }
+  .qty.add button.plus { width: auto; padding: 0 14px; font-size: 13px; letter-spacing: .06em; text-transform: uppercase; }
+  .qty.add button.minus, .qty.add .q { display: none; }
+  .qty:not(.add) { background: var(--gold); border-color: var(--gold); }
+  .qty:not(.add) button, .qty:not(.add) .q { color: var(--ink); }
+  .qty:not(.add) button:hover { background: rgba(0,0,0,.08); }
+
+  .cartbar { position: fixed; left: 50%; bottom: 20px; z-index: 70; transform: translate(-50%, 140%); transition: transform .35s ease; width: min(560px, calc(100% - 24px)); display: flex; align-items: center; gap: 14px; background: #1f8a4c; color: #fff; border-radius: 14px; padding: 12px 14px 12px 18px; box-shadow: 0 16px 40px -10px rgba(0,0,0,.5); border: 0; font: inherit; cursor: pointer; text-align: left; }
+  .cartbar.on { transform: translate(-50%, 0); }
+  .cartbar .cnt { font-size: 13px; opacity: .9; }
+  .cartbar .tot { font: 700 18px/1.1 var(--sans); }
+  .cartbar .go { margin-left: auto; display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,.16); padding: 10px 14px; border-radius: 10px; font-weight: 600; font-size: 14px; white-space: nowrap; }
+  .cartbar svg { width: 18px; height: 18px; }
+  @media (max-width: 760px) { .cartbar { bottom: 76px; } }
+
+  .odlg { position: fixed; inset: 0; z-index: 110; display: none; }
+  .odlg.on { display: block; }
+  .odlg .scrim { position: absolute; inset: 0; background: rgba(8,12,10,.6); }
+  .odlg .sheet { position: absolute; right: 0; top: 0; bottom: 0; width: min(460px, 100%); background: var(--paper); color: var(--text); display: flex; flex-direction: column; box-shadow: -20px 0 50px rgba(0,0,0,.3); }
+  .odlg header { display: flex; align-items: center; justify-content: space-between; padding: 18px 22px; border-bottom: 1px solid var(--line); }
+  .odlg header h3 { font-size: 28px; }
+  .odlg .x { border: 0; background: transparent; font-size: 28px; line-height: 1; cursor: pointer; color: var(--muted); padding: 4px 8px; }
+  .odlg .body { flex: 1; overflow: auto; padding: 8px 22px 22px; }
+  .oline { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--line); }
+  .oline .nm { flex: 1; font-size: 15px; }
+  .oline .nm small { display: block; color: var(--muted); font-size: 12px; }
+  .oline .amt { font-weight: 600; min-width: 64px; text-align: right; }
+  .oline .qty { border-color: var(--ink); background: transparent; }
+  .oline .qty button, .oline .qty .q { color: var(--ink); }
+  .ototal { display: flex; justify-content: space-between; font: 700 18px/1 var(--sans); padding: 16px 0 6px; }
+  .otype { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 18px 0 6px; }
+  .otype label { display: block; cursor: pointer; }
+  .otype input { position: absolute; opacity: 0; pointer-events: none; }
+  .otype span { display: block; text-align: center; padding: 10px 6px; border: 1px solid var(--line); border-radius: 8px; font-size: 13px; font-weight: 600; background: #fff; }
+  .otype input:checked + span { border-color: var(--ink); background: var(--ink); color: #fff; }
+  .otype input:focus-visible + span { outline: 2px solid var(--gold); }
+  .ofield { display: grid; gap: 6px; margin-top: 12px; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+  .ofield input, .ofield textarea { font: 15px/1.4 var(--sans); color: var(--text); background: #fff; border: 1px solid var(--line); border-radius: 8px; padding: 11px 12px; text-transform: none; letter-spacing: 0; width: 100%; }
+  .ofield input:focus, .ofield textarea:focus { outline: none; border-color: var(--gold); }
+  .odlg footer { padding: 16px 22px 22px; border-top: 1px solid var(--line); display: grid; gap: 10px; }
+  .odlg .send { justify-content: center; background: #1f8a4c; color: #fff; padding: 16px; font-size: 15px; }
+  .odlg .send:hover { background: #197a42; }
+  .odlg .clear { justify-self: center; border: 0; background: transparent; color: var(--muted); font-size: 13px; text-decoration: underline; cursor: pointer; }
+  .odlg .fine { font-size: 12px; color: var(--muted); text-align: center; margin: 0; }
+  .empty { text-align: center; color: var(--muted); padding: 40px 0; }
+
   /* ---------- Reviews ---------- */
   .g-badge { display: inline-flex; align-items: center; gap: 16px; background: #fff; border: 1px solid var(--line); border-radius: 999px; padding: 10px 22px 10px 12px; margin-top: 26px; text-decoration: none; }
   .g-badge .g { width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; background: #f3f3f3; }
@@ -521,6 +575,7 @@
       <div class="eyebrow">The Menu · 2026</div>
       <h2>Something for every craving</h2>
       <p>All prices in ₹. <span class="veg"></span>Veg &nbsp; <span class="veg nv"></span>Non-veg</p>
+      <div class="order-hint"><svg><use href="#i-wa"/></svg><span>Skip the queue: tap <b>Add</b>, then send your order on WhatsApp</span></div>
     </div>
     <div class="tabs" role="tablist" id="tabs"></div>
     <div class="menu-panel" id="panel" role="tabpanel"></div>
@@ -677,6 +732,39 @@
   </div>
 </footer>
 
+<!-- ============ ORDER (cart → WhatsApp) ============ -->
+<button class="cartbar" id="cartbar" type="button" aria-controls="odlg">
+  <span><span class="cnt" id="cbCount"></span><br><span class="tot" id="cbTotal"></span></span>
+  <span class="go"><span data-t="view">View order</span> <svg><use href="#i-wa"/></svg></span>
+</button>
+<div class="odlg" id="odlg" role="dialog" aria-modal="true" aria-labelledby="odTitle">
+  <div class="scrim" data-close></div>
+  <div class="sheet">
+    <header><h3 id="odTitle" data-t="title">Your order</h3><button class="x" type="button" data-close aria-label="Close">×</button></header>
+    <div class="body">
+      <div id="olines"></div>
+      <div class="ototal"><span data-t="total">Total</span><span id="oTotal"></span></div>
+      <form id="oform">
+        <div class="otype" role="radiogroup">
+          <label><input type="radio" name="type" value="dine" checked><span data-t="dine">Dine-in</span></label>
+          <label><input type="radio" name="type" value="take"><span data-t="take">Takeaway</span></label>
+          <label><input type="radio" name="type" value="deliver"><span data-t="deliver">Delivery</span></label>
+        </div>
+        <label class="ofield" data-for="dine"><span data-t="table">Table number (if seated)</span><input name="table" inputmode="numeric" maxlength="10"></label>
+        <label class="ofield" data-for="take"><span data-t="pickup">Pickup time</span><input name="pickup" type="time"></label>
+        <label class="ofield" data-for="deliver"><span data-t="address">Delivery address</span><textarea name="address" rows="2"></textarea></label>
+        <label class="ofield"><span data-t="name">Your name</span><input name="name" autocomplete="name" maxlength="60"></label>
+        <label class="ofield"><span data-t="notes">Notes (spice level, no onion…)</span><textarea name="notes" rows="2" maxlength="300"></textarea></label>
+      </form>
+    </div>
+    <footer>
+      <button class="btn send" type="submit" form="oform"><svg><use href="#i-wa"/></svg><span data-t="send">Send order on WhatsApp</span></button>
+      <p class="fine" data-t="fine">Opens WhatsApp with your order filled in. We'll confirm it there. Prices as per menu; delivery subject to area.</p>
+      <button class="clear" type="button" id="oclear" data-t="clear">Clear order</button>
+    </footer>
+  </div>
+</div>
+
 <div class="mbar">
   <a href="tel:+918942804671"><svg><use href="#i-phone"/></svg>Call</a>
   <a href="https://wa.me/918942804671" target="_blank" rel="noopener"><svg><use href="#i-wa"/></svg>WhatsApp</a>
@@ -742,7 +830,7 @@ const MENU = {
   ],
   "Pizza & Burger": [
     "# Pizza",
-    ["Margherita Pizza (Regular / Special)","249 / 349","v"],["Paneer Corn Pizza",299,"v"],["Veg Pizza",349,"v"],
+    ["Margherita Pizza",249,"v"],["Margherita Pizza (Special)",349,"v"],["Paneer Corn Pizza",299,"v"],["Veg Pizza",349,"v"],
     ["Paneer Tikka Pizza",349,"v"],["Chicken BBQ Pizza",349,"n"],["Chicken Tikka Pizza",349,"n"],
     ["Food Villa Special",449,"n"],["Bhoot Bangla Special",449,"n"],
     "# Burger",
@@ -769,7 +857,7 @@ const MENU = {
     ["Masala Dosa",79,"v"],["Cheese Dosa",89,"v"],["Butter Dosa",89,"v"],["Ghee Dosa",99,"v"]
   ],
   "Beverages": [
-    ["Hot Coffee",49,"v"],["Lassi / Dry Fruit & Butterscotch Lassi","69 / 99","v"],["Fresh Lime Soda",79,"v"],["Masala Cold Drink",79,"v"],
+    ["Hot Coffee",49,"v"],["Lassi",69,"v"],["Dry Fruit & Butterscotch Lassi",99,"v"],["Fresh Lime Soda",79,"v"],["Masala Cold Drink",79,"v"],
     ["Mojito",109,"v"],["3 in 1 Mojito",149,"v"],["Blue Lagoon",149,"v"],["Couple Dance",149,"v"],["Buttermilk",149,"v"],
     ["Cold Coffee",149,"v"],["Chocolate Shake",149,"v"],["Chocolate Shake (Special)",149,"v"],["Oreo Milkshake",149,"v"],
     ["Strawberry Shake",149,"v"],["Vanilla Shake",149,"v"],["Vanilla Milk Shake",149,"v"]
@@ -801,7 +889,7 @@ function show(cat) {
   [...tabs.children].forEach(b => b.setAttribute('aria-selected', b.dataset.cat === cat));
   panel.innerHTML = MENU[cat].map(row => typeof row === 'string'
     ? `<div class="menu-sub">${LANG === 'bn' ? (SUB_BN[row.slice(2)] || row.slice(2)) : row.slice(2)}</div>`
-    : `<div class="menu-item"><span class="n"><span class="veg ${row[2] === 'n' ? 'nv' : ''}" title="${row[2] === 'n' ? 'Non-veg' : 'Veg'}"></span>${row[0]}</span><span class="dots"></span><span class="p">₹${row[1]}</span></div>`
+    : `<div class="menu-item"><span class="n"><span class="veg ${row[2] === 'n' ? 'nv' : ''}" title="${row[2] === 'n' ? 'Non-veg' : 'Veg'}"></span>${row[0]}</span><span class="dots"></span><span class="p">₹${row[1]}</span>${qtyCtl(cat + '|' + row[0])}</div>`
   ).join('');
 }
 Object.keys(MENU).forEach(cat => {
@@ -810,7 +898,104 @@ Object.keys(MENU).forEach(cat => {
   b.onclick = () => show(cat);
   tabs.appendChild(b);
 });
+// ===================== ORDER ON WHATSAPP (cart) =====================
+const ORDER_PHONE = '918942804671';
+const OT = {
+  en: { add: 'Add', item: 'item', items: 'items', view: 'View order', title: 'Your order', total: 'Total', dine: 'Dine-in', take: 'Takeaway', deliver: 'Delivery',
+        table: 'Table number (if seated)', pickup: 'Pickup time', address: 'Delivery address', name: 'Your name', notes: 'Notes (spice level, no onion…)',
+        send: 'Send order on WhatsApp', fine: "Opens WhatsApp with your order filled in. We'll confirm it there. Prices as per menu; delivery subject to area.",
+        clear: 'Clear order', empty: 'Your order is empty. Tap Add on any dish in the menu.', needAddr: 'Please enter your delivery address.' },
+  bn: { add: 'যোগ', item: 'টি পদ', items: 'টি পদ', view: 'অর্ডার দেখুন', title: 'আপনার অর্ডার', total: 'মোট', dine: 'বসে খাব', take: 'নিয়ে যাব', deliver: 'ডেলিভারি',
+        table: 'টেবিল নম্বর (বসে থাকলে)', pickup: 'কখন নিতে আসবেন', address: 'ডেলিভারির ঠিকানা', name: 'আপনার নাম', notes: 'বিশেষ অনুরোধ (ঝাল কম, পেঁয়াজ ছাড়া…)',
+        send: 'হোয়াটসঅ্যাপে অর্ডার পাঠান', fine: 'আপনার অর্ডার লেখা অবস্থায় হোয়াটসঅ্যাপ খুলবে, আমরা সেখানেই কনফার্ম করব। দাম মেনু অনুযায়ী; ডেলিভারি এলাকা সাপেক্ষে।',
+        clear: 'অর্ডার মুছুন', empty: 'অর্ডার খালি। মেনু থেকে যে কোনো পদে "যোগ" চাপুন।', needAddr: 'ডেলিভারির ঠিকানা লিখুন।' }
+};
+const t = k => (OT[LANG] || OT.en)[k];
+
+// Look up a dish by "Category|Name"
+const DISH = {};
+Object.entries(MENU).forEach(([cat, rows]) => rows.forEach(r => { if (typeof r !== 'string') DISH[cat + '|' + r[0]] = { cat, name: r[0], price: r[1], veg: r[2] }; }));
+const dupNames = new Set(Object.values(DISH).map(d => d.name).filter((n, i, a) => a.indexOf(n) !== i));
+const label = d => dupNames.has(d.name) ? `${d.name} (${d.cat})` : d.name;
+
+let cart = {};
+try { cart = JSON.parse(localStorage.getItem('fv-cart') || '{}'); } catch (e) {}
+Object.keys(cart).forEach(k => { if (!DISH[k] || !(cart[k] > 0)) delete cart[k]; });
+
+function qtyCtl(key) {
+  const q = cart[key] || 0;
+  return `<span class="qty${q ? '' : ' add'}" data-key="${key.replace(/"/g, '&quot;')}"><button type="button" class="minus" aria-label="Remove one">−</button><span class="q">${q}</span><button type="button" class="plus" aria-label="Add one">${q ? '+' : t('add')}</button></span>`;
+}
+function setQty(key, q) {
+  if (q > 0) cart[key] = Math.min(q, 99); else delete cart[key];
+  try { localStorage.setItem('fv-cart', JSON.stringify(cart)); } catch (e) {}
+  document.querySelectorAll('.qty[data-key]').forEach(el => { if (el.dataset.key === key) el.outerHTML = qtyCtl(key); });
+  renderCart();
+}
+document.addEventListener('click', e => {
+  const b = e.target.closest('.qty button'); if (!b) return;
+  const key = b.parentElement.dataset.key;
+  setQty(key, (cart[key] || 0) + (b.classList.contains('plus') ? 1 : -1));
+});
+
+const cartbar = document.getElementById('cartbar'), odlg = document.getElementById('odlg'), oform = document.getElementById('oform');
+const totals = () => Object.entries(cart).reduce((a, [k, q]) => ({ n: a.n + q, sum: a.sum + q * DISH[k].price }), { n: 0, sum: 0 });
+const rupees = n => '₹' + n.toLocaleString('en-IN');
+
+function renderCart() {
+  const { n, sum } = totals();
+  cartbar.classList.toggle('on', n > 0 && !odlg.classList.contains('on'));
+  document.getElementById('cbCount').textContent = `${n} ${n === 1 ? t('item') : t('items')}`;
+  document.getElementById('cbTotal').textContent = rupees(sum);
+  document.getElementById('oTotal').textContent = rupees(sum);
+  const keys = Object.keys(cart);
+  document.getElementById('olines').innerHTML = keys.length
+    ? keys.map(k => `<div class="oline"><span class="nm">${label(DISH[k])}<small>${rupees(DISH[k].price)} ${LANG === 'bn' ? 'প্রতিটি' : 'each'}</small></span>${qtyCtl(k)}<span class="amt">${rupees(cart[k] * DISH[k].price)}</span></div>`).join('')
+    : `<p class="empty">${t('empty')}</p>`;
+}
+function openOrder() { odlg.classList.add('on'); document.body.style.overflow = 'hidden'; renderCart(); }
+function closeOrder() { odlg.classList.remove('on'); document.body.style.overflow = ''; renderCart(); }
+cartbar.addEventListener('click', openOrder);
+odlg.addEventListener('click', e => { if (e.target.closest('[data-close]')) closeOrder(); });
+addEventListener('keydown', e => { if (e.key === 'Escape' && odlg.classList.contains('on')) closeOrder(); });
+document.getElementById('oclear').addEventListener('click', () => { Object.keys(cart).forEach(k => delete cart[k]); setQty('', 0); show(currentCat); });
+
+function syncType() {
+  const type = oform.type.value;
+  oform.querySelectorAll('[data-for]').forEach(el => el.style.display = el.dataset.for === type ? '' : 'none');
+}
+oform.addEventListener('change', syncType); syncType();
+
+oform.addEventListener('submit', e => {
+  e.preventDefault();
+  const { n, sum } = totals();
+  if (!n) return;
+  const f = Object.fromEntries(new FormData(oform));
+  if (f.type === 'deliver' && !f.address.trim()) { alert(t('needAddr')); oform.address.focus(); return; }
+  const fmtTime = v => v ? new Date('2000-01-01T' + v).toLocaleTimeString('en-IN', { hour: 'numeric', minute: '2-digit' }) : '';
+  const how = f.type === 'dine' ? 'Dine-in' + (f.table.trim() ? ` · Table ${f.table.trim()}` : '')
+            : f.type === 'take' ? 'Takeaway' + (f.pickup ? ` · Pickup at ${fmtTime(f.pickup)}` : '')
+            : 'Home delivery';
+  const lines = Object.entries(cart).map(([k, q], i) => `${i + 1}. ${label(DISH[k])} × ${q} = ${rupees(q * DISH[k].price)}`);
+  const msg = [
+    '*New order · Food Villa website*', '',
+    `Order type: ${how}`,
+    f.name.trim() ? `Name: ${f.name.trim()}` : null,
+    f.type === 'deliver' ? `Address: ${f.address.trim()}` : null, '',
+    ...lines, '',
+    `*Total: ${rupees(sum)}* (${n} ${n === 1 ? 'item' : 'items'})`,
+    f.notes.trim() ? `Notes: ${f.notes.trim()}` : null
+  ].filter(x => x !== null).join('\n');
+  window.open(`https://wa.me/${ORDER_PHONE}?text=${encodeURIComponent(msg)}`, '_blank', 'noopener');
+});
+
+function orderLang() {
+  document.querySelectorAll('[data-t]').forEach(el => el.textContent = t(el.dataset.t));
+  renderCart();
+}
+
 show('Starters');
+renderCart();
 
 // ===================== REVIEWS (quoted from Google Maps; excerpts marked with …) =====================
 const REVIEWS = [
@@ -955,7 +1140,8 @@ const BN = [
 
   ['#menu .eyebrow', 'মেনু · ২০২৬', 't'],
   ['#menu h2', 'সব রকম খিদের জন্য কিছু না কিছু', 't'],
-  ['#menu .section-head p', 'সব দাম ₹-এ। <span class="veg"></span>নিরামিষ &nbsp; <span class="veg nv"></span>আমিষ', 'h'],
+  ['#menu .section-head > p', 'সব দাম ₹-এ। <span class="veg"></span>নিরামিষ &nbsp; <span class="veg nv"></span>আমিষ', 'h'],
+  ['.order-hint span', 'লাইনে দাঁড়াতে হবে না: <b>যোগ</b> চাপুন, তারপর হোয়াটসঅ্যাপে অর্ডার পাঠান', 'h'],
   ['.menu-note', 'দাম আমাদের ২০২৬ মেনু অনুযায়ী, পরিবর্তন হতে পারে। অর্ডার করতে কল করুন <a href="tel:+918942804671">89428 04671</a> অথবা <a href="tel:+916295736811">62957 36811</a>।', 'h'],
 
   ['#celebrate .section-head .eyebrow', 'উৎসব ও বুকিং', 't'],
@@ -1018,6 +1204,7 @@ function applyLang(lang) {
   });
   [...tabs.children].forEach(b => b.textContent = lang === 'bn' ? (TAB_BN[b.dataset.cat] || b.dataset.cat) : b.dataset.cat);
   show(currentCat);
+  orderLang();
   setStatus();
   const btn = document.getElementById('langBtn');
   btn.textContent = lang === 'bn' ? 'English' : 'বাংলা';
