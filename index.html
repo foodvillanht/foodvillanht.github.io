@@ -256,8 +256,8 @@
   .qty:not(.add) button, .qty:not(.add) .q { color: var(--ink); }
   .qty:not(.add) button:hover { background: rgba(0,0,0,.08); }
 
-  .cartbar { position: fixed; left: 50%; bottom: 20px; z-index: 70; transform: translate(-50%, 140%); transition: transform .35s ease; width: min(560px, calc(100% - 24px)); display: flex; align-items: center; gap: 14px; background: #1f8a4c; color: #fff; border-radius: 14px; padding: 12px 14px 12px 18px; box-shadow: 0 16px 40px -10px rgba(0,0,0,.5); border: 0; font: inherit; cursor: pointer; text-align: left; }
-  .cartbar.on { transform: translate(-50%, 0); }
+  .cartbar { position: fixed; left: 50%; bottom: 20px; z-index: 70; transform: translate(-50%, 260%); visibility: hidden; transition: transform .35s ease, visibility .35s; width: min(560px, calc(100% - 24px)); display: flex; align-items: center; gap: 14px; background: #1f8a4c; color: #fff; border-radius: 14px; padding: 12px 14px 12px 18px; box-shadow: 0 16px 40px -10px rgba(0,0,0,.5); border: 0; font: inherit; cursor: pointer; text-align: left; }
+  .cartbar.on { transform: translate(-50%, 0); visibility: visible; }
   .cartbar .cnt { font-size: 13px; opacity: .9; }
   .cartbar .tot { font: 700 18px/1.1 var(--sans); }
   .cartbar .go { margin-left: auto; display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,.16); padding: 10px 14px; border-radius: 10px; font-weight: 600; font-size: 14px; white-space: nowrap; }
@@ -294,6 +294,33 @@
   .odlg .clear { justify-self: center; border: 0; background: transparent; color: var(--muted); font-size: 13px; text-decoration: underline; cursor: pointer; }
   .odlg .fine { font-size: 12px; color: var(--muted); text-align: center; margin: 0; }
   .empty { text-align: center; color: var(--muted); padding: 40px 0; }
+  .ofield.loc { gap: 8px; }
+  .locbtn { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; padding: 11px 12px; border: 1px dashed var(--ink-3); border-radius: 8px; background: #fff; color: var(--ink); font: 600 14px/1.2 var(--sans); text-transform: none; letter-spacing: 0; cursor: pointer; }
+  .locbtn svg { width: 18px; height: 18px; color: #1f8a4c; }
+  .locbtn:hover { border-style: solid; }
+  .locbtn.got { border: 1px solid #1f8a4c; background: #eef8f1; }
+  .locstat { font-size: 13px; text-transform: none; letter-spacing: 0; font-weight: 500; color: var(--muted); }
+  .locstat:empty { display: none; }
+  .locstat.ok { color: #1f8a4c; }
+  .locstat.err { color: #b3402c; }
+  .locstat a { color: inherit; }
+
+  /* ---------- Quick links index ---------- */
+  .qnav { background: var(--ink-2); border-top: 1px solid rgba(201,164,92,.2); border-bottom: 1px solid rgba(201,164,92,.2); z-index: 45; }
+  .qnav .wrap { display: flex; gap: 10px; overflow-x: auto; padding: 14px 0; scrollbar-width: none; justify-content: center; }
+  .qnav .wrap::-webkit-scrollbar { display: none; }
+  .qnav a { flex: none; display: inline-flex; align-items: center; gap: 8px; padding: 9px 16px; border-radius: 999px; border: 1px solid rgba(255,255,255,.16); color: rgba(255,255,255,.88); text-decoration: none; font: 500 14px/1 var(--sans); white-space: nowrap; transition: all .2s; }
+  .qnav a svg { width: 16px; height: 16px; color: var(--gold); }
+  .qnav a:hover { border-color: var(--gold); color: #fff; }
+  .qnav a.hot { background: #1f8a4c; border-color: #1f8a4c; color: #fff; }
+  .qnav a.hot svg { color: #fff; }
+  .qnav a.active { border-color: var(--gold); color: var(--gold-soft); }
+  .nav ul a.active { color: var(--gold-soft); }
+  @media (max-width: 920px) {
+    .qnav { position: sticky; top: 72px; }
+    .qnav .wrap { justify-content: flex-start; padding: 10px 16px; width: 100%; }
+    html { scroll-padding-top: 132px; }
+  }
 
   /* ---------- Reviews ---------- */
   .g-badge { display: inline-flex; align-items: center; gap: 16px; background: #fff; border: 1px solid var(--line); border-radius: 999px; padding: 10px 22px 10px 12px; margin-top: 26px; text-decoration: none; }
@@ -389,6 +416,12 @@
   <symbol id="i-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
   <symbol id="i-dir" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l18-8-8 18-2-8-8-2z"/></symbol>
   <symbol id="i-rupee" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4h12M6 9h12M14 20L7 13h3a4 4 0 0 0 0-9"/></symbol>
+  <symbol id="i-cake" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21h16M5 21v-7a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v7M5 16c1.5 1 3 1 4.5 0s3-1 4.5 0 3 1 5 0M12 12V8M12 5.5c.8-.6.8-1.6 0-2.5-.8.9-.8 1.9 0 2.5z"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1zM9 8h6M9 12h6M9 16h4"/></symbol>
+  <symbol id="i-floors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l9 4.5-9 4.5-9-4.5L12 3zM3 12l9 4.5 9-4.5M3 16.5L12 21l9-4.5"/></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M12 3l2.8 5.7 6.2.9-4.5 4.4 1 6.2L12 17.3 6.5 20.2l1-6.2L3 9.6l6.2-.9L12 3z"/></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M10 9.5v5l4.5-2.5z" fill="currentColor"/></symbol>
+  <symbol id="i-photo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="M21 16l-5-5-9 9"/></symbol>
   <symbol id="i-g" viewBox="0 0 48 48"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3l5.7-5.7C34 6 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.4-.4-3.5z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3l5.7-5.7C34 6 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-8l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.4-.4-3.5z"/></symbol>
 </svg>
 
@@ -421,8 +454,9 @@
     <div class="bn">ফুড ভিলা</div>
     <p class="lead"><i>A taste you'll remember.</i>Smoky kababs, rich curries, sizzling Chinese, cheesy pizzas and chilled mocktails, all under one roof on Netaji Road.</p>
     <div class="ctas">
-      <a class="btn btn-gold" href="#menu">View the Menu</a>
-      <a class="btn btn-ghost" href="tel:+918942804671"><svg><use href="#i-phone"/></svg>Call to Order</a>
+      <a class="btn btn-gold" href="#menu">Order Online</a>
+      <a class="btn btn-ghost" href="#celebrate">Book a Party</a>
+      <a class="btn btn-ghost" href="tel:+918942804671"><svg><use href="#i-phone"/></svg>Call</a>
     </div>
     <div class="hero-meta">
       <div><svg><use href="#i-clock"/></svg><span class="status" data-status>Open daily</span>&nbsp;· 11 AM – 11:30 PM</div>
@@ -431,6 +465,20 @@
     </div>
   </div>
 </header>
+
+<!-- ============ QUICK LINKS ============ -->
+<nav class="qnav" id="qnav" aria-label="Quick links">
+  <div class="wrap">
+    <a class="hot" href="#menu"><svg><use href="#i-wa"/></svg><span>Order Online</span></a>
+    <a href="#celebrate"><svg><use href="#i-cake"/></svg><span>Book a Party</span></a>
+    <a href="#menu"><svg><use href="#i-menu"/></svg><span>Menu</span></a>
+    <a href="#floors"><svg><use href="#i-floors"/></svg><span>Our Floors</span></a>
+    <a href="#reviews"><svg><use href="#i-star"/></svg><span>Reviews</span></a>
+    <a href="#videos"><svg><use href="#i-play"/></svg><span>Videos</span></a>
+    <a href="#gallery"><svg><use href="#i-photo"/></svg><span>Gallery</span></a>
+    <a href="#visit"><svg><use href="#i-pin"/></svg><span>Visit</span></a>
+  </div>
+</nav>
 
 <!-- ============ TRUST STRIP ============ -->
 <section class="strip" aria-label="Highlights">
@@ -752,7 +800,14 @@
         </div>
         <label class="ofield" data-for="dine"><span data-t="table">Table number (if seated)</span><input name="table" inputmode="numeric" maxlength="10"></label>
         <label class="ofield" data-for="take"><span data-t="pickup">Pickup time</span><input name="pickup" type="time"></label>
-        <label class="ofield" data-for="deliver"><span data-t="address">Delivery address</span><textarea name="address" rows="2"></textarea></label>
+        <label class="ofield" data-for="deliver"><span data-t="dtime">Delivery time (leave blank for ASAP)</span><input name="dtime" type="time"></label>
+        <label class="ofield" data-for="deliver"><span data-t="address">Delivery address</span><textarea name="address" rows="2" autocomplete="street-address"></textarea></label>
+        <div class="ofield loc" data-for="deliver">
+          <span data-t="location">Location for the rider</span>
+          <button type="button" class="locbtn" id="locBtn"><svg><use href="#i-pin"/></svg><span data-t="useLoc">Use my current location</span></button>
+          <div class="locstat" id="locStat" aria-live="polite"></div>
+          <input name="maplink" type="url" inputmode="url" data-tp="pasteMap" placeholder="…or paste a Google Maps link">
+        </div>
         <label class="ofield"><span data-t="name">Your name</span><input name="name" autocomplete="name" maxlength="60"></label>
         <label class="ofield"><span data-t="notes">Notes (spice level, no onion…)</span><textarea name="notes" rows="2" maxlength="300"></textarea></label>
       </form>
@@ -904,11 +959,17 @@ const OT = {
   en: { add: 'Add', item: 'item', items: 'items', view: 'View order', title: 'Your order', total: 'Total', dine: 'Dine-in', take: 'Takeaway', deliver: 'Delivery',
         table: 'Table number (if seated)', pickup: 'Pickup time', address: 'Delivery address', name: 'Your name', notes: 'Notes (spice level, no onion…)',
         send: 'Send order on WhatsApp', fine: "Opens WhatsApp with your order filled in. We'll confirm it there. Prices as per menu; delivery subject to area.",
-        clear: 'Clear order', empty: 'Your order is empty. Tap Add on any dish in the menu.', needAddr: 'Please enter your delivery address.' },
+        clear: 'Clear order', empty: 'Your order is empty. Tap Add on any dish in the menu.', needAddr: 'Please enter your delivery address, or share your location.',
+        dtime: 'Delivery time (leave blank for ASAP)', location: 'Location for the rider', useLoc: 'Use my current location', pasteMap: '…or paste a Google Maps link',
+        locating: 'Finding your location…', locOk: 'Location added', locView: 'check on map', locAgain: 'Update my location',
+        locDenied: 'Location permission was blocked. Allow it in your browser, or paste a Google Maps link below.', locFail: "Couldn't get your location. Try again, or paste a Google Maps link below.", locNo: 'Your browser does not support location. Please paste a Google Maps link below.' },
   bn: { add: 'যোগ', item: 'টি পদ', items: 'টি পদ', view: 'অর্ডার দেখুন', title: 'আপনার অর্ডার', total: 'মোট', dine: 'বসে খাব', take: 'নিয়ে যাব', deliver: 'ডেলিভারি',
         table: 'টেবিল নম্বর (বসে থাকলে)', pickup: 'কখন নিতে আসবেন', address: 'ডেলিভারির ঠিকানা', name: 'আপনার নাম', notes: 'বিশেষ অনুরোধ (ঝাল কম, পেঁয়াজ ছাড়া…)',
         send: 'হোয়াটসঅ্যাপে অর্ডার পাঠান', fine: 'আপনার অর্ডার লেখা অবস্থায় হোয়াটসঅ্যাপ খুলবে, আমরা সেখানেই কনফার্ম করব। দাম মেনু অনুযায়ী; ডেলিভারি এলাকা সাপেক্ষে।',
-        clear: 'অর্ডার মুছুন', empty: 'অর্ডার খালি। মেনু থেকে যে কোনো পদে "যোগ" চাপুন।', needAddr: 'ডেলিভারির ঠিকানা লিখুন।' }
+        clear: 'অর্ডার মুছুন', empty: 'অর্ডার খালি। মেনু থেকে যে কোনো পদে "যোগ" চাপুন।', needAddr: 'ডেলিভারির ঠিকানা লিখুন, অথবা আপনার লোকেশন শেয়ার করুন।',
+        dtime: 'ডেলিভারির সময় (যত তাড়াতাড়ি সম্ভব হলে ফাঁকা রাখুন)', location: 'রাইডারের জন্য লোকেশন', useLoc: 'আমার বর্তমান লোকেশন দিন', pasteMap: '…অথবা Google Maps লিংক পেস্ট করুন',
+        locating: 'আপনার লোকেশন খোঁজা হচ্ছে…', locOk: 'লোকেশন যোগ হয়েছে', locView: 'ম্যাপে দেখুন', locAgain: 'লোকেশন আবার নিন',
+        locDenied: 'লোকেশনের অনুমতি বন্ধ আছে। ব্রাউজারে অনুমতি দিন, অথবা নিচে Google Maps লিংক পেস্ট করুন।', locFail: 'লোকেশন পাওয়া গেল না। আবার চেষ্টা করুন, অথবা নিচে Google Maps লিংক পেস্ট করুন।', locNo: 'এই ব্রাউজারে লোকেশন সুবিধা নেই। নিচে Google Maps লিংক পেস্ট করুন।' }
 };
 const t = k => (OT[LANG] || OT.en)[k];
 
@@ -971,17 +1032,19 @@ oform.addEventListener('submit', e => {
   const { n, sum } = totals();
   if (!n) return;
   const f = Object.fromEntries(new FormData(oform));
-  if (f.type === 'deliver' && !f.address.trim()) { alert(t('needAddr')); oform.address.focus(); return; }
+  const mapLink = f.type === 'deliver' ? (geo ? `https://maps.google.com/?q=${geo.lat},${geo.lng}` : f.maplink.trim()) : '';
+  if (f.type === 'deliver' && !f.address.trim() && !mapLink) { alert(t('needAddr')); oform.address.focus(); return; }
   const fmtTime = v => v ? new Date('2000-01-01T' + v).toLocaleTimeString('en-IN', { hour: 'numeric', minute: '2-digit' }) : '';
   const how = f.type === 'dine' ? 'Dine-in' + (f.table.trim() ? ` · Table ${f.table.trim()}` : '')
             : f.type === 'take' ? 'Takeaway' + (f.pickup ? ` · Pickup at ${fmtTime(f.pickup)}` : '')
-            : 'Home delivery';
+            : 'Home delivery · ' + (f.dtime ? `Deliver at ${fmtTime(f.dtime)}` : 'As soon as possible');
   const lines = Object.entries(cart).map(([k, q], i) => `${i + 1}. ${label(DISH[k])} × ${q} = ${rupees(q * DISH[k].price)}`);
   const msg = [
     '*New order · Food Villa website*', '',
     `Order type: ${how}`,
     f.name.trim() ? `Name: ${f.name.trim()}` : null,
-    f.type === 'deliver' ? `Address: ${f.address.trim()}` : null, '',
+    f.type === 'deliver' && f.address.trim() ? `Address: ${f.address.trim()}` : null,
+    mapLink ? `Location: ${mapLink}` + (geo ? ` (live, ±${geo.acc} m)` : '') : null, '',
     ...lines, '',
     `*Total: ${rupees(sum)}* (${n} ${n === 1 ? 'item' : 'items'})`,
     f.notes.trim() ? `Notes: ${f.notes.trim()}` : null
@@ -989,8 +1052,31 @@ oform.addEventListener('submit', e => {
   window.open(`https://wa.me/${ORDER_PHONE}?text=${encodeURIComponent(msg)}`, '_blank', 'noopener');
 });
 
+// Live location for delivery (needs HTTPS, which GitHub Pages provides)
+let geo = null, locState = '';
+const locBtn = document.getElementById('locBtn'), locStat = document.getElementById('locStat');
+function paintLoc() {
+  locStat.className = 'locstat' + (locState === 'ok' ? ' ok' : locState && locState !== 'locating' ? ' err' : '');
+  if (locState === 'ok') {
+    locStat.innerHTML = `✓ ${t('locOk')} (±${geo.acc} m) · <a href="https://maps.google.com/?q=${geo.lat},${geo.lng}" target="_blank" rel="noopener">${t('locView')}</a>`;
+  } else locStat.textContent = locState ? t(locState) : '';
+  locBtn.classList.toggle('got', locState === 'ok');
+  locBtn.querySelector('span').textContent = t(locState === 'ok' ? 'locAgain' : 'useLoc');
+}
+locBtn.addEventListener('click', () => {
+  if (!navigator.geolocation) { locState = 'locNo'; return paintLoc(); }
+  locState = 'locating'; paintLoc();
+  navigator.geolocation.getCurrentPosition(
+    p => { geo = { lat: p.coords.latitude.toFixed(6), lng: p.coords.longitude.toFixed(6), acc: Math.round(p.coords.accuracy) }; locState = 'ok'; paintLoc(); },
+    err => { locState = err.code === 1 ? 'locDenied' : 'locFail'; paintLoc(); },
+    { enableHighAccuracy: true, timeout: 15000, maximumAge: 60000 }
+  );
+});
+
 function orderLang() {
   document.querySelectorAll('[data-t]').forEach(el => el.textContent = t(el.dataset.t));
+  document.querySelectorAll('[data-tp]').forEach(el => el.placeholder = t(el.dataset.tp));
+  paintLoc();
   renderCart();
 }
 
@@ -1088,6 +1174,17 @@ const nav = document.getElementById('nav');
 const onScroll = () => nav.classList.toggle('solid', scrollY > 40);
 addEventListener('scroll', onScroll, { passive: true }); onScroll();
 
+// Highlight the section you're in, in the top menu and the quick links
+const spyLinks = [...document.querySelectorAll('.nav ul a, .qnav a:not(.hot)')];
+const spyIds = [...new Set(spyLinks.map(a => a.getAttribute('href').slice(1)))];
+const spy = new IntersectionObserver(es => es.forEach(e => {
+  if (!e.isIntersecting) return;
+  spyLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + e.target.id));
+  const on = document.querySelector('.qnav a.active');
+  if (on && matchMedia('(max-width: 920px)').matches) on.scrollIntoView({ block: 'nearest', inline: 'center', behavior: 'smooth' });
+}), { rootMargin: '-45% 0px -50% 0px' });
+spyIds.forEach(id => { const s = document.getElementById(id); if (s) spy.observe(s); });
+
 const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: .12 });
 document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
@@ -1100,7 +1197,8 @@ const BN = [
   ['.nav ul a', ['আমাদের ফ্লোর', 'মেনু', 'উৎসব ও বুকিং', 'রিভিউ', 'ভিডিও', 'গ্যালারি', 'ঠিকানা'], 't'],
   ['.hero .eyebrow', 'রেস্টুরেন্ট · নলহাটি, বীরভূম', 't'],
   ['.hero .lead', '<i>এমন স্বাদ, যা মনে থেকে যাবে।</i>ধোঁয়া-ওঠা কাবাব, জমাটি কারি, গরমাগরম চাইনিজ, চিজি পিৎজা আর ঠান্ডা মকটেল — সব এক ছাদের নিচে, নেতাজি রোডে।', 'h'],
-  ['.hero .ctas .btn', ['মেনু দেখুন', 'অর্ডার করতে কল করুন'], 't'],
+  ['.hero .ctas .btn', ['অনলাইনে অর্ডার', 'পার্টি বুক করুন', 'কল করুন'], 't'],
+  ['.qnav a span', ['অনলাইনে অর্ডার', 'পার্টি বুক করুন', 'মেনু', 'আমাদের ফ্লোর', 'রিভিউ', 'ভিডিও', 'গ্যালারি', 'ঠিকানা'], 't'],
   ['.hero-meta > div:nth-child(2)', 'স্টাইল বাজারের কাছে, নেতাজি রোড', 't'],
   ['.hero-meta > div:nth-child(3)', 'জনপ্রতি ₹200–400', 't'],
   ['.strip .lbl', ['Google রেটিং', 'Google রিভিউ', 'মেনুতে পদ', 'প্রতিদিন খোলা'], 't'],
