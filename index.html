@@ -12,7 +12,7 @@
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%2314201b'/><text x='32' y='43' font-family='Georgia,serif' font-size='30' fill='%23c9a45c' text-anchor='middle'>FV</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600&family=Hind+Siliguri:wght@400;500;600&family=Noto+Serif+Bengali:wght@500;600&display=swap" rel="stylesheet">
 
 <script type="application/ld+json">
 {
@@ -94,6 +94,17 @@
   .nav ul a { color: rgba(255,255,255,.85); text-decoration: none; font-size: 14px; letter-spacing: .05em; }
   .nav ul a:hover { color: var(--gold-soft); }
   .nav .call { padding: 10px 18px; }
+  .nav-right { display: flex; align-items: center; gap: 12px; }
+  .lang { background: transparent; border: 1px solid rgba(201,164,92,.6); color: var(--gold-soft); border-radius: 999px; padding: 8px 14px; font: 600 13px/1 var(--sans); cursor: pointer; transition: all .2s; }
+  .lang:hover { background: var(--gold); color: var(--ink); }
+
+  /* Bengali: Bengali fonts, no wide letter-spacing, taller line-height for conjuncts */
+  html[lang="bn"] { --serif: "Noto Serif Bengali", "Cormorant Garamond", Georgia, serif; --sans: "Hind Siliguri", "Inter", system-ui, sans-serif; }
+  html[lang="bn"] h1, html[lang="bn"] h2, html[lang="bn"] h3 { line-height: 1.35; }
+  html[lang="bn"] .eyebrow, html[lang="bn"] .lvl, html[lang="bn"] .menu-sub, html[lang="bn"] .info-row b, html[lang="bn"] .book label, html[lang="bn"] .tag { letter-spacing: .03em; }
+  html[lang="bn"] .nav ul { gap: 20px; }
+  @media (max-width: 1100px) { html[lang="bn"] .nav ul { display: none; } }
+  html[lang="bn"] .menu-item .n { font-family: "Cormorant Garamond", Georgia, serif; }
   @media (max-width: 920px) { .nav ul { display: none; } }
 
   /* ---------- Hero ---------- */
@@ -340,7 +351,10 @@
       <li><a href="#gallery">Gallery</a></li>
       <li><a href="#visit">Visit</a></li>
     </ul>
-    <a class="btn btn-gold call" href="tel:+918942804671"><svg><use href="#i-phone"/></svg>89428 04671</a>
+    <div class="nav-right">
+      <button class="lang" id="langBtn" type="button" lang="bn" aria-label="বাংলায় দেখুন / View in English">বাংলা</button>
+      <a class="btn btn-gold call" href="tel:+918942804671"><svg><use href="#i-phone"/></svg>89428 04671</a>
+    </div>
   </div>
 </nav>
 
@@ -631,7 +645,7 @@
     <div class="info">
       <div class="eyebrow">Visit Us</div>
       <h2>Come hungry. Leave happy.</h2>
-      <div class="info-row"><svg><use href="#i-pin"/></svg><div><b>Address</b>East Market, Netaji Road,<br>near Style Baazar, Nalhati,<br>West Bengal 731220</div></div>
+      <div class="info-row"><svg><use href="#i-pin"/></svg><div><b>Address</b><span class="addr">East Market, Netaji Road,<br>near Style Baazar, Nalhati,<br>West Bengal 731220</span></div></div>
       <div class="info-row"><svg><use href="#i-clock"/></svg><div><b>Hours</b>Every day, 11:00 AM – 11:30 PM<br><span class="status" data-status style="font-size:14px"></span></div></div>
       <div class="info-row"><svg><use href="#i-phone"/></svg><div><b>Reservations &amp; orders</b><a href="tel:+918942804671">+91 89428 04671</a><br><a href="tel:+916295736811">+91 62957 36811</a></div></div>
       <div class="info-row"><svg><use href="#i-ig"/></svg><div><b>Instagram</b><a href="https://www.instagram.com/foodvillanht/" target="_blank" rel="noopener">@foodvillanht</a></div></div>
@@ -659,7 +673,7 @@
       <a href="https://www.instagram.com/foodvillanht/" target="_blank" rel="noopener" aria-label="Instagram"><svg><use href="#i-ig"/></svg></a>
       <a href="https://maps.app.goo.gl/dNp85L8Ujmpdfvh68" target="_blank" rel="noopener" aria-label="Google Maps"><svg><use href="#i-pin"/></svg></a>
     </div>
-    <div class="copy">© <span id="yr"></span> Food Villa, Nalhati. Reviews, photos and videos from Google Maps; the Hunter House image is illustrative.</div>
+    <div class="copy">© <span id="yr"></span> <span class="copytxt">Food Villa, Nalhati. Reviews, photos and videos from Google Maps; the Hunter House image is illustrative.</span></div>
   </div>
 </footer>
 
@@ -766,11 +780,27 @@ const MENU = {
   ]
 };
 
+// Bengali labels for menu tabs and sub-headings (dish names stay as printed on the menu)
+let LANG = 'en';
+const TAB_BN = {
+  "Starters": "স্টার্টার", "Kabab": "কাবাব", "Main Course": "মেইন কোর্স", "Biryani & Rice": "বিরিয়ানি ও রাইস",
+  "Roti & Naan": "রুটি ও নান", "Noodles & Momo": "নুডলস ও মোমো", "Pizza & Burger": "পিৎজা ও বার্গার",
+  "Pasta & Sizzler": "পাস্তা ও সিজলার", "Soup & Salad": "স্যুপ ও স্যালাড", "Rolls & Dosa": "রোল ও দোসা",
+  "Beverages": "পানীয়", "Pure Veg": "পিওর ভেজ"
+};
+const SUB_BN = {
+  "Non-veg": "আমিষ", "Veg": "নিরামিষ", "Chicken, Mutton & Fish": "চিকেন, মাটন ও মাছ", "Biryani": "বিরিয়ানি",
+  "Rice": "রাইস", "Noodles": "নুডলস", "Momo": "মোমো", "Pizza": "পিৎজা", "Burger": "বার্গার", "Pasta": "পাস্তা",
+  "Sizzler": "সিজলার", "Soup": "স্যুপ", "Salad": "স্যালাড", "Rolls": "রোল", "South Indian": "দক্ষিণ ভারতীয়",
+  "No onion, no garlic": "পেঁয়াজ-রসুন ছাড়া"
+};
 const tabs = document.getElementById('tabs'), panel = document.getElementById('panel');
+let currentCat = 'Starters';
 function show(cat) {
+  currentCat = cat;
   [...tabs.children].forEach(b => b.setAttribute('aria-selected', b.dataset.cat === cat));
   panel.innerHTML = MENU[cat].map(row => typeof row === 'string'
-    ? `<div class="menu-sub">${row.slice(2)}</div>`
+    ? `<div class="menu-sub">${LANG === 'bn' ? (SUB_BN[row.slice(2)] || row.slice(2)) : row.slice(2)}</div>`
     : `<div class="menu-item"><span class="n"><span class="veg ${row[2] === 'n' ? 'nv' : ''}" title="${row[2] === 'n' ? 'Non-veg' : 'Veg'}"></span>${row[0]}</span><span class="dots"></span><span class="p">₹${row[1]}</span></div>`
   ).join('');
 }
@@ -825,15 +855,16 @@ if (GOOGLE_API_KEY) {
 }
 
 // ===================== OPEN / CLOSED (Indian time) =====================
-(function () {
+function setStatus() {
   const now = new Date(Date.now() + (330 + new Date().getTimezoneOffset()) * 60000); // IST
   const mins = now.getHours() * 60 + now.getMinutes();
   const open = mins >= 11 * 60 && mins < 23 * 60 + 30;
   document.querySelectorAll('[data-status]').forEach(el => {
     el.classList.add(open ? 'open' : 'closed');
-    el.textContent = open ? 'Open now' : 'Closed now';
+    el.textContent = LANG === 'bn' ? (open ? 'এখন খোলা' : 'এখন বন্ধ') : (open ? 'Open now' : 'Closed now');
   });
-})();
+}
+setStatus();
 
 // ===================== BOOKING → WHATSAPP =====================
 const bookForm = document.getElementById('bookForm');
@@ -876,6 +907,134 @@ const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting
 document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
 document.getElementById('yr').textContent = new Date().getFullYear();
+
+// ===================== বাংলা / ENGLISH =====================
+// [selector, Bengali text (or one per matched element; null = leave as is), mode]
+// mode 't' swaps only the element's own text (keeps icons, inputs, live numbers); 'h' swaps its inner HTML.
+const BN = [
+  ['.nav ul a', ['আমাদের ফ্লোর', 'মেনু', 'উৎসব ও বুকিং', 'রিভিউ', 'ভিডিও', 'গ্যালারি', 'ঠিকানা'], 't'],
+  ['.hero .eyebrow', 'রেস্টুরেন্ট · নলহাটি, বীরভূম', 't'],
+  ['.hero .lead', '<i>এমন স্বাদ, যা মনে থেকে যাবে।</i>ধোঁয়া-ওঠা কাবাব, জমাটি কারি, গরমাগরম চাইনিজ, চিজি পিৎজা আর ঠান্ডা মকটেল — সব এক ছাদের নিচে, নেতাজি রোডে।', 'h'],
+  ['.hero .ctas .btn', ['মেনু দেখুন', 'অর্ডার করতে কল করুন'], 't'],
+  ['.hero-meta > div:nth-child(2)', 'স্টাইল বাজারের কাছে, নেতাজি রোড', 't'],
+  ['.hero-meta > div:nth-child(3)', 'জনপ্রতি ₹200–400', 't'],
+  ['.strip .lbl', ['Google রেটিং', 'Google রিভিউ', 'মেনুতে পদ', 'প্রতিদিন খোলা'], 't'],
+  ['.strip .item:nth-child(4) .num', '১২½ ঘণ্টা', 't'],
+
+  ['#about .eyebrow', 'আমাদের কথা', 't'],
+  ['#about h2', 'নলহাটিতেই এক টুকরো বিলাসিতা।', 't'],
+  ['#about .reveal > p', [
+    'ফুড ভিলা শহরে নিয়ে এসেছে নতুন কিছু — পরিষ্কার, ঝকঝকে, খোলামেলা এক রেস্টুরেন্ট, যেখানে পরিবার, বন্ধু আর কাপলরা আরাম করে বসে ভালো খাবার উপভোগ করতে পারেন। আমাদের শেফরা প্রতিটি পদ অর্ডার অনুযায়ী রান্না করেন — কয়লার আঁচে সেঁকা কাবাব আর জমাটি মাটন কষা থেকে হাক্কা নুডলস, পিৎজা আর সিজলার পর্যন্ত।',
+    'আমাদের খাবার নিয়ে আমরা গর্বিত, আর আমাদের টিম নিয়েও। অতিথিরা প্রায়ই আমাদের কর্মীদের নাম ধরে প্রশংসা করেন।'], 't'],
+  ['#about .feats > div', ['<b>অর্ডার অনুযায়ী রান্না</b>সরাসরি আমাদের কিচেন থেকে', '<b>পিওর ভেজও আছে</b>পেঁয়াজ-রসুন ছাড়া পদ', '<b>বসে খান · নিয়ে যান</b>অথবা আগে থেকে ফোনে অর্ডার করুন'], 'h'],
+
+  ['#floors .section-head .eyebrow', 'তিনটি ফ্লোর · তিন রকম মেজাজ', 't'],
+  ['#floors .section-head h2', 'আপনার পছন্দের সন্ধ্যা বেছে নিন', 't'],
+  ['#floors .section-head p', 'আরামদায়ক ফ্যামিলি ডাইনিং হল, জমজমাট পার্টি ফ্লোর আর ভৌতিক থিমের এক অভিজ্ঞতা — সব একই বিল্ডিংয়ে।', 't'],
+  ['.floor .lvl', ['গ্রাউন্ড ফ্লোর', 'ফার্স্ট ফ্লোর', 'সাহস থাকলে ঢুকুন'], 't'],
+  ['.floor h3', ['ফ্যামিলি ডাইনিং', 'পার্টি ফ্লোর', 'হান্টার হাউস'], 't'],
+  ['.floor .txt > p', [
+    'ঝকঝকে, খোলামেলা আর আরামদায়ক। পরিবারের সঙ্গে দুপুরের খাবার, বন্ধুদের সঙ্গে হালকা কিছু বা নিশ্চিন্ত ডিনার — যখন খুশি চলে আসুন।',
+    'আমাদের সবচেয়ে প্রাণবন্ত জায়গা — রঙিন ম্যুরাল, ঝাড়বাতি আর ছবি তোলার জন্য সাজানো ডেকর ওয়াল। বেশিরভাগ জন্মদিন, বিবাহবার্ষিকী, মিটিং আর গেট-টুগেদার এখানেই হয়।',
+    'আমাদের হরর-থিমের ফ্লোর। আবছা আলো, গা-ছমছমে সাজ আর এমন এক ডিনার যা ভুলবেন না। যে বন্ধুরা স্টার্টারের সঙ্গে একটু ভয়ও চান, তাঁদের জন্য একদম ঠিক।'], 't'],
+  ['.floor ul', ['<li>সরাসরি চলে আসুন</li><li>ফ্যামিলি সিটিং</li><li>কাপল ও বন্ধুরা</li>', '<li>জন্মদিন</li><li>বিবাহবার্ষিকী</li><li>মিটিং</li><li>গ্রুপ বুকিং</li>', '<li>হরর থিম</li><li>বন্ধু ও গ্রুপ</li><li>থিম জন্মদিন</li>'], 'h'],
+  ['.floor .btn', ['মেনু দেখুন', 'উৎসব বুক করুন', 'হান্টার হাউস বুক করুন'], 't'],
+  ['.floor .note', 'প্রতীকী ছবি', 't'],
+
+  ['#signature .eyebrow', 'শেফের সেরা পদ', 't'],
+  ['#signature h2', 'যে পদের টানে অতিথিরা বারবার ফেরেন', 't'],
+  ['.dish p', [
+    'দই আর মশলায় ম্যারিনেট করে মাটির তন্দুরে সেঁকা — ধোঁয়াটে আর রসালো। হাফ বা ফুল।',
+    'মুচমুচে চিকেন, ক্যাপসিকাম, পেঁয়াজ আর ঝাল চিলি-গার্লিক সসে কড়াইয়ে টস করা।',
+    'প্রচুর টপিং আর ভরপুর চিজ দিয়ে আমাদের স্পেশাল পিৎজা। সবাই মিলে খাওয়ার জন্য।',
+    'রেশমি, হরিয়ালি, বানজারা, শিক আর তাংরি — শিকে গেঁথে তন্দুরে গ্রিল করা।',
+    'নরম পনিরের টুকরো, মশলা মাখিয়ে ক্যাপসিকাম আর পেঁয়াজের সঙ্গে গ্রিল করা। নিরামিষপ্রেমীদের প্রিয়।',
+    'ব্লু লেগুন, থ্রি-ইন-ওয়ান মোহিতো, কাপল ড্যান্স, ফ্রেশ লাইম সোডা — আর ₹149 থেকে ঘন শেক।'], 't'],
+  ['.dish .tag', ['কাবাব', 'স্টার্টার', 'পিৎজা', 'কাবাব', 'ভেজ · কাবাব', 'পানীয়'], 't'],
+  ['.dish .price', [null, null, null, '₹239 থেকে', null, '₹79 থেকে'], 't'],
+
+  ['#menu .eyebrow', 'মেনু · ২০২৬', 't'],
+  ['#menu h2', 'সব রকম খিদের জন্য কিছু না কিছু', 't'],
+  ['#menu .section-head p', 'সব দাম ₹-এ। <span class="veg"></span>নিরামিষ &nbsp; <span class="veg nv"></span>আমিষ', 'h'],
+  ['.menu-note', 'দাম আমাদের ২০২৬ মেনু অনুযায়ী, পরিবর্তন হতে পারে। অর্ডার করতে কল করুন <a href="tel:+918942804671">89428 04671</a> অথবা <a href="tel:+916295736811">62957 36811</a>।', 'h'],
+
+  ['#celebrate .section-head .eyebrow', 'উৎসব ও বুকিং', 't'],
+  ['#celebrate .section-head h2', 'আপনার উপলক্ষ, আমাদের টেবিল', 't'],
+  ['#celebrate .section-head p', 'যে কোনো অনুষ্ঠানের জন্য একটি টেবিল, একটি অংশ বা পুরো ফ্লোর বুক করুন। খাবার আর সাজসজ্জার দায়িত্ব আমাদের।', 't'],
+  ['.occ h3', ['জন্মদিন', 'থিম পার্টি', 'পারিবারিক উৎসব', 'বিবাহবার্ষিকী', 'মিটিং ও গেট-টুগেদার'], 't'],
+  ['.occ p', ['বেলুনের আর্চ, "হ্যাপি বার্থডে" ব্যাকড্রপ আর টেবিলে আপনার কেক।', 'কস্টিউম পরা চরিত্র আর বাচ্চাদের জন্য থিম সাজসজ্জা।', 'পার্টি ফ্লোরে গোটা পরিবারের জন্য লম্বা টেবিল।', 'মনে রাখার মতো সন্ধ্যা, শুধু আপনার জন্য সাজানো।', 'টিম লাঞ্চ, রি-ইউনিয়ন, কিটি পার্টি আর গেট-টুগেদার।'], 't'],
+  ['.book .left .eyebrow', 'আমাদের সঙ্গে পরিকল্পনা করুন', 't'],
+  ['.book .left h3', 'আপনার অনুষ্ঠান বুক করুন', 't'],
+  ['.book .left p', 'কয়েকটি তথ্য দিয়ে আমাদের হোয়াটসঅ্যাপে পাঠান, অথবা সরাসরি ফোন করুন। আমরা তারিখ, মেনু আর সাজসজ্জা কনফার্ম করে দেব।', 't'],
+  ['.book .left ul', '<li>ফ্লোর বেছে নিন: ফ্যামিলি, পার্টি বা হান্টার হাউস</li><li>অনুরোধে বেলুন ও থিম সাজসজ্জা</li><li>সব বাজেটের জন্য গ্রুপ মেনু</li>', 'h'],
+  ['#bookForm label', ['আপনার নাম', 'উপলক্ষ', 'তারিখ', 'অতিথি সংখ্যা', 'পছন্দের ফ্লোর', 'আর কিছু?'], 't'],
+  ['#bookForm button[type=submit]', 'হোয়াটসঅ্যাপে পাঠান', 't'],
+  ['#bookForm .hint', 'আপনার মেসেজ তৈরি করে হোয়াটসঅ্যাপ খুলবে। এই ওয়েবসাইটে কিছুই সেভ হয় না।', 't'],
+
+  ['#reviews .section-head .eyebrow', 'অতিথিদের কথা', 't'],
+  ['#reviews .section-head h2', 'আমাদের অতিথিরা যা বলেন', 't'],
+  ['.g-badge small', ' টি Google রিভিউ', 't'],
+  ['.reviews-cta .btn', ['Google-এ সব রিভিউ পড়ুন', 'খাবার ভালো লাগল? একটি রিভিউ দিন'], 't'],
+
+  ['#videos .eyebrow', 'দেখুন', 't'],
+  ['#videos h2', 'চলমান ছবিতে ফুড ভিলা', 't'],
+  ['#videos .section-head p', 'সিজলার, উৎসব আর গরমাগরম প্লেট — সব রেস্টুরেন্টেই তোলা।', 't'],
+  ['.vcard .cap', ['গরমাগরম সিজলার', 'সোজা কিচেন থেকে', 'জন্মদিনের সাজ', 'চিজি পিৎজা', 'বেলুন ডেকর'], 't'],
+
+  ['#gallery .eyebrow', 'গ্যালারি', 't'],
+  ['#gallery h2', 'আমাদের টেবিল থেকে সরাসরি', 't'],
+  ['#gallery .section-head p', 'ফুড ভিলার আসল ছবি, Google Maps-এ শেয়ার করা।', 't'],
+
+  ['#visit .eyebrow', 'আমাদের ঠিকানা', 't'],
+  ['#visit h2', 'খিদে নিয়ে আসুন, খুশি হয়ে ফিরুন।', 't'],
+  ['.info-row b', ['ঠিকানা', 'খোলার সময়', 'রিজার্ভেশন ও অর্ডার', 'ইনস্টাগ্রাম'], 't'],
+  ['.addr', 'ইস্ট মার্কেট, নেতাজি রোড,<br>স্টাইল বাজারের কাছে, নলহাটি,<br>পশ্চিমবঙ্গ 731220', 'h'],
+  ['.info-row > div', [null, 'প্রতিদিন, সকাল 11:00 – রাত 11:30', null, null], 't'],
+  ['.visit .btns .btn', ['দিকনির্দেশ দেখুন', 'হোয়াটসঅ্যাপ'], 't'],
+
+  ['footer.site .wrap > div:first-child > div', ['ইস্ট মার্কেট, নেতাজি রোড, স্টাইল বাজারের কাছে, নলহাটি', '+91 89428 04671 · +91 62957 36811 · প্রতিদিন সকাল 11টা – রাত 11:30'], 't'],
+  ['.copytxt', 'ফুড ভিলা, নলহাটি। রিভিউ, ছবি ও ভিডিও Google Maps থেকে; হান্টার হাউসের ছবিটি প্রতীকী।', 't'],
+  ['.mbar a', ['কল', 'হোয়াটসঅ্যাপ', 'দিকনির্দেশ'], 't']
+];
+
+// The element's own (direct) text node that holds its words
+const ownText = el => [...el.childNodes].find(n => n.nodeType === 3 && n.textContent.trim());
+const saved = new Map(); // element -> original English (HTML or text)
+
+function applyLang(lang) {
+  LANG = lang;
+  document.documentElement.lang = lang;
+  BN.forEach(([sel, bn, mode]) => {
+    document.querySelectorAll(sel).forEach((el, i) => {
+      const val = Array.isArray(bn) ? bn[i] : bn;
+      if (val == null) return;
+      const node = mode === 't' ? ownText(el) : el;
+      if (!node) return;
+      if (!saved.has(node)) saved.set(node, mode === 't' ? node.textContent : el.innerHTML);
+      const en = saved.get(node);
+      if (mode === 't') node.textContent = lang === 'bn' ? val : en;
+      else el.innerHTML = lang === 'bn' ? val : en;
+    });
+  });
+  [...tabs.children].forEach(b => b.textContent = lang === 'bn' ? (TAB_BN[b.dataset.cat] || b.dataset.cat) : b.dataset.cat);
+  show(currentCat);
+  setStatus();
+  const btn = document.getElementById('langBtn');
+  btn.textContent = lang === 'bn' ? 'English' : 'বাংলা';
+  btn.lang = lang === 'bn' ? 'en' : 'bn';
+  document.title = lang === 'bn' ? 'ফুড ভিলা · নলহাটির রেস্টুরেন্ট' : 'Food Villa · Restaurant in Nalhati';
+  try { localStorage.setItem('fv-lang', lang); } catch (e) {}
+}
+
+document.getElementById('langBtn').addEventListener('click', () => applyLang(LANG === 'bn' ? 'en' : 'bn'));
+
+// Start in Bengali for ?lang=bn links, a saved choice, or a Bengali phone/browser
+(function () {
+  let pick = new URLSearchParams(location.search).get('lang');
+  if (!pick) { try { pick = localStorage.getItem('fv-lang'); } catch (e) {} }
+  if (!pick && /^bn/i.test(navigator.language || '')) pick = 'bn';
+  if (pick === 'bn') applyLang('bn');
+})();
 </script>
 </body>
 </html>
