@@ -1,0 +1,680 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Food Villa · Restaurant in Nalhati</title>
+<meta name="description" content="Food Villa (ফুড ভিলা), East Market, Netaji Road, near Style Baazar, Nalhati. Tandoor, kababs, curries, Chinese, pizza, biryani and mocktails. Open daily 11 AM – 11:30 PM.">
+<meta property="og:title" content="Food Villa · Nalhati">
+<meta property="og:description" content="A taste you'll remember. Open daily 11 AM – 11:30 PM, Netaji Road, Nalhati.">
+<meta property="og:image" content="images/hero.jpg">
+<meta name="theme-color" content="#14201b">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%2314201b'/><text x='32' y='43' font-family='Georgia,serif' font-size='30' fill='%23c9a45c' text-anchor='middle'>FV</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Restaurant",
+  "name": "Food Villa",
+  "alternateName": "ফুড ভিলা",
+  "slogan": "A taste you'll remember",
+  "telephone": ["+91 89428 04671", "+91 62957 36811"],
+  "servesCuisine": ["North Indian", "Chinese", "Tandoor", "Pizza", "South Indian"],
+  "priceRange": "₹200–400 per person",
+  "openingHours": "Mo-Su 11:00-23:30",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "East Market, Netaji Road, near Style Baazar",
+    "addressLocality": "Nalhati",
+    "addressRegion": "West Bengal",
+    "postalCode": "731220",
+    "addressCountry": "IN"
+  },
+  "geo": { "@type": "GeoCoordinates", "latitude": 24.2926368, "longitude": 87.8392915 },
+  "hasMap": "https://www.google.com/maps/place/?q=place_id:ChIJ10Z-qF4Z-jkRUEddy_uhcok",
+  "sameAs": ["https://www.instagram.com/foodvillanht/"]
+}
+</script>
+
+<style>
+  :root {
+    --ink: #14201b;
+    --ink-2: #1d2c25;
+    --ink-3: #26382f;
+    --ivory: #f8f4ec;
+    --paper: #fffdf8;
+    --gold: #c9a45c;
+    --gold-soft: #e2cc9b;
+    --text: #2a2a26;
+    --muted: #6e6a60;
+    --line: #e6dfd0;
+    --serif: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+    --sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    --wrap: 1160px;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; scroll-padding-top: 76px; }
+  body { margin: 0; background: var(--ivory); color: var(--text); font: 16px/1.65 var(--sans); -webkit-font-smoothing: antialiased; }
+  img { max-width: 100%; display: block; }
+  a { color: inherit; }
+  .wrap { width: min(var(--wrap), 100% - 32px); margin-inline: auto; }
+
+  .eyebrow { font: 600 12px/1 var(--sans); letter-spacing: .22em; text-transform: uppercase; color: var(--gold); }
+  h1, h2, h3 { font-family: var(--serif); font-weight: 600; line-height: 1.1; margin: 0; }
+  h2 { font-size: clamp(34px, 5vw, 52px); }
+  .section { padding: clamp(72px, 10vw, 120px) 0; }
+  .section-head { text-align: center; max-width: 640px; margin: 0 auto 48px; }
+  .section-head h2 { margin-top: 14px; }
+  .section-head p { color: var(--muted); margin: 16px 0 0; }
+  .rule { width: 56px; height: 1px; background: var(--gold); margin: 22px auto 0; border: 0; }
+
+  .btn { display: inline-flex; align-items: center; gap: 10px; padding: 14px 26px; border-radius: 999px; font: 600 14px/1 var(--sans); letter-spacing: .04em; text-decoration: none; transition: transform .2s, background .2s, color .2s, border-color .2s; border: 1px solid transparent; cursor: pointer; }
+  .btn:hover { transform: translateY(-2px); }
+  .btn svg { width: 18px; height: 18px; flex: none; }
+  .btn-gold { background: var(--gold); color: var(--ink); }
+  .btn-gold:hover { background: var(--gold-soft); }
+  .btn-ghost { border-color: rgba(255,255,255,.45); color: #fff; }
+  .btn-ghost:hover { border-color: var(--gold); color: var(--gold-soft); }
+  .btn-dark { background: var(--ink); color: #fff; }
+  .btn-dark:hover { background: var(--ink-3); }
+  .btn-line { border-color: var(--ink); color: var(--ink); }
+  .btn-line:hover { background: var(--ink); color: #fff; }
+
+  /* ---------- Nav ---------- */
+  .nav { position: fixed; inset: 0 0 auto; z-index: 50; transition: background .3s, box-shadow .3s; }
+  .nav.solid { background: rgba(20,32,27,.96); backdrop-filter: blur(8px); box-shadow: 0 1px 0 rgba(201,164,92,.25); }
+  .nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 72px; }
+  .brand { display: flex; align-items: baseline; gap: 10px; text-decoration: none; color: #fff; }
+  .brand b { font: 700 26px/1 var(--serif); letter-spacing: .02em; }
+  .brand span { font-size: 13px; color: var(--gold-soft); }
+  .nav ul { display: flex; gap: 30px; list-style: none; margin: 0; padding: 0; }
+  .nav ul a { color: rgba(255,255,255,.85); text-decoration: none; font-size: 14px; letter-spacing: .05em; }
+  .nav ul a:hover { color: var(--gold-soft); }
+  .nav .call { padding: 10px 18px; }
+  @media (max-width: 920px) { .nav ul { display: none; } }
+
+  /* ---------- Hero ---------- */
+  .hero { position: relative; min-height: 100svh; display: grid; align-items: center; color: #fff; overflow: hidden; background: var(--ink); }
+  .hero > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: .62; }
+  .hero::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(14,22,18,.94) 0%, rgba(14,22,18,.6) 55%, rgba(14,22,18,.2) 100%), linear-gradient(0deg, rgba(14,22,18,.75), transparent 45%); }
+  .hero .wrap { position: relative; z-index: 1; padding: 120px 0 90px; }
+  .hero h1 { font-size: clamp(54px, 9vw, 104px); font-weight: 600; letter-spacing: -.01em; margin-top: 18px; }
+  .hero h1 em { font-style: italic; color: var(--gold-soft); font-weight: 500; }
+  .hero .bn { font-size: 20px; color: var(--gold-soft); margin-top: 6px; }
+  .hero p.lead { max-width: 540px; font-size: 18px; color: rgba(255,255,255,.88); margin: 22px 0 34px; }
+  .hero p.lead i { font-family: var(--serif); font-size: 24px; color: #fff; display: block; margin-bottom: 8px; }
+  .hero .ctas { display: flex; flex-wrap: wrap; gap: 14px; }
+  .hero-meta { display: flex; flex-wrap: wrap; gap: 14px 28px; margin-top: 54px; font-size: 14px; color: rgba(255,255,255,.8); }
+  .hero-meta div { display: flex; align-items: center; gap: 10px; }
+  .hero-meta svg { width: 18px; height: 18px; color: var(--gold); }
+  .status { display: inline-flex; align-items: center; gap: 8px; font-weight: 600; }
+  .status::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: #9aa39e; }
+  .status.open::before { background: #4cc46e; box-shadow: 0 0 0 4px rgba(76,196,110,.2); }
+  .status.closed::before { background: #e06a52; }
+
+  /* ---------- Trust strip ---------- */
+  .strip { background: var(--ink); color: #fff; border-top: 1px solid rgba(201,164,92,.25); }
+  .strip .wrap { display: grid; grid-template-columns: repeat(4, 1fr); }
+  .strip .item { padding: 30px 20px; text-align: center; border-right: 1px solid rgba(255,255,255,.08); text-decoration: none; }
+  .strip .item:last-child { border-right: 0; }
+  .strip .num { font: 600 34px/1 var(--serif); color: var(--gold-soft); }
+  .strip .num small { font-size: 22px; color: #e3a52b; }
+  .strip .lbl { font-size: 13px; color: rgba(255,255,255,.7); margin-top: 8px; letter-spacing: .04em; }
+  @media (max-width: 760px) { .strip .wrap { grid-template-columns: 1fr 1fr; } .strip .item:nth-child(2) { border-right: 0; } .strip .item:nth-child(-n+2) { border-bottom: 1px solid rgba(255,255,255,.08); } }
+
+  /* ---------- About ---------- */
+  .about .wrap { display: grid; grid-template-columns: 1.05fr 1fr; gap: clamp(36px, 6vw, 80px); align-items: center; }
+  .about .pics { position: relative; padding-bottom: 40px; }
+  .about .pics img { border-radius: 6px; aspect-ratio: 4/3.4; object-fit: cover; width: 86%; }
+  .about .pics img + img { position: absolute; right: 0; bottom: 0; width: 50%; aspect-ratio: 4/3; border: 8px solid var(--ivory); }
+  .about h2 { margin: 14px 0 22px; }
+  .about p { color: #4a4740; }
+  .about blockquote { margin: 30px 0 0; padding: 4px 0 4px 22px; border-left: 2px solid var(--gold); font: italic 500 22px/1.4 var(--serif); color: var(--ink); }
+  .about blockquote cite { display: block; font: 500 13px/1 var(--sans); color: var(--muted); margin-top: 12px; font-style: normal; letter-spacing: .03em; }
+  .feats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 34px; }
+  .feats div { font-size: 14px; color: var(--muted); }
+  .feats b { display: block; font: 600 20px/1.2 var(--serif); color: var(--ink); margin-bottom: 4px; }
+  @media (max-width: 860px) { .about .wrap { grid-template-columns: 1fr; } }
+  @media (max-width: 480px) { .feats { grid-template-columns: 1fr; } }
+
+  /* ---------- Signature dishes ---------- */
+  .signature { background: var(--paper); }
+  .dishes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+  .dish { background: #fff; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; transition: transform .3s, box-shadow .3s; }
+  .dish:hover { transform: translateY(-6px); box-shadow: 0 24px 48px -24px rgba(20,32,27,.35); }
+  .dish .ph { overflow: hidden; aspect-ratio: 4/3; }
+  .dish img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s; }
+  .dish:hover img { transform: scale(1.06); }
+  .dish .body { padding: 22px 24px 26px; }
+  .dish .row { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+  .dish h3 { font-size: 26px; }
+  .dish .price { font: 600 20px/1 var(--serif); color: var(--gold); white-space: nowrap; }
+  .dish p { margin: 8px 0 0; font-size: 14px; color: var(--muted); }
+  .tag { display: inline-block; margin-top: 14px; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-3); background: #f1ead9; padding: 6px 10px; border-radius: 4px; }
+  @media (max-width: 960px) { .dishes { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 600px) { .dishes { grid-template-columns: 1fr; } }
+
+  /* ---------- Menu ---------- */
+  .menu { background: var(--ink); color: #fff; }
+  .menu .section-head p { color: rgba(255,255,255,.65); }
+  .tabs { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-bottom: 44px; }
+  .tabs button { background: transparent; color: rgba(255,255,255,.78); border: 1px solid rgba(255,255,255,.18); border-radius: 999px; padding: 10px 18px; font: 500 14px/1 var(--sans); cursor: pointer; transition: all .2s; }
+  .tabs button:hover { border-color: var(--gold); color: #fff; }
+  .tabs button[aria-selected="true"] { background: var(--gold); border-color: var(--gold); color: var(--ink); }
+  .menu-panel { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 64px; max-width: 980px; margin: 0 auto; }
+  .menu-item { display: flex; align-items: baseline; gap: 12px; padding: 14px 0; border-bottom: 1px dashed rgba(255,255,255,.12); }
+  .menu-item .n { font: 500 21px/1.25 var(--serif); }
+  .menu-item .dots { flex: 1; border-bottom: 1px dotted rgba(201,164,92,.35); transform: translateY(-5px); min-width: 16px; }
+  .menu-item .p { font: 600 19px/1 var(--serif); color: var(--gold-soft); white-space: nowrap; }
+  .menu-sub { grid-column: 1 / -1; font: 600 12px/1 var(--sans); letter-spacing: .2em; text-transform: uppercase; color: var(--gold); padding: 26px 0 6px; }
+  .menu-sub:first-child { padding-top: 0; }
+  .veg { display: inline-block; width: 12px; height: 12px; border: 1.5px solid #3fa35b; border-radius: 2px; position: relative; margin-right: 8px; vertical-align: 1px; flex: none; }
+  .veg::after { content: ""; position: absolute; inset: 2px; border-radius: 50%; background: #3fa35b; }
+  .veg.nv { border-color: #c2412d; }
+  .veg.nv::after { background: #c2412d; }
+  .menu-note { text-align: center; color: rgba(255,255,255,.55); font-size: 13px; margin-top: 40px; }
+  @media (max-width: 760px) { .menu-panel { grid-template-columns: 1fr; } .menu-item .n { font-size: 19px; } }
+
+  /* ---------- Reviews ---------- */
+  .g-badge { display: inline-flex; align-items: center; gap: 16px; background: #fff; border: 1px solid var(--line); border-radius: 999px; padding: 10px 22px 10px 12px; margin-top: 26px; text-decoration: none; }
+  .g-badge .g { width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; background: #f3f3f3; }
+  .g-badge strong { font: 600 22px/1 var(--serif); color: var(--ink); }
+  .g-badge small { color: var(--muted); font-size: 13px; }
+  .stars { color: #e3a52b; letter-spacing: 2px; font-size: 15px; }
+  .stars-bar { position: relative; display: inline-block; color: #ddd; letter-spacing: 2px; font-size: 15px; }
+  .stars-bar span { position: absolute; inset: 0 auto 0 0; overflow: hidden; color: #e3a52b; white-space: nowrap; }
+  .reviews-grid { columns: 3 300px; column-gap: 24px; }
+  .review { break-inside: avoid; background: #fff; border: 1px solid var(--line); border-radius: 8px; padding: 26px 26px 22px; margin-bottom: 24px; position: relative; }
+  .review::before { content: "\201C"; position: absolute; top: 6px; right: 20px; font: 700 70px/1 var(--serif); color: #efe5cf; }
+  .review p { margin: 12px 0 18px; font-size: 15.5px; color: #3c3a34; }
+  .review footer { display: flex; align-items: center; gap: 12px; border-top: 1px solid var(--line); padding-top: 14px; }
+  .avatar { width: 38px; height: 38px; border-radius: 50%; display: grid; place-items: center; font: 600 15px/1 var(--sans); color: #fff; background: var(--ink-3); flex: none; }
+  .review .who { font-weight: 600; font-size: 14px; color: var(--ink); }
+  .review .when { font-size: 12px; color: var(--muted); }
+  .reviews-cta { text-align: center; margin-top: 18px; display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+
+  /* ---------- Gallery ---------- */
+  .gallery { background: var(--paper); }
+  .grid-g { display: grid; grid-template-columns: repeat(4, 1fr); grid-auto-rows: 220px; grid-auto-flow: dense; gap: 12px; }
+  .grid-g figure { margin: 0; overflow: hidden; border-radius: 6px; cursor: zoom-in; background: #eee; }
+  .grid-g figure.tall { grid-row: span 2; }
+  .grid-g figure.wide { grid-column: span 2; }
+  .grid-g img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s; }
+  .grid-g figure:hover img { transform: scale(1.05); }
+  @media (max-width: 760px) { .grid-g { grid-template-columns: 1fr 1fr; grid-auto-rows: 160px; } }
+  .lightbox { position: fixed; inset: 0; z-index: 100; background: rgba(10,14,12,.92); display: none; place-items: center; padding: 24px; cursor: zoom-out; }
+  .lightbox.on { display: grid; }
+  .lightbox img { max-height: 90vh; max-width: 100%; border-radius: 6px; }
+
+  /* ---------- Visit ---------- */
+  .visit .wrap { display: grid; grid-template-columns: 1fr 1.25fr; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: #fff; }
+  .visit .info { padding: clamp(32px, 5vw, 56px); }
+  .visit h2 { margin: 14px 0 28px; }
+  .info-row { display: flex; gap: 16px; padding: 16px 0; border-bottom: 1px solid var(--line); }
+  .info-row:last-of-type { border-bottom: 0; }
+  .info-row svg { width: 22px; height: 22px; color: var(--gold); flex: none; margin-top: 2px; }
+  .info-row b { display: block; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); font-weight: 600; margin-bottom: 4px; }
+  .info-row a { text-decoration: none; }
+  .info-row a:hover { color: var(--gold); }
+  .visit .btns { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+  .visit iframe { width: 100%; height: 100%; min-height: 460px; border: 0; display: block; filter: grayscale(.25) contrast(1.05); }
+  @media (max-width: 860px) { .visit .wrap { grid-template-columns: 1fr; } .visit iframe { min-height: 320px; } }
+
+  /* ---------- Footer ---------- */
+  footer.site { background: var(--ink); color: rgba(255,255,255,.7); padding: 56px 0 100px; font-size: 14px; }
+  footer.site .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 28px; align-items: center; }
+  footer.site .brand b { font-size: 30px; }
+  footer.site .social { display: flex; gap: 12px; }
+  footer.site .social a { width: 42px; height: 42px; border: 1px solid rgba(255,255,255,.2); border-radius: 50%; display: grid; place-items: center; transition: all .2s; }
+  footer.site .social a:hover { border-color: var(--gold); color: var(--gold); }
+  footer.site .social svg { width: 18px; height: 18px; }
+  footer.site .copy { width: 100%; border-top: 1px solid rgba(255,255,255,.1); padding-top: 22px; font-size: 12px; color: rgba(255,255,255,.45); }
+  @media (min-width: 761px) { footer.site { padding-bottom: 56px; } }
+
+  /* ---------- Mobile action bar ---------- */
+  .mbar { position: fixed; inset: auto 0 0; z-index: 60; display: none; grid-template-columns: 1fr 1fr 1fr; background: var(--ink); border-top: 1px solid rgba(201,164,92,.35); }
+  .mbar a { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 10px 0 12px; color: #fff; text-decoration: none; font-size: 12px; letter-spacing: .04em; }
+  .mbar a svg { width: 20px; height: 20px; color: var(--gold); }
+  .mbar a + a { border-left: 1px solid rgba(255,255,255,.08); }
+  @media (max-width: 760px) { .mbar { display: grid; } .nav .call { display: none; } }
+
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity .8s ease, transform .8s ease; }
+  .reveal.in { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } html { scroll-behavior: auto; } }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-phone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></symbol>
+  <symbol id="i-wa" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.4.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.4.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1 2.7c.1.2 1.8 2.8 4.4 3.9 1.6.7 2.3.8 3.1.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.2-.3-.3-.5-.4z"/></symbol>
+  <symbol id="i-ig" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s7-6.1 7-12a7 7 0 0 0-14 0c0 5.9 7 12 7 12z"/><circle cx="12" cy="10" r="2.6"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+  <symbol id="i-dir" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l18-8-8 18-2-8-8-2z"/></symbol>
+  <symbol id="i-rupee" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4h12M6 9h12M14 20L7 13h3a4 4 0 0 0 0-9"/></symbol>
+  <symbol id="i-g" viewBox="0 0 48 48"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3l5.7-5.7C34 6 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.4-.4-3.5z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3l5.7-5.7C34 6 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-8l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.4-.4-3.5z"/></symbol>
+</svg>
+
+<!-- ============ NAV ============ -->
+<nav class="nav" id="nav">
+  <div class="wrap">
+    <a class="brand" href="#top"><b>Food Villa</b><span>ফুড ভিলা</span></a>
+    <ul>
+      <li><a href="#about">About</a></li>
+      <li><a href="#signature">Signatures</a></li>
+      <li><a href="#menu">Menu</a></li>
+      <li><a href="#reviews">Reviews</a></li>
+      <li><a href="#gallery">Gallery</a></li>
+      <li><a href="#visit">Visit</a></li>
+    </ul>
+    <a class="btn btn-gold call" href="tel:+918942804671"><svg><use href="#i-phone"/></svg>89428 04671</a>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<header class="hero" id="top">
+  <img src="images/hero.jpg" alt="Drums of Heaven, glazed chicken lollipops plated at Food Villa">
+  <div class="wrap">
+    <div class="eyebrow">Restaurant · Nalhati, Birbhum</div>
+    <h1>Food <em>Villa</em></h1>
+    <div class="bn">ফুড ভিলা</div>
+    <p class="lead"><i>A taste you'll remember.</i>Smoky kababs, rich curries, sizzling Chinese, cheesy pizzas and chilled mocktails, all under one roof on Netaji Road.</p>
+    <div class="ctas">
+      <a class="btn btn-gold" href="#menu">View the Menu</a>
+      <a class="btn btn-ghost" href="tel:+918942804671"><svg><use href="#i-phone"/></svg>Call to Order</a>
+    </div>
+    <div class="hero-meta">
+      <div><svg><use href="#i-clock"/></svg><span class="status" data-status>Open daily</span>&nbsp;· 11 AM – 11:30 PM</div>
+      <div><svg><use href="#i-pin"/></svg>Near Style Baazar, Netaji Rd</div>
+      <div><svg><use href="#i-rupee"/></svg>₹200–400 per person</div>
+    </div>
+  </div>
+</header>
+
+<!-- ============ TRUST STRIP ============ -->
+<section class="strip" aria-label="Highlights">
+  <div class="wrap">
+    <a class="item" href="#reviews"><div class="num"><span data-rating>3.8</span> <small>★</small></div><div class="lbl">Google rating</div></a>
+    <a class="item" href="#reviews"><div class="num" data-count>198</div><div class="lbl">Google reviews</div></a>
+    <a class="item" href="#menu"><div class="num">150+</div><div class="lbl">Dishes on the menu</div></a>
+    <a class="item" href="#visit"><div class="num">12½ hrs</div><div class="lbl">Open every day</div></a>
+  </div>
+</section>
+
+<!-- ============ ABOUT ============ -->
+<section class="section about" id="about">
+  <div class="wrap">
+    <div class="pics reveal">
+      <img src="images/interior.jpg" alt="Food Villa dining room">
+      <img src="images/storefront.jpg" alt="Food Villa entrance at night">
+    </div>
+    <div class="reveal">
+      <div class="eyebrow">Our Story</div>
+      <h2>A little bit of luxury, right here in Nalhati.</h2>
+      <p>Food Villa brought something new to town: a clean, bright, spacious restaurant where families, friends and couples can sit back and enjoy a proper meal. Our chefs cook everything to order, from charcoal-kissed kababs and rich mutton kosha to Hakka noodles, pizzas and sizzlers.</p>
+      <p>We're proud of our food, and just as proud of our team. Guests often mention our staff by name.</p>
+      <blockquote>“Feel like in some luxury restaurant.”<cite>Arpan Dutta, Google review</cite></blockquote>
+      <div class="feats">
+        <div><b>Cooked to order</b>Fresh from our kitchen</div>
+        <div><b>Pure veg too</b>No onion, no garlic options</div>
+        <div><b>Dine · Take away</b>Or call ahead to order</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SIGNATURE DISHES ============ -->
+<section class="section signature" id="signature">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">Chef's Signatures</div>
+      <h2>Dishes our guests come back for</h2>
+      <hr class="rule">
+    </div>
+    <div class="dishes">
+      <article class="dish reveal">
+        <div class="ph"><img loading="lazy" src="images/tandoori.jpg" alt="Tandoori chicken"></div>
+        <div class="body">
+          <div class="row"><h3>Tandoori Chicken</h3><span class="price">₹249 / 479</span></div>
+          <p>Marinated in yoghurt and spices, then charred in the clay oven until smoky and juicy. Half or full.</p>
+          <span class="tag">Kabab</span>
+        </div>
+      </article>
+      <article class="dish reveal">
+        <div class="ph"><img loading="lazy" src="images/chilli-chicken.jpg" alt="Chilli chicken"></div>
+        <div class="body">
+          <div class="row"><h3>Chilli Chicken</h3><span class="price">₹239</span></div>
+          <p>Crisp chicken tossed in the wok with peppers, onion and a glossy, fiery chilli-garlic glaze.</p>
+          <span class="tag">Starter</span>
+        </div>
+      </article>
+      <article class="dish reveal">
+        <div class="ph"><img loading="lazy" src="images/pizza.jpg" alt="Food Villa special pizza"></div>
+        <div class="body">
+          <div class="row"><h3>Food Villa Special Pizza</h3><span class="price">₹449</span></div>
+          <p>Our loaded house pizza with generous toppings and plenty of cheese. Made for sharing.</p>
+          <span class="tag">Pizza</span>
+        </div>
+      </article>
+      <article class="dish reveal">
+        <div class="ph"><img loading="lazy" src="images/kabab.jpg" alt="Assorted kabab skewers"></div>
+        <div class="body">
+          <div class="row"><h3>Tikka &amp; Kababs</h3><span class="price">from ₹239</span></div>
+          <p>Reshmi, Hariali, Banjara, Seekh and Tangri: skewered and grilled in the tandoor.</p>
+          <span class="tag">Kabab</span>
+        </div>
+      </article>
+      <article class="dish reveal">
+        <div class="ph"><img loading="lazy" src="images/paneer-tikka.jpg" alt="Paneer tikka"></div>
+        <div class="body">
+          <div class="row"><h3>Paneer Tikka</h3><span class="price">₹249</span></div>
+          <p>Soft cottage-cheese cubes, spiced and grilled with peppers and onion. A vegetarian favourite.</p>
+          <span class="tag">Veg · Kabab</span>
+        </div>
+      </article>
+      <article class="dish reveal">
+        <div class="ph"><img loading="lazy" src="images/mocktails.jpg" alt="Mojitos and mocktails"></div>
+        <div class="body">
+          <div class="row"><h3>Mojitos &amp; Mocktails</h3><span class="price">from ₹79</span></div>
+          <p>Blue Lagoon, 3-in-1 Mojito, Couple Dance, fresh lime soda, plus thick shakes from ₹149.</p>
+          <span class="tag">Beverages</span>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MENU ============ -->
+<section class="section menu" id="menu">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">The Menu · 2026</div>
+      <h2>Something for every craving</h2>
+      <p>All prices in ₹. <span class="veg"></span>Veg &nbsp; <span class="veg nv"></span>Non-veg</p>
+    </div>
+    <div class="tabs" role="tablist" id="tabs"></div>
+    <div class="menu-panel" id="panel" role="tabpanel"></div>
+    <p class="menu-note">Prices as per our 2026 menu and may change. Call <a href="tel:+918942804671">89428 04671</a> or <a href="tel:+916295736811">62957 36811</a> to order.</p>
+  </div>
+</section>
+
+<!-- ============ REVIEWS ============ -->
+<section class="section" id="reviews">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">Kind Words</div>
+      <h2>What our guests say</h2>
+      <a class="g-badge" data-maps-link href="https://maps.app.goo.gl/dNp85L8Ujmpdfvh68" target="_blank" rel="noopener">
+        <span class="g"><svg width="22" height="22"><use href="#i-g"/></svg></span>
+        <span style="text-align:left">
+          <strong data-rating>3.8</strong> <span class="stars-bar">★★★★★<span data-stars style="width:76%">★★★★★</span></span><br>
+          <small><span data-count>198</span> reviews on Google</small>
+        </span>
+      </a>
+    </div>
+    <div class="reviews-grid" id="reviewsGrid"></div>
+    <div class="reviews-cta">
+      <a class="btn btn-line" data-maps-link href="https://maps.app.goo.gl/dNp85L8Ujmpdfvh68" target="_blank" rel="noopener">Read all reviews on Google</a>
+      <a class="btn btn-dark" href="https://search.google.com/local/writereview?placeid=ChIJ10Z-qF4Z-jkRUEddy_uhcok" target="_blank" rel="noopener">Loved your meal? Leave a review</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ GALLERY ============ -->
+<section class="section gallery" id="gallery">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">Gallery</div>
+      <h2>Straight from our tables</h2>
+      <p>Real photos from Food Villa, shared on Google Maps.</p>
+    </div>
+    <div class="grid-g" id="grid">
+      <figure class="tall"><img loading="lazy" src="images/g1.jpg" alt="Food Villa storefront"></figure>
+      <figure class="wide"><img loading="lazy" src="images/g3.jpg" alt="Pizza"></figure>
+      <figure class="tall"><img loading="lazy" src="images/g4.jpg" alt="Blue mocktails"></figure>
+      <figure><img loading="lazy" src="images/g5.jpg" alt="Fried rice"></figure>
+      <figure><img loading="lazy" src="images/g6.jpg" alt="Tandoori chicken leg"></figure>
+      <figure class="wide"><img loading="lazy" src="images/hero.jpg" alt="Drums of Heaven"></figure>
+      <figure class="tall"><img loading="lazy" src="images/g8.jpg" alt="Noodles"></figure>
+      <figure class="wide"><img loading="lazy" src="images/interior.jpg" alt="Dining room"></figure>
+    </div>
+  </div>
+</section>
+<div class="lightbox" id="lb" role="dialog" aria-label="Photo"><img alt=""></div>
+
+<!-- ============ VISIT ============ -->
+<section class="section visit" id="visit">
+  <div class="wrap">
+    <div class="info">
+      <div class="eyebrow">Visit Us</div>
+      <h2>Come hungry. Leave happy.</h2>
+      <div class="info-row"><svg><use href="#i-pin"/></svg><div><b>Address</b>East Market, Netaji Road,<br>near Style Baazar, Nalhati,<br>West Bengal 731220</div></div>
+      <div class="info-row"><svg><use href="#i-clock"/></svg><div><b>Hours</b>Every day, 11:00 AM – 11:30 PM<br><span class="status" data-status style="font-size:14px"></span></div></div>
+      <div class="info-row"><svg><use href="#i-phone"/></svg><div><b>Reservations &amp; orders</b><a href="tel:+918942804671">+91 89428 04671</a><br><a href="tel:+916295736811">+91 62957 36811</a></div></div>
+      <div class="info-row"><svg><use href="#i-ig"/></svg><div><b>Instagram</b><a href="https://www.instagram.com/foodvillanht/" target="_blank" rel="noopener">@foodvillanht</a></div></div>
+      <div class="btns">
+        <a class="btn btn-dark" href="https://www.google.com/maps/dir/?api=1&amp;destination=Food+Villa+Nalhati&amp;destination_place_id=ChIJ10Z-qF4Z-jkRUEddy_uhcok" target="_blank" rel="noopener"><svg><use href="#i-dir"/></svg>Get Directions</a>
+        <a class="btn btn-line" href="https://wa.me/918942804671?text=Hi%20Food%20Villa!%20I%27d%20like%20to%20place%20an%20order." target="_blank" rel="noopener"><svg><use href="#i-wa"/></svg>WhatsApp</a>
+      </div>
+    </div>
+    <iframe title="Food Villa on Google Maps" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+      src="https://maps.google.com/maps?q=Food%20Villa%2C%20Netaji%20Rd%2C%20Nalhati&amp;ll=24.2926368,87.8392915&amp;z=16&amp;output=embed"></iframe>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="site">
+  <div class="wrap">
+    <div>
+      <a class="brand" href="#top"><b>Food Villa</b><span>ফুড ভিলা</span></a>
+      <div style="margin-top:8px">East Market, Netaji Road, near Style Baazar, Nalhati</div>
+      <div>+91 89428 04671 · +91 62957 36811 · Open daily 11 AM – 11:30 PM</div>
+    </div>
+    <div class="social">
+      <a href="tel:+918942804671" aria-label="Call"><svg><use href="#i-phone"/></svg></a>
+      <a href="https://wa.me/918942804671" target="_blank" rel="noopener" aria-label="WhatsApp"><svg><use href="#i-wa"/></svg></a>
+      <a href="https://www.instagram.com/foodvillanht/" target="_blank" rel="noopener" aria-label="Instagram"><svg><use href="#i-ig"/></svg></a>
+      <a href="https://maps.app.goo.gl/dNp85L8Ujmpdfvh68" target="_blank" rel="noopener" aria-label="Google Maps"><svg><use href="#i-pin"/></svg></a>
+    </div>
+    <div class="copy">© <span id="yr"></span> Food Villa, Nalhati. Reviews and photos from Google Maps.</div>
+  </div>
+</footer>
+
+<div class="mbar">
+  <a href="tel:+918942804671"><svg><use href="#i-phone"/></svg>Call</a>
+  <a href="https://wa.me/918942804671" target="_blank" rel="noopener"><svg><use href="#i-wa"/></svg>WhatsApp</a>
+  <a href="https://www.google.com/maps/dir/?api=1&amp;destination=Food+Villa+Nalhati&amp;destination_place_id=ChIJ10Z-qF4Z-jkRUEddy_uhcok" target="_blank" rel="noopener"><svg><use href="#i-dir"/></svg>Directions</a>
+</div>
+
+<script>
+// ===================== SETTINGS =====================
+// Live Google rating: paste a Google Maps Platform API key (Places API (New) enabled,
+// restricted to your github.io domain) and the rating + review count update on every visit.
+// Leave it empty to show the fallback numbers below.
+const GOOGLE_API_KEY = "";
+const PLACE_ID = "ChIJ10Z-qF4Z-jkRUEddy_uhcok";
+const FALLBACK = { rating: 3.8, count: 198 };
+
+// ===================== MENU (Food Villa Menu 2026) =====================
+// [name, price, "v" veg | "n" non-veg]. A string starting with "# " is a sub-heading.
+const MENU = {
+  "Starters": [
+    "# Non-veg",
+    ["Chicken 65",229,"n"],["Chicken KFC Boneless",349,"n"],["Chicken Lollipop",219,"n"],["Chicken Popcorn",349,"n"],
+    ["Chicken Pakoda",229,"n"],["Chicken Nuggets",299,"n"],["Chicken Manchurian",239,"n"],["Chilli Chicken",239,"n"],
+    ["Drums of Heaven",249,"n"],["Hariali Chicken",349,"n"],["Fish Finger (6 pcs)",229,"n"],["Fish Fry (2 pcs)",229,"n"],
+    ["Pomfret Fry",299,"n"],["Chilli Fish Dry",299,"n"],["Garlic Prawns",299,"n"],
+    "# Veg",
+    ["French Fry",139,"v"],["Paneer Pakoda",219,"v"],["Paneer 65",229,"v"],["Paneer Tikka",269,"v"],
+    ["Paneer Chilli Dry",229,"v"],["Paneer Jhal Fry",239,"v"],["Veg Manchurian",199,"v"],["Crispy Chilli Baby Corn",219,"v"]
+  ],
+  "Kabab": [
+    ["Tandoori Chicken (Half)",249,"n"],["Tandoori Chicken (Full)",479,"n"],["Chicken Reshmi Kabab",249,"n"],
+    ["Chicken Tikka",249,"n"],["Chicken Hariali",249,"n"],["Chicken Banjara",249,"n"],["Chicken Seekh Kabab",399,"n"],
+    ["Tangri Kabab (2 pcs)",239,"n"],["Fish Tikka",249,"n"],["Paneer Tikka",249,"v"]
+  ],
+  "Main Course": [
+    "# Veg",
+    ["Dal Fry",179,"v"],["Dal Makhani",199,"v"],["Tarka",119,"v"],["Chole (Kabuli Chana)",119,"v"],
+    ["Paneer Butter Masala",229,"v"],["Paneer Kadhai",229,"v"],["Tawa Paneer",239,"v"],["Handi Paneer",239,"v"],["Special Paneer",349,"v"],
+    "# Chicken, Mutton & Fish",
+    ["Chicken Bharta",249,"n"],["Chicken Kosha",249,"n"],["Chicken Butter Masala (4 pcs)",399,"n"],["Chicken Kadhai",259,"n"],
+    ["Chicken Dopyaza (4 pcs)",249,"n"],["Chicken Handi (4 pcs)",249,"n"],["Chicken Korma",299,"n"],["Chicken Tawa",479,"n"],
+    ["Chicken Hyderabadi",479,"n"],["Chicken Angara",479,"n"],["Mutton Kosha",499,"n"],["Mutton Dopyaza (4 pcs)",549,"n"],
+    ["Fish Tikka Masala",349,"n"]
+  ],
+  "Biryani & Rice": [
+    "# Biryani",
+    ["Veg Biryani (Aloo)",95,"v"],["Egg Biryani",109,"n"],["Chicken Biryani",149,"n"],["Mutton Biryani",249,"n"],
+    "# Rice",
+    ["Steam Rice",109,"v"],["Jeera Rice",119,"v"],["Pulao",149,"v"],["Basanti Pulao",159,"v"],
+    ["Veg Fried Rice",129,"v"],["Veg Schezwan Rice",179,"v"],["Veg Hong Kong Rice",219,"v"],["Egg Fried Rice",129,"n"],
+    ["Chicken Fried Rice",159,"n"],["Mixed Fried Rice",189,"n"],["Chicken Schezwan Rice",219,"n"],["Chicken Hong Kong Rice",219,"n"]
+  ],
+  "Roti & Naan": [
+    ["Hat Roti",10,"v"],["Butter Roti",35,"v"],["Butter Naan",45,"v"],["Lachha Paratha",45,"v"],
+    ["Masala Kulcha",59,"v"],["Garlic Naan",69,"v"],["Cheese Garlic Naan",89,"v"]
+  ],
+  "Noodles & Momo": [
+    "# Noodles",
+    ["Veg Noodles",129,"v"],["Egg Noodles",139,"n"],["Chicken Noodles",159,"n"],["Mix Noodles",189,"n"],
+    ["Schezwan Noodles",199,"n"],["Hong Kong Noodles",219,"n"],
+    "# Momo",
+    ["Veg Momo",79,"v"],["Veg Fry Momo",99,"v"],["Veg Pan Fry Momo",149,"v"],["Veg White Sauce Momo",169,"v"],
+    ["Chicken Momo",99,"n"],["Chicken Fry Momo",119,"n"],["Chicken Pan Fry Momo",149,"n"]
+  ],
+  "Pizza & Burger": [
+    "# Pizza",
+    ["Margherita Pizza (Regular / Special)","249 / 349","v"],["Paneer Corn Pizza",299,"v"],["Veg Pizza",349,"v"],
+    ["Paneer Tikka Pizza",349,"v"],["Chicken BBQ Pizza",349,"n"],["Chicken Tikka Pizza",349,"n"],
+    ["Food Villa Special",449,"n"],["Bhoot Bangla Special",449,"n"],
+    "# Burger",
+    ["Veg Burger",119,"v"],["Paneer Burger",139,"v"],["Chicken Burger",139,"n"],["KFC Burger",169,"n"]
+  ],
+  "Pasta & Sizzler": [
+    "# Pasta",
+    ["Red Sauce Pasta (Veg)",229,"v"],["White Sauce Pasta (Veg)",229,"v"],["Mix Sauce Pasta (Veg)",229,"v"],
+    ["Red Sauce Pasta (Non-veg)",249,"n"],["White Sauce Pasta (Non-veg)",249,"n"],["Mix Sauce Pasta (Non-veg)",249,"n"],
+    "# Sizzler",
+    ["Veg Sizzler",449,"v"],["Chicken Sizzler",449,"n"],["Food Villa Special Sizzler",799,"n"]
+  ],
+  "Soup & Salad": [
+    "# Soup",
+    ["Veg Hot & Sour",129,"v"],["Veg Manchow",139,"v"],["Veg Sweet Corn",139,"v"],["Cream of Tomato",139,"v"],
+    ["Cream of Mushroom",139,"v"],["Chicken Manchow Soup",139,"n"],["Chicken Hot & Sour Soup",149,"n"],["Chicken Sweet Corn Soup",149,"n"],
+    "# Salad",
+    ["Green Salad",59,"v"],["Onion Salad",59,"v"],["Cucumber Salad",59,"v"],["Carrot Salad",59,"v"],["Tomato Salad",59,"v"]
+  ],
+  "Rolls & Dosa": [
+    "# Rolls",
+    ["Egg Roll",59,"n"],["Chicken Roll",79,"n"],["Mutton Roll",99,"n"],["Special Roll",119,"n"],
+    "# South Indian",
+    ["Masala Dosa",79,"v"],["Cheese Dosa",89,"v"],["Butter Dosa",89,"v"],["Ghee Dosa",99,"v"]
+  ],
+  "Beverages": [
+    ["Hot Coffee",49,"v"],["Lassi / Dry Fruit & Butterscotch Lassi","69 / 99","v"],["Fresh Lime Soda",79,"v"],["Masala Cold Drink",79,"v"],
+    ["Mojito",109,"v"],["3 in 1 Mojito",149,"v"],["Blue Lagoon",149,"v"],["Couple Dance",149,"v"],["Buttermilk",149,"v"],
+    ["Cold Coffee",149,"v"],["Chocolate Shake",149,"v"],["Chocolate Shake (Special)",149,"v"],["Oreo Milkshake",149,"v"],
+    ["Strawberry Shake",149,"v"],["Vanilla Shake",149,"v"],["Vanilla Milk Shake",149,"v"]
+  ],
+  "Pure Veg": [
+    "# No onion, no garlic",
+    ["Pure Veg Starter",299,"v"],["Pure Veg (Veg)",249,"v"],["Pure Veg (Paneer)",349,"v"]
+  ]
+};
+
+const tabs = document.getElementById('tabs'), panel = document.getElementById('panel');
+function show(cat) {
+  [...tabs.children].forEach(b => b.setAttribute('aria-selected', b.dataset.cat === cat));
+  panel.innerHTML = MENU[cat].map(row => typeof row === 'string'
+    ? `<div class="menu-sub">${row.slice(2)}</div>`
+    : `<div class="menu-item"><span class="n"><span class="veg ${row[2] === 'n' ? 'nv' : ''}" title="${row[2] === 'n' ? 'Non-veg' : 'Veg'}"></span>${row[0]}</span><span class="dots"></span><span class="p">₹${row[1]}</span></div>`
+  ).join('');
+}
+Object.keys(MENU).forEach(cat => {
+  const b = document.createElement('button');
+  b.type = 'button'; b.setAttribute('role', 'tab'); b.textContent = cat; b.dataset.cat = cat;
+  b.onclick = () => show(cat);
+  tabs.appendChild(b);
+});
+show('Starters');
+
+// ===================== REVIEWS (quoted from Google Maps; excerpts marked with …) =====================
+const REVIEWS = [
+  { name: "ambar barman", when: "3 years ago", stars: 5, text: "Food quality is excellent. Packaging is very good. I order lunch for 3 person. The amount is adequate and food is very tasty too. The behaviour of staff is also very humble. Best in nalhati" },
+  { name: "Travellar Guy", when: "7 months ago", stars: 4, text: "Finding a spot that consistently hits the mark on food quality, atmosphere, and service can be a challenge, but this establishment managed to nail the trifecta. … It has a very welcoming and well-thought-out interior that strikes a great balance between being stylish and comfortable." },
+  { name: "Arijit Choudhury", when: "3 years ago", stars: 5, text: "This has got very nice ambiance and friendly vibes to match or chill in the town with delicious and exotic food and mocktails. There food are soo good as there chef are well trained and professional as you can feel in the taste." },
+  { name: "AKM Mohiul Hassan", when: "3 years ago", stars: 5, text: "The food was excellent. Management and service went above and beyond to ensure we have a wonderful experience." },
+  { name: "Sufia Sultana", when: "a year ago", stars: 5, text: "Food is awesome and staff and service is so good with neat and clean. It’s one of my fav restaurant 💕✨🔥" },
+  { name: "Debabrata Ghosh", when: "3 years ago", stars: 4, text: "I appreciate them bringing something new and fresh to the town. … Indian gravy … it was amazing. Great taste and it clicked very well. … Clean, bright and spacious. Service was nice too. Will definitely visit again." },
+  { name: "TAPAS Saha", when: "a year ago", stars: 5, text: "Very authentic and attractive. Must visit. One of the astonishing places to visit in Nalhati. Just marvellous" },
+  { name: "Shreya Chowdhury", when: "2 years ago", stars: 5, text: "Food quality is too good. Staffs are also very co operative. Specially the staff who served me Jiban is really sweet." },
+  { name: "Nisha Rathi", when: "3 years ago", stars: 4, text: "It was an amazing experience... The atmosphere was superb.. The food was also sumptuous.. Enjoyed it" }
+];
+const tones = ['#26382f', '#7a5a2a', '#3b4a6b', '#6b3b3b', '#2f5b57', '#5b4a7a'];
+document.getElementById('reviewsGrid').innerHTML = REVIEWS.map((r, i) => `
+  <article class="review reveal">
+    <div class="stars" aria-label="${r.stars} out of 5 stars">${'★'.repeat(r.stars)}<span style="color:#ddd">${'★'.repeat(5 - r.stars)}</span></div>
+    <p>${r.text}</p>
+    <footer>
+      <div class="avatar" style="background:${tones[i % tones.length]}">${r.name.trim()[0].toUpperCase()}</div>
+      <div><div class="who">${r.name}</div><div class="when">Google review · ${r.when}</div></div>
+    </footer>
+  </article>`).join('');
+
+// ===================== LIVE GOOGLE RATING =====================
+function paintRating(rating, count) {
+  document.querySelectorAll('[data-rating]').forEach(el => el.textContent = rating.toFixed(1));
+  document.querySelectorAll('[data-count]').forEach(el => el.textContent = count.toLocaleString('en-IN'));
+  document.querySelectorAll('[data-stars]').forEach(el => el.style.width = (rating / 5 * 100) + '%');
+}
+paintRating(FALLBACK.rating, FALLBACK.count);
+if (GOOGLE_API_KEY) {
+  fetch(`https://places.googleapis.com/v1/places/${PLACE_ID}?fields=rating,userRatingCount,googleMapsUri`, {
+    headers: { 'X-Goog-Api-Key': GOOGLE_API_KEY }
+  })
+    .then(r => r.ok ? r.json() : Promise.reject(r.status))
+    .then(d => {
+      if (d.rating) paintRating(d.rating, d.userRatingCount || FALLBACK.count);
+      if (d.googleMapsUri) document.querySelectorAll('[data-maps-link]').forEach(a => a.href = d.googleMapsUri);
+    })
+    .catch(() => {});
+}
+
+// ===================== OPEN / CLOSED (Indian time) =====================
+(function () {
+  const now = new Date(Date.now() + (330 + new Date().getTimezoneOffset()) * 60000); // IST
+  const mins = now.getHours() * 60 + now.getMinutes();
+  const open = mins >= 11 * 60 && mins < 23 * 60 + 30;
+  document.querySelectorAll('[data-status]').forEach(el => {
+    el.classList.add(open ? 'open' : 'closed');
+    el.textContent = open ? 'Open now' : 'Closed now';
+  });
+})();
+
+// ===================== GALLERY LIGHTBOX =====================
+const lb = document.getElementById('lb');
+document.getElementById('grid').addEventListener('click', e => {
+  const img = e.target.closest('figure')?.querySelector('img');
+  if (!img) return;
+  lb.querySelector('img').src = img.src; lb.querySelector('img').alt = img.alt; lb.classList.add('on');
+});
+lb.addEventListener('click', () => lb.classList.remove('on'));
+addEventListener('keydown', e => { if (e.key === 'Escape') lb.classList.remove('on'); });
+
+// ===================== NAV + REVEAL =====================
+const nav = document.getElementById('nav');
+const onScroll = () => nav.classList.toggle('solid', scrollY > 40);
+addEventListener('scroll', onScroll, { passive: true }); onScroll();
+
+const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: .12 });
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+document.getElementById('yr').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
