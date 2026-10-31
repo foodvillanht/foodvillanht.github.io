@@ -163,15 +163,18 @@
 
   /* ---------- Celebrations ---------- */
   .celebrate { position: relative; background: var(--paper); }
-  .occasions { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-bottom: 56px; }
-  .occ { position: relative; border-radius: 8px; overflow: hidden; aspect-ratio: 3/4; color: #fff; }
+  .occasions { display: grid; grid-template-columns: 1.3fr 1fr 1fr; grid-auto-rows: 300px; gap: 16px; margin-bottom: 56px; }
+  .occ { position: relative; border-radius: 8px; overflow: hidden; color: #fff; }
+  .occ.big { grid-row: span 2; }
   .occ img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform .6s; }
   .occ:hover img { transform: scale(1.06); }
   .occ::after { content: ""; position: absolute; inset: 0; background: linear-gradient(0deg, rgba(14,22,18,.9) 10%, rgba(14,22,18,.1) 60%); }
   .occ div { position: absolute; left: 20px; right: 20px; bottom: 20px; z-index: 1; }
   .occ h3 { font-size: 28px; }
   .occ p { margin: 6px 0 0; font-size: 13px; color: rgba(255,255,255,.8); }
-  @media (max-width: 900px) { .occasions { grid-template-columns: 1fr 1fr; } }
+  .occasions .occ:last-child { grid-column: span 2; }
+  @media (max-width: 900px) { .occasions { grid-template-columns: 1fr 1fr; grid-auto-rows: 260px; } .occasions .occ:last-child { grid-column: span 2; } }
+  @media (max-width: 520px) { .occasions { grid-template-columns: 1fr; grid-auto-rows: 340px; } .occ.big { grid-row: span 1; } .occasions .occ:last-child { grid-column: auto; } }
   .book { display: grid; grid-template-columns: 1fr 1.15fr; gap: 0; background: var(--ink); color: #fff; border-radius: 10px; overflow: hidden; }
   .book .left { padding: clamp(28px, 4vw, 48px); background: linear-gradient(rgba(20,32,27,.88), rgba(20,32,27,.88)), url(images/stock-balloons.jpg) center/cover; }
   .book .left h3 { font-size: clamp(30px, 4vw, 40px); margin: 12px 0 16px; }
@@ -245,6 +248,22 @@
   .review .when { font-size: 12px; color: var(--muted); }
   .reviews-cta { text-align: center; margin-top: 18px; display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
 
+  /* ---------- Videos ---------- */
+  .videos { background: var(--ink); color: #fff; }
+  .videos .section-head p { color: rgba(255,255,255,.65); }
+  .vgrid { display: grid; grid-template-columns: 1fr 1.3fr 1.3fr; grid-auto-rows: 250px; gap: 14px; }
+  .vcard { position: relative; border-radius: 8px; overflow: hidden; background: #000; cursor: pointer; }
+  .vcard.tall { grid-row: span 2; }
+  .vcard video { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .vcard .play { position: absolute; inset: 0; display: grid; place-items: center; background: linear-gradient(0deg, rgba(0,0,0,.55), transparent 55%); transition: opacity .3s; }
+  .vcard .play span { width: 64px; height: 64px; border-radius: 50%; background: rgba(201,164,92,.92); display: grid; place-items: center; box-shadow: 0 10px 30px rgba(0,0,0,.4); transition: transform .2s; }
+  .vcard:hover .play span { transform: scale(1.08); }
+  .vcard .play svg { width: 24px; height: 24px; margin-left: 4px; fill: var(--ink); }
+  .vcard .cap { position: absolute; left: 16px; bottom: 14px; font: 600 20px/1.2 var(--serif); pointer-events: none; }
+  .vcard.playing .play, .vcard.playing .cap { opacity: 0; pointer-events: none; }
+  @media (max-width: 860px) { .vgrid { grid-template-columns: 1fr 1fr; grid-auto-rows: 220px; } }
+  @media (max-width: 520px) { .vgrid { grid-template-columns: 1fr; grid-auto-rows: 230px; } .vcard.tall { grid-row: span 2; } }
+
   /* ---------- Gallery ---------- */
   .gallery { background: var(--paper); }
   .grid-g { display: grid; grid-template-columns: repeat(4, 1fr); grid-auto-rows: 220px; grid-auto-flow: dense; gap: 12px; }
@@ -317,6 +336,7 @@
       <li><a href="#menu">Menu</a></li>
       <li><a href="#celebrate">Celebrations</a></li>
       <li><a href="#reviews">Reviews</a></li>
+      <li><a href="#videos">Videos</a></li>
       <li><a href="#gallery">Gallery</a></li>
       <li><a href="#visit">Visit</a></li>
     </ul>
@@ -358,8 +378,8 @@
 <section class="section about" id="about">
   <div class="wrap">
     <div class="pics reveal">
-      <img src="images/interior.jpg" alt="Food Villa dining room">
-      <img src="images/storefront.jpg" alt="Food Villa entrance at night">
+      <img src="images/storefront-day.jpg" alt="Food Villa storefront on Netaji Road, Nalhati" style="object-position:center 38%">
+      <img src="images/kabab.jpg" alt="Kabab skewers fresh from the tandoor">
     </div>
     <div class="reveal">
       <div class="eyebrow">Our Story</div>
@@ -503,10 +523,11 @@
       <p>Reserve a table, a section or a whole floor for any gathering. We'll take care of the food and the setting.</p>
     </div>
     <div class="occasions">
-      <div class="occ reveal"><img loading="lazy" src="images/stock-birthday.jpg" alt="Birthday cake with candles"><div><h3>Birthdays</h3><p>Balloon décor, a party floor and food everyone loves.</p></div></div>
-      <div class="occ reveal"><img loading="lazy" src="images/stock-anniversary.jpg" alt="Elegant table set for a celebration"><div><h3>Anniversaries</h3><p>A special dinner for two, or the whole family.</p></div></div>
-      <div class="occ reveal"><img loading="lazy" src="images/stock-meeting.jpg" alt="Group sharing a meal"><div><h3>Meetings</h3><p>Office lunches, team dinners and business meetings.</p></div></div>
-      <div class="occ reveal"><img loading="lazy" src="images/floor-first.webp" alt="Group celebration on the first floor" style="object-position:30% center"><div><h3>Any Gathering</h3><p>Reunions, get-togethers and family functions.</p></div></div>
+      <div class="occ big reveal"><img loading="lazy" src="images/celeb-birthday.webp" alt="Birthday celebration with balloon arch and cake at Food Villa"><div><h3>Birthdays</h3><p>Balloon arches, a "Happy Birthday" backdrop and your cake on the table.</p></div></div>
+      <div class="occ reveal"><img loading="lazy" src="images/celeb-theme.webp" alt="Theme birthday party with a costumed character" style="object-position:center 62%"><div><h3>Theme Parties</h3><p>Costumed characters and themed setups for the kids.</p></div></div>
+      <div class="occ reveal"><img loading="lazy" src="images/celeb-family.webp" alt="Family celebration on the party floor" style="object-position:center 60%"><div><h3>Family Celebrations</h3><p>Long tables for the whole family on our party floor.</p></div></div>
+      <div class="occ reveal"><img loading="lazy" src="images/celeb-evening.webp" alt="Anniversary evening with balloon decor" style="object-position:center 45%"><div><h3>Anniversaries</h3><p>Evenings to remember, with décor set up just for you.</p></div></div>
+      <div class="occ reveal"><img loading="lazy" src="images/celeb-group.webp" alt="Large group gathering at a long table" style="object-position:center 55%"><div><h3>Meetings &amp; Gatherings</h3><p>Team lunches, reunions, kitty parties and get-togethers.</p></div></div>
     </div>
 
     <div class="book reveal">
@@ -564,6 +585,24 @@
   </div>
 </section>
 
+<!-- ============ VIDEOS ============ -->
+<section class="section videos" id="videos">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">Watch</div>
+      <h2>Food Villa in motion</h2>
+      <p>Sizzlers, celebrations and fresh plates, filmed at the restaurant.</p>
+    </div>
+    <div class="vgrid">
+      <div class="vcard tall reveal"><video src="videos/sizzler.mp4" poster="videos/sizzler.jpg" preload="none" playsinline loop></video><div class="play"><span><svg viewBox="0 0 24 24"><path d="M6 4l14 8-14 8z"/></svg></span></div><div class="cap">Sizzling hot</div></div>
+      <div class="vcard reveal"><video src="videos/food.mp4" poster="videos/food.jpg" preload="none" playsinline loop></video><div class="play"><span><svg viewBox="0 0 24 24"><path d="M6 4l14 8-14 8z"/></svg></span></div><div class="cap">Fresh from the kitchen</div></div>
+      <div class="vcard reveal"><video src="videos/birthday.mp4" poster="videos/birthday.jpg" preload="none" playsinline loop></video><div class="play"><span><svg viewBox="0 0 24 24"><path d="M6 4l14 8-14 8z"/></svg></span></div><div class="cap">Birthday setups</div></div>
+      <div class="vcard reveal"><video src="videos/pizza.mp4" poster="videos/pizza.jpg" preload="none" playsinline loop></video><div class="play"><span><svg viewBox="0 0 24 24"><path d="M6 4l14 8-14 8z"/></svg></span></div><div class="cap">Cheesy pizzas</div></div>
+      <div class="vcard reveal"><video src="videos/decor.mp4" poster="videos/decor.jpg" preload="none" playsinline loop></video><div class="play"><span><svg viewBox="0 0 24 24"><path d="M6 4l14 8-14 8z"/></svg></span></div><div class="cap">Balloon décor</div></div>
+    </div>
+  </div>
+</section>
+
 <!-- ============ GALLERY ============ -->
 <section class="section gallery" id="gallery">
   <div class="wrap">
@@ -580,7 +619,7 @@
       <figure><img loading="lazy" src="images/g6.jpg" alt="Tandoori chicken leg"></figure>
       <figure class="wide"><img loading="lazy" src="images/hero.jpg" alt="Drums of Heaven"></figure>
       <figure class="tall"><img loading="lazy" src="images/g8.jpg" alt="Noodles"></figure>
-      <figure class="wide"><img loading="lazy" src="images/interior.jpg" alt="Dining room"></figure>
+      <figure class="wide"><img loading="lazy" src="images/celeb-group.webp" alt="Group dinner on the ground floor" style="object-position:center 60%"></figure>
     </div>
   </div>
 </section>
@@ -620,7 +659,7 @@
       <a href="https://www.instagram.com/foodvillanht/" target="_blank" rel="noopener" aria-label="Instagram"><svg><use href="#i-ig"/></svg></a>
       <a href="https://maps.app.goo.gl/dNp85L8Ujmpdfvh68" target="_blank" rel="noopener" aria-label="Google Maps"><svg><use href="#i-pin"/></svg></a>
     </div>
-    <div class="copy">© <span id="yr"></span> Food Villa, Nalhati. Reviews and most photos from Google Maps; celebration and Hunter House images are illustrative.</div>
+    <div class="copy">© <span id="yr"></span> Food Villa, Nalhati. Reviews, photos and videos from Google Maps; the Hunter House image is illustrative.</div>
   </div>
 </footer>
 
@@ -805,6 +844,17 @@ bookForm.addEventListener('submit', e => {
   const d = f.date ? new Date(f.date + 'T00:00').toLocaleDateString('en-IN', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' }) : '';
   const msg = `Hi Food Villa! I'd like to book a celebration.\n\nName: ${f.name}\nOccasion: ${f.occasion}\nDate: ${d}\nGuests: ${f.guests}\nFloor: ${f.floor}` + (f.notes ? `\nNotes: ${f.notes}` : '');
   window.open('https://wa.me/918942804671?text=' + encodeURIComponent(msg), '_blank', 'noopener');
+});
+
+// ===================== VIDEOS: tap to play / pause, one at a time =====================
+document.querySelectorAll('.vcard').forEach(card => {
+  const v = card.querySelector('video');
+  card.addEventListener('click', () => {
+    if (v.paused) {
+      document.querySelectorAll('.vcard video').forEach(o => { if (o !== v) { o.pause(); o.closest('.vcard').classList.remove('playing'); } });
+      v.play(); card.classList.add('playing');
+    } else { v.pause(); card.classList.remove('playing'); }
+  });
 });
 
 // ===================== GALLERY LIGHTBOX =====================
