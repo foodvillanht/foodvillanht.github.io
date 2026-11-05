@@ -12,13 +12,13 @@
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%2314201b'/><text x='32' y='43' font-family='Georgia,serif' font-size='30' fill='%23c9a45c' text-anchor='middle'>FV</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
     --ink: #14201b; --ink-2: #1d2c25; --ink-3: #26382f; --line: rgba(255,255,255,.1);
     --gold: #c9a45c; --gold-soft: #e2cc9b; --green: #1f8a4c; --red: #c2412d;
     --text: #f3efe6; --muted: rgba(243,239,230,.6);
-    --sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    --sans: "Inter", "Hind Siliguri", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   }
   * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
   html, body { margin: 0; background: var(--ink); color: var(--text); font: 15px/1.4 var(--sans); }
@@ -123,13 +123,14 @@
   <!-- ===== Screen 1: pick a table ===== -->
   <section id="vTables">
     <div class="top"><div class="bar">
-      <h1>Food Villa · Waiter<small id="today"></small></h1>
+      <h1><span data-t="title">Food Villa · Waiter</span><small id="today"></small></h1>
+      <button class="chip" id="langBtn" type="button">বাংলা</button>
       <button class="chip" id="whoBtn" type="button"></button>
     </div></div>
     <div id="floors"></div>
     <div class="legend">
-      <span><i style="background:#173a29;border:1px solid var(--green)"></i>Order sent (running total)</span>
-      <span><i style="border:1px solid var(--gold)"></i>Not sent yet</span>
+      <span><i style="background:#173a29;border:1px solid var(--green)"></i><span data-t="lgSent">Order sent (running total)</span></span>
+      <span><i style="border:1px solid var(--gold)"></i><span data-t="lgDraft">Not sent yet</span></span>
     </div>
   </section>
 
@@ -141,7 +142,7 @@
         <h1 id="tblTitle"></h1>
         <button class="chip" id="tblInfo" type="button" hidden></button>
       </div>
-      <div class="search"><input id="q" type="search" placeholder="Search dish… e.g. chi, naan, momo" autocomplete="off"></div>
+      <div class="search"><input id="q" type="search" data-tp="search" placeholder="Search dish… e.g. chi, naan, momo" autocomplete="off"></div>
       <div class="cats" id="cats"></div>
     </div>
     <div id="list"></div>
@@ -157,22 +158,22 @@
   <header><h2 id="shTitle"></h2><button class="x" id="shClose" type="button" aria-label="Close">×</button></header>
   <div id="shLines"></div>
   <div id="newPart">
-  <div class="tot"><span>This order</span><span id="shTot"></span></div>
+  <div class="tot"><span data-t="thisOrder">This order</span><span id="shTot"></span></div>
   <div class="row2">
-    <label class="field">Guests<input id="guests" type="number" min="1" max="60" inputmode="numeric" placeholder="optional"></label>
-    <label class="field">Order note<input id="gnote" placeholder="e.g. serve starters first"></label>
+    <label class="field"><span data-t="guests">Guests</span><input id="guests" type="number" min="1" max="60" inputmode="numeric" data-tp="optional" placeholder="optional"></label>
+    <label class="field"><span data-t="gnote">Order note</span><input id="gnote" data-tp="gnoteP" placeholder="e.g. serve starters first"></label>
   </div>
-  <label class="toggle"><input type="checkbox" id="addon"><span>Add-on to this table's earlier order<small>Kitchen sees it marked as extra items</small></span></label>
-  <button class="go send" id="sendBtn" type="button"><b>Send to kitchen</b><span>WhatsApp ›</span></button>
-  <p class="hint">Opens the share menu: choose WhatsApp → your kitchen group.</p>
+  <label class="toggle"><input type="checkbox" id="addon"><span><span data-t="addon">Add-on to this table's earlier order</span><small data-t="addonS">Kitchen sees it marked as extra items</small></span></label>
+  <button class="go send" id="sendBtn" type="button"><b data-t="send">Send to kitchen</b><span>WhatsApp ›</span></button>
+  <p class="hint" data-t="hint">Opens the share menu: choose WhatsApp → your kitchen group.</p>
   </div>
   <div class="prev" id="prev" hidden>
-    <h3>Already sent for this table</h3>
+    <h3 data-t="prev">Already sent for this table</h3>
     <div id="prevList"></div>
-    <div class="tot"><span>Table total so far</span><span id="prevTot"></span></div>
+    <div class="tot"><span data-t="soFar">Table total so far</span><span id="prevTot"></span></div>
     <div class="btns">
-      <button class="btn2" id="billBtn" type="button">Send bill summary</button>
-      <button class="btn2 warn" id="closeBtn" type="button">Close table (paid)</button>
+      <button class="btn2" id="billBtn" type="button" data-t="bill">Send bill summary</button>
+      <button class="btn2 warn" id="closeBtn" type="button" data-t="close">Close table (paid)</button>
     </div>
   </div>
 </div></div>
@@ -191,7 +192,63 @@ const FLOORS = [
 const EXTRA = ['Takeaway', 'Parcel'];            // non-table orders, shown as their own buttons
 // Used only on phones/computers without a share menu: the order opens in a WhatsApp chat with this number.
 const KITCHEN_PHONE = '918942804671';
-const QUICK_NOTES = ['Less spicy', 'Extra spicy', 'No onion', 'No garlic', 'Well done', 'Pack it'];
+const QUICK_NOTES = {
+  en: ['Less spicy', 'Extra spicy', 'No onion', 'No garlic', 'Well done', 'Pack it'],
+  bn: ['কম ঝাল', 'বেশি ঝাল', 'পেঁয়াজ ছাড়া', 'রসুন ছাড়া', 'ভালো করে রান্না', 'প্যাক করে দিন']
+};
+
+// ===================== LANGUAGE (English / বাংলা) =====================
+// Dish names stay as printed on the menu. The screens follow the switch; kitchen tickets always carry both languages.
+const TXT = {
+  en: {
+    title: 'Food Villa · Waiter', lgSent: 'Order sent (running total)', lgDraft: 'Not sent yet', search: 'Search dish… e.g. chi, naan, momo',
+    thisOrder: 'This order', guests: 'Guests', optional: 'optional', gnote: 'Order note', gnoteP: 'e.g. serve starters first',
+    addon: "Add-on to this table's earlier order", addonS: 'Kitchen sees it marked as extra items', send: 'Send to kitchen',
+    hint: 'Opens the share menu: choose WhatsApp → your kitchen group.', prev: 'Already sent for this table', soFar: 'Table total so far',
+    bill: 'Send bill summary', close: 'Close table (paid)', setName: 'Set your name', askName: 'Your name (shown to the kitchen):',
+    other: 'Other', add: 'ADD', note: 'Note', noteP: 'Note for the kitchen', noMatch: q => `No dish matches “${q}”`,
+    items: n => `${n} item${n > 1 ? 's' : ''}`, tapAdd: 'Tap ADD on a dish', review: 'Review ›', table: 'Table ', waiter: 'Waiter: ',
+    noName: 'Tap 👤 on the tables screen to set your name', sentChip: 'Sent ', nothing: 'Nothing new to send. Tap × and ADD dishes for an add-on.',
+    first: 'First order', addN: i => 'Add-on ' + i, wasSent: 'Was the order sent? Tap OK to mark it as sent.',
+    toastSent: t => `Sent · ${t}`, toastClosed: t => `${t} closed`, confirmClose: t => `Close ${t}? Its sent orders will be cleared from this phone.`,
+    // kitchen ticket
+    TABLE: 'TABLE ', NEW: 'NEW ORDER', ADDON: 'ADD-ON', kWaiter: 'Waiter', kGuests: 'Guests', tableTotal: 'table total', BILL: 'BILL', total: 'Total',
+    floors: { 'Ground Floor': 'Ground Floor', 'First Floor': 'First Floor', 'Hunter House': 'Hunter House' },
+    extra: { Takeaway: 'Takeaway', Parcel: 'Parcel' }, locale: 'en-IN'
+  },
+  bn: {
+    title: 'ফুড ভিলা · ওয়েটার', lgSent: 'অর্ডার পাঠানো হয়েছে (মোট বিল)', lgDraft: 'এখনও পাঠানো হয়নি', search: 'পদ খুঁজুন… যেমন chi, naan, momo',
+    thisOrder: 'এই অর্ডার', guests: 'অতিথি', optional: 'ঐচ্ছিক', gnote: 'অর্ডার নোট', gnoteP: 'যেমন: আগে স্টার্টার দিন',
+    addon: 'এই টেবিলের আগের অর্ডারে যোগ', addonS: 'রান্নাঘরে অতিরিক্ত আইটেম হিসেবে দেখাবে', send: 'রান্নাঘরে পাঠান',
+    hint: 'শেয়ার মেনু খুলবে: হোয়াটসঅ্যাপ → রান্নাঘরের গ্রুপ বেছে নিন।', prev: 'এই টেবিলের আগে পাঠানো অর্ডার', soFar: 'এখন পর্যন্ত টেবিলের মোট',
+    bill: 'বিলের হিসাব পাঠান', close: 'টেবিল বন্ধ (টাকা পাওয়া গেছে)', setName: 'আপনার নাম দিন', askName: 'আপনার নাম (রান্নাঘরে দেখাবে):',
+    other: 'অন্যান্য', add: 'যোগ', note: 'নোট', noteP: 'রান্নাঘরের জন্য নোট', noMatch: q => `“${q}” নামে কোনো পদ নেই`,
+    items: n => `${n}টি আইটেম`, tapAdd: 'পদের পাশে "যোগ" চাপুন', review: 'দেখুন ›', table: 'টেবিল ', waiter: 'ওয়েটার: ',
+    noName: 'টেবিলের পাতায় 👤 চেপে নাম দিন', sentChip: 'পাঠানো ', nothing: 'নতুন কিছু পাঠানোর নেই। × চেপে আরও পদ যোগ করুন।',
+    first: 'প্রথম অর্ডার', addN: i => 'অতিরিক্ত ' + i, wasSent: 'অর্ডার পাঠানো হয়েছে? হলে OK চাপুন।',
+    toastSent: t => `পাঠানো হয়েছে · ${t}`, toastClosed: t => `${t} বন্ধ হয়েছে`, confirmClose: t => `${t} বন্ধ করবেন? এই ফোন থেকে এর অর্ডারগুলো মুছে যাবে।`,
+    TABLE: 'টেবিল ', NEW: 'নতুন অর্ডার', ADDON: 'অতিরিক্ত অর্ডার', kWaiter: 'ওয়েটার', kGuests: 'অতিথি', tableTotal: 'টেবিলের মোট', BILL: 'বিল', total: 'মোট',
+    floors: { 'Ground Floor': 'গ্রাউন্ড ফ্লোর', 'First Floor': 'ফার্স্ট ফ্লোর', 'Hunter House': 'হান্টার হাউস' },
+    extra: { Takeaway: 'টেকঅ্যাওয়ে', Parcel: 'পার্সেল' }, locale: 'bn-IN'
+  }
+};
+// Category and sub-heading names in Bengali (same as the website)
+const CAT_BN = {
+  "Starters": "স্টার্টার", "Kabab": "কাবাব", "Main Course": "মেইন কোর্স", "Biryani & Rice": "বিরিয়ানি ও রাইস",
+  "Roti & Naan": "রুটি ও নান", "Noodles & Momo": "নুডলস ও মোমো", "Pizza & Burger": "পিৎজা ও বার্গার",
+  "Pasta & Sizzler": "পাস্তা ও সিজলার", "Soup & Salad": "স্যুপ ও স্যালাড", "Rolls & Dosa": "রোল ও দোসা",
+  "Beverages": "পানীয়", "Pure Veg": "পিওর ভেজ"
+};
+const SUB_BN = {
+  "Non-veg": "আমিষ", "Veg": "নিরামিষ", "Chicken, Mutton & Fish": "চিকেন, মাটন ও মাছ", "Biryani": "বিরিয়ানি",
+  "Rice": "রাইস", "Noodles": "নুডলস", "Momo": "মোমো", "Pizza": "পিৎজা", "Burger": "বার্গার", "Pasta": "পাস্তা",
+  "Sizzler": "সিজলার", "Soup": "স্যুপ", "Salad": "স্যালাড", "Rolls": "রোল", "South Indian": "দক্ষিণ ভারতীয়",
+  "No onion, no garlic": "পেঁয়াজ-রসুন ছাড়া"
+};
+let LANG = (() => { try { return localStorage.getItem('fvw-lang') || 'en'; } catch { return 'en'; } })();
+const T = k => TXT[LANG][k];
+const catName = c => LANG === 'bn' ? (CAT_BN[c] || c) : c;
+const subName = s => LANG === 'bn' ? (SUB_BN[s] || s) : s;
 
 // ===================== DATA =====================
 const DISH = {}, ORDER = [];   // ORDER keeps menu order so kitchen tickets read top to bottom like the menu
@@ -203,7 +260,13 @@ const dup = new Set(Object.values(DISH).map(d => d.name).filter((n, i, a) => a.i
 const label = d => dup.has(d.name) ? `${d.name} (${d.cat})` : d.name;
 const rs = n => '₹' + n.toLocaleString('en-IN');
 const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
-const timeNow = () => new Date().toLocaleTimeString('en-IN', { hour: 'numeric', minute: '2-digit' });
+const timeNow = (loc = T('locale')) => new Date().toLocaleTimeString(loc, { hour: 'numeric', minute: '2-digit' });
+// Kitchen tickets: "English / বাংলা" labels, and quick notes in both languages ("Less spicy (কম ঝাল)")
+const both = k => `${TXT.en[k]} / ${TXT.bn[k]}`;
+const noteBoth = note => note.split(/\s*,\s*/).map(p => {
+  const i = QUICK_NOTES.en.indexOf(p), j = QUICK_NOTES.bn.indexOf(p);
+  return i >= 0 ? `${p} (${QUICK_NOTES.bn[i]})` : j >= 0 ? `${p} (${QUICK_NOTES.en[j]})` : p;
+}).join(', ');
 
 // Saved on this phone: waiter name, unsent drafts per table, and orders already sent per table
 const store = {
@@ -225,18 +288,30 @@ const sentTotal = t => (sent[t] || []).reduce((a, o) => a + o.total, 0);
 
 // ===================== SCREEN 1: TABLES =====================
 const $ = id => document.getElementById(id);
-$('today').textContent = new Date().toLocaleDateString('en-IN', { weekday: 'long', day: 'numeric', month: 'short' });
-function paintWho() { $('whoBtn').textContent = who ? '👤 ' + who : 'Set your name'; }
-$('whoBtn').onclick = () => { const n = prompt('Your name (shown to the kitchen):', who); if (n !== null) { who = n.trim(); store.set('fvw-who', who); paintWho(); } };
+function paintWho() { $('whoBtn').textContent = who ? '👤 ' + who : T('setName'); }
+$('whoBtn').onclick = () => { const n = prompt(T('askName'), who); if (n !== null) { who = n.trim(); store.set('fvw-who', who); paintWho(); } };
+
+// Switch language: fixed labels, then whatever screen is showing
+function applyLang() {
+  document.documentElement.lang = LANG;
+  $('langBtn').textContent = LANG === 'bn' ? 'English' : 'বাংলা';
+  document.querySelectorAll('[data-t]').forEach(el => el.textContent = T(el.dataset.t));
+  document.querySelectorAll('[data-tp]').forEach(el => el.placeholder = T(el.dataset.tp));
+  $('today').textContent = new Date().toLocaleDateString(T('locale'), { weekday: 'long', day: 'numeric', month: 'short' });
+  [...$('cats').children].forEach(b => b.textContent = catName(b.dataset.c));
+  paintWho();
+  if (table) { paintTitle(); paintList(); if (!$('sheet').hidden) openSheet(); } else paintTables();
+}
+$('langBtn').onclick = () => { LANG = LANG === 'bn' ? 'en' : 'bn'; try { localStorage.setItem('fvw-lang', LANG); } catch {} applyLang(); };
 
 function tableBtn(t, text) {
   const n = Object.values(drafts[t] || {}).reduce((a, x) => a + x.q, 0), tot = sentTotal(t);
   return `<button class="tbl ${tot ? 'busy' : ''} ${n ? 'draft' : ''}" data-t="${esc(t)}" type="button">${esc(text)}${tot ? `<small>${rs(tot)}</small>` : ''}${n ? `<span class="dot">${n}</span>` : ''}</button>`;
 }
 function paintTables() {
-  $('floors').innerHTML = FLOORS.map(f => `<div class="floor"><h2>${esc(f.name)}</h2><div class="grid">${
+  $('floors').innerHTML = FLOORS.map(f => `<div class="floor"><h2>${esc(T('floors')[f.name] || f.name)}</h2><div class="grid">${
     Array.from({ length: f.tables }, (_, i) => tableBtn(f.prefix + (i + 1), f.prefix + (i + 1))).join('')}</div></div>`).join('')
-    + `<div class="floor"><h2>Other</h2><div class="grid" style="grid-template-columns:1fr 1fr">${EXTRA.map(t => tableBtn(t, t)).join('')}</div></div>`;
+    + `<div class="floor"><h2>${T('other')}</h2><div class="grid" style="grid-template-columns:1fr 1fr">${EXTRA.map(t => tableBtn(t, T('extra')[t] || t)).join('')}</div></div>`;
 }
 $('floors').onclick = e => { const b = e.target.closest('.tbl'); if (b) openTable(b.dataset.t); };
 
@@ -253,17 +328,17 @@ $('cats').onclick = e => {
 let openNote = null;   // key of the dish whose note box is open
 function qtyCtl(k) {
   const q = draft()[k]?.q || 0;
-  return `<span class="qty ${q ? '' : 'add'}"><button class="minus" type="button" data-k="${esc(k)}" data-d="-1" aria-label="Less">−</button><span class="q">${q}</span><button class="plus" type="button" data-k="${esc(k)}" data-d="1" aria-label="${q ? 'More' : 'Add'}">${q ? '+' : 'ADD'}</button></span>`;
+  return `<span class="qty ${q ? '' : 'add'}"><button class="minus" type="button" data-k="${esc(k)}" data-d="-1" aria-label="Less">−</button><span class="q">${q}</span><button class="plus" type="button" data-k="${esc(k)}" data-d="1" aria-label="${q ? 'More' : 'Add'}">${q ? '+' : T('add')}</button></span>`;
 }
 function itemRow(k, showCat) {
   const d = DISH[k], o = draft()[k];
   return `<div class="it" data-k="${esc(k)}"><div class="row">
-      <span class="nm"><span class="veg ${d.veg === 'n' ? 'nv' : ''}"></span>${esc(d.name)}<small>${rs(d.price)}${showCat ? ' · ' + esc(d.cat) : ''}</small></span>
-      ${o ? `<button class="notebtn ${o.note ? 'has' : ''}" type="button" data-note="${esc(k)}">✎ Note</button>` : ''}
+      <span class="nm"><span class="veg ${d.veg === 'n' ? 'nv' : ''}"></span>${esc(d.name)}<small>${rs(d.price)}${showCat ? ' · ' + esc(catName(d.cat)) : ''}</small></span>
+      ${o ? `<button class="notebtn ${o.note ? 'has' : ''}" type="button" data-note="${esc(k)}">✎ ${T('note')}</button>` : ''}
       ${qtyCtl(k)}
     </div>
     ${o?.note && openNote !== k ? `<div class="shown-note">↳ ${esc(o.note)}</div>` : ''}
-    ${openNote === k && o ? `<div class="note"><input data-ni="${esc(k)}" value="${esc(o.note || '')}" placeholder="Note for the kitchen"><div class="quick">${QUICK_NOTES.map(n => `<button type="button" data-qn="${esc(n)}" data-k="${esc(k)}">${n}</button>`).join('')}</div></div>` : ''}
+    ${openNote === k && o ? `<div class="note"><input data-ni="${esc(k)}" value="${esc(o.note || '')}" placeholder="${T('noteP')}"><div class="quick">${QUICK_NOTES[LANG].map(n => `<button type="button" data-qn="${esc(n)}" data-k="${esc(k)}">${n}</button>`).join('')}</div></div>` : ''}
   </div>`;
 }
 function paintList() {
@@ -271,11 +346,11 @@ function paintList() {
   if (q) {
     // Every word typed must appear in the dish name or category: "chi ric" → Chicken Fried Rice
     const words = q.split(/\s+/);
-    const hits = ORDER.filter(k => { const s = (DISH[k].name + ' ' + DISH[k].cat).toLowerCase(); return words.every(w => s.includes(w)); });
-    $('list').innerHTML = hits.length ? `<div class="sec">${hits.map(k => itemRow(k, true)).join('')}</div>` : `<p class="none">No dish matches “${esc(q)}”</p>`;
+    const hits = ORDER.filter(k => { const s = (DISH[k].name + ' ' + DISH[k].cat + ' ' + (CAT_BN[DISH[k].cat] || '')).toLowerCase(); return words.every(w => s.includes(w)); });
+    $('list').innerHTML = hits.length ? `<div class="sec">${hits.map(k => itemRow(k, true)).join('')}</div>` : `<p class="none">${T('noMatch')(esc(q))}</p>`;
   } else {
-    $('list').innerHTML = cats.map(c => `<div class="sec" data-c="${esc(c)}"><h3>${esc(c)}</h3>${
-      MENU[c].map(r => typeof r === 'string' ? `<h4>${esc(r.slice(2))}</h4>` : itemRow(c + '|' + r[0], false)).join('')}</div>`).join('');
+    $('list').innerHTML = cats.map(c => `<div class="sec" data-c="${esc(c)}"><h3>${esc(catName(c))}</h3>${
+      MENU[c].map(r => typeof r === 'string' ? `<h4>${esc(subName(r.slice(2)))}</h4>` : itemRow(c + '|' + r[0], false)).join('')}</div>`).join('');
   }
   paintFoot();
 }
@@ -303,15 +378,21 @@ function paintFoot() {
   const { n, sum } = totals();
   $('foot').hidden = !table;
   $('goBtn').disabled = !n;
-  $('goCount').textContent = n ? `${n} item${n > 1 ? 's' : ''} · ${rs(sum)}` : 'Tap ADD on a dish';
-  $('goTot').textContent = 'Review ›';
+  $('goCount').textContent = n ? `${T('items')(n)} · ${rs(sum)}` : T('tapAdd');
+  $('goTot').textContent = T('review');
 }
 
+const isTable = t => /^[A-Z]\d+$/.test(t);
+const shortName = t => isTable(t) ? T('table') + t : (T('extra')[t] || t);      // on screen: "Table G5" / "টেবিল G5"
+const tableName = (t, L = LANG) => isTable(t) ? TXT[L].TABLE + t : (TXT[L].extra[t] || t).toUpperCase();   // on tickets: "TABLE G5"
+function paintTitle() {
+  $('tblTitle').innerHTML = `${esc(shortName(table))}<small>${esc(who ? T('waiter') + who : T('noName'))}</small>`;
+  const tot = sentTotal(table);
+  $('tblInfo').hidden = !tot; $('tblInfo').textContent = T('sentChip') + rs(tot);
+}
 function openTable(t) {
   table = t; openNote = null;
-  $('tblTitle').innerHTML = `${/^[A-Z]\d+$/.test(t) ? 'Table ' : ''}${esc(t)}<small>${esc(who ? 'Waiter: ' + who : 'Tap 👤 on the tables screen to set your name')}</small>`;
-  const tot = sentTotal(t);
-  $('tblInfo').hidden = !tot; $('tblInfo').textContent = `Sent ${rs(tot)}`;
+  paintTitle();
   $('q').value = ''; paintList();
   $('vTables').hidden = true; $('vOrder').hidden = false; scrollTo(0, 0);
   history.pushState({ t }, '', '#' + encodeURIComponent(t));
@@ -328,15 +409,15 @@ $('tblInfo').onclick = () => openSheet();
 const keysInOrder = (t = table) => ORDER.filter(k => drafts[t]?.[k]);
 function openSheet() {
   const keys = keysInOrder(), { sum } = totals();
-  $('shTitle').textContent = (/^[A-Z]\d+$/.test(table) ? 'Table ' : '') + table;
+  $('shTitle').textContent = shortName(table);
   $('shLines').innerHTML = keys.length ? keys.map(k => { const o = drafts[table][k]; return `<div class="line"><span class="nm">${esc(label(DISH[k]))}${o.note ? `<small>↳ ${esc(o.note)}</small>` : ''}</span>${qtyCtl(k)}<span class="amt">${rs(o.q * DISH[k].price)}</span></div>`; }).join('')
-    : '<p class="none" style="padding:20px 0">Nothing new to send. Tap × and ADD dishes for an add-on.</p>';
+    : `<p class="none" style="padding:20px 0">${T('nothing')}</p>`;
   $('shTot').textContent = rs(sum);
   $('newPart').hidden = !keys.length;
   const prev = sent[table] || [];
   $('addon').checked = prev.length > 0;
   $('prev').hidden = !prev.length;
-  $('prevList').innerHTML = prev.map((o, i) => `<div class="p"><b>${i ? 'Add-on ' + i : 'First order'}</b> · ${o.time}${o.who ? ' · ' + esc(o.who) : ''} · ${rs(o.total)}<br>${o.lines.map(l => `${l[1]} × ${esc(l[0])}`).join(', ')}</div>`).join('');
+  $('prevList').innerHTML = prev.map((o, i) => `<div class="p"><b>${i ? T('addN')(i) : T('first')}</b> · ${o.time}${o.who ? ' · ' + esc(o.who) : ''} · ${rs(o.total)}<br>${o.lines.map(l => `${l[1]} × ${esc(l[0])}`).join(', ')}</div>`).join('');
   $('prevTot').textContent = rs(sentTotal(table));
   $('sheet').hidden = false;
 }
@@ -358,30 +439,29 @@ async function share(text) {
   }
   try { await navigator.clipboard.writeText(text); } catch {}
   window.open(`https://wa.me/${KITCHEN_PHONE}?text=${encodeURIComponent(text)}`, '_blank', 'noopener');
-  return confirm('Was the order sent? Tap OK to mark it as sent.');
+  return confirm(T('wasSent'));
 }
-const tableName = t => (/^[A-Z]\d+$/.test(t) ? 'TABLE ' : '') + t.toUpperCase();
 
 $('sendBtn').onclick = async () => {
   const keys = keysInOrder(); if (!keys.length) return;
   const { n, sum } = totals(), prev = sent[table] || [], addon = $('addon').checked;
   const guests = $('guests').value.trim(), gnote = $('gnote').value.trim();
-  const head = addon ? `*➕ ${tableName(table)} · ADD-ON${prev.length ? ' #' + prev.length : ''}*` : `*🍽️ ${tableName(table)} · NEW ORDER*`;
+  const head = L => `*${L === 'en' ? (addon ? '➕ ' : '🍽️ ') : ''}${tableName(table, L)} · ${addon ? TXT[L].ADDON + (prev.length ? ' #' + prev.length : '') : TXT[L].NEW}*`;
   const msg = [
-    head,
-    [who && `Waiter: ${who}`, timeNow(), guests && `Guests: ${guests}`].filter(Boolean).join(' · '),
+    head('en'), head('bn'),
+    [who && `${both('kWaiter')}: ${who}`, timeNow('en-IN'), guests && `${both('kGuests')}: ${guests}`].filter(Boolean).join(' · '),
     '',
-    ...keys.flatMap(k => { const o = drafts[table][k]; return [`*${o.q} ×* ${label(DISH[k])}`, ...(o.note ? [`      ↳ _${o.note}_`] : [])]; }),
+    ...keys.flatMap(k => { const o = drafts[table][k]; return [`*${o.q} ×* ${label(DISH[k])}`, ...(o.note ? [`      ↳ _${noteBoth(o.note)}_`] : [])]; }),
     ...(gnote ? ['', `📝 ${gnote}`] : []),
     '',
-    `${n} item${n > 1 ? 's' : ''} · ${rs(sum)}${prev.length ? `  (table total ${rs(sentTotal(table) + sum)})` : ''}`
+    `${TXT.en.items(n)} / ${TXT.bn.items(n)} · ${rs(sum)}${prev.length ? `  (${both('tableTotal')} ${rs(sentTotal(table) + sum)})` : ''}`
   ].join('\n');
   if (!(await share(msg))) return;
   (sent[table] ||= []).push({ at: Date.now(), time: timeNow(), who, total: sum, lines: keys.map(k => [label(DISH[k]), drafts[table][k].q, DISH[k].price, drafts[table][k].note || '']) });
   store.set('fvw-sent', sent);
   const t = table; delete drafts[table]; saveDrafts();
   $('guests').value = ''; $('gnote').value = '';
-  toast(`Sent · ${tableName(t)}`);
+  toast(T('toastSent')(shortName(t)));
   $('sheet').hidden = true; history.back();
 };
 
@@ -389,19 +469,19 @@ $('sendBtn').onclick = async () => {
 $('billBtn').onclick = async () => {
   const all = {};
   (sent[table] || []).forEach(o => o.lines.forEach(([nm, q, p]) => { all[nm] ||= { q: 0, p }; all[nm].q += q; }));
-  const msg = [`*🧾 BILL · ${tableName(table)}*`, timeNow() + (who ? ` · ${who}` : ''), '',
-    ...Object.entries(all).map(([nm, o]) => `${o.q} × ${nm} = ${rs(o.q * o.p)}`), '', `*Total: ${rs(sentTotal(table))}*`].join('\n');
+  const msg = [`*🧾 ${TXT.en.BILL} · ${tableName(table, 'en')}*`, `*${TXT.bn.BILL} · ${tableName(table, 'bn')}*`, timeNow('en-IN') + (who ? ` · ${who}` : ''), '',
+    ...Object.entries(all).map(([nm, o]) => `${o.q} × ${nm} = ${rs(o.q * o.p)}`), '', `*${both('total')}: ${rs(sentTotal(table))}*`].join('\n');
   await share(msg);
 };
 $('closeBtn').onclick = () => {
-  if (!confirm(`Close ${tableName(table)}? Its sent orders will be cleared from this phone.`)) return;
+  if (!confirm(T('confirmClose')(shortName(table)))) return;
   delete sent[table]; delete drafts[table]; store.set('fvw-sent', sent); saveDrafts();
-  toast(`${tableName(table)} closed`); $('sheet').hidden = true; history.back();
+  toast(T('toastClosed')(shortName(table))); $('sheet').hidden = true; history.back();
 };
 
 function toast(t) { const el = $('toast'); el.textContent = t; el.hidden = false; clearTimeout(toast.h); toast.h = setTimeout(() => el.hidden = true, 2200); }
 
-paintWho(); paintTables();
+applyLang();
 history.replaceState({}, '', location.pathname);
 if (!who) setTimeout(() => $('whoBtn').click(), 300);
 </script>

@@ -969,19 +969,20 @@ oform.addEventListener('submit', e => {
   const mapLink = f.type === 'deliver' ? (geo ? `https://maps.google.com/?q=${geo.lat},${geo.lng}` : f.maplink.trim()) : '';
   if (f.type === 'deliver' && !f.address.trim() && !mapLink) { alert(t('needAddr')); oform.address.focus(); return; }
   const fmtTime = v => v ? new Date('2000-01-01T' + v).toLocaleTimeString('en-IN', { hour: 'numeric', minute: '2-digit' }) : '';
-  const how = f.type === 'dine' ? 'Dine-in' + (f.table.trim() ? ` · Table ${f.table.trim()}` : '')
-            : f.type === 'take' ? 'Takeaway' + (f.pickup ? ` · Pickup at ${fmtTime(f.pickup)}` : '')
-            : 'Home delivery · ' + (f.dtime ? `Deliver at ${fmtTime(f.dtime)}` : 'As soon as possible');
+  // The WhatsApp message is in English and Bengali side by side (dish names stay as on the menu)
+  const how = f.type === 'dine' ? 'Dine-in / বসে খাবেন' + (f.table.trim() ? ` · Table / টেবিল ${f.table.trim()}` : '')
+            : f.type === 'take' ? 'Takeaway / নিয়ে যাবেন' + (f.pickup ? ` · Pickup / নেবেন ${fmtTime(f.pickup)}` : '')
+            : 'Home delivery / হোম ডেলিভারি · ' + (f.dtime ? `Deliver at / ডেলিভারি ${fmtTime(f.dtime)}` : 'As soon as possible / যত তাড়াতাড়ি সম্ভব');
   const lines = Object.entries(cart).map(([k, q], i) => `${i + 1}. ${label(DISH[k])} × ${q} = ${rupees(q * DISH[k].price)}`);
   const msg = [
-    '*New order · Food Villa website*', '',
-    `Order type: ${how}`,
-    f.name.trim() ? `Name: ${f.name.trim()}` : null,
-    f.type === 'deliver' && f.address.trim() ? `Address: ${f.address.trim()}` : null,
-    mapLink ? `Location: ${mapLink}` + (geo ? ` (live, ±${geo.acc} m)` : '') : null, '',
+    '*New order · Food Villa website*', '*নতুন অর্ডার · ফুড ভিলা ওয়েবসাইট*', '',
+    `Order type / অর্ডারের ধরন: ${how}`,
+    f.name.trim() ? `Name / নাম: ${f.name.trim()}` : null,
+    f.type === 'deliver' && f.address.trim() ? `Address / ঠিকানা: ${f.address.trim()}` : null,
+    mapLink ? `Location / লোকেশন: ${mapLink}` + (geo ? ` (live, ±${geo.acc} m)` : '') : null, '',
     ...lines, '',
-    `*Total: ${rupees(sum)}* (${n} ${n === 1 ? 'item' : 'items'})`,
-    f.notes.trim() ? `Notes: ${f.notes.trim()}` : null
+    `*Total / মোট: ${rupees(sum)}* (${n} ${n === 1 ? 'item' : 'items'} / ${n}টি পদ)`,
+    f.notes.trim() ? `Notes / নোট: ${f.notes.trim()}` : null
   ].filter(x => x !== null).join('\n');
   window.open(`https://wa.me/${ORDER_PHONE}?text=${encodeURIComponent(msg)}`, '_blank', 'noopener');
 });
@@ -1083,7 +1084,7 @@ bookForm.addEventListener('submit', e => {
   e.preventDefault();
   const f = Object.fromEntries(new FormData(bookForm));
   const d = f.date ? new Date(f.date + 'T00:00').toLocaleDateString('en-IN', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' }) : '';
-  const msg = `Hi Food Villa! I'd like to book a celebration.\n\nName: ${f.name}\nOccasion: ${f.occasion}\nDate: ${d}\nGuests: ${f.guests}\nFloor: ${f.floor}` + (f.notes ? `\nNotes: ${f.notes}` : '');
+  const msg = `Hi Food Villa! I'd like to make a booking.\nনমস্কার ফুড ভিলা! আমি বুকিং করতে চাই।\n\nName / নাম: ${f.name}\nOccasion / উপলক্ষ: ${f.occasion}\nDate / তারিখ: ${d}\nGuests / অতিথি: ${f.guests}\nFloor / ফ্লোর: ${f.floor}` + (f.notes ? `\nNotes / নোট: ${f.notes}` : '');
   window.open('https://wa.me/918942804671?text=' + encodeURIComponent(msg), '_blank', 'noopener');
 });
 

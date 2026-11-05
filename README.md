@@ -29,6 +29,7 @@ Prices come from `menu.js`, so a price change there updates ordering too.
 - A second order for the same table is sent as **ADD-ON #1, #2…** with the table's running total.
 - Green tables already have orders. **Send bill summary** sends one combined list with the total for the counter, and **Close table (paid)** clears the table.
 - Running totals are kept on that waiter's phone only, and reset after 16 hours.
+- **বাংলা / English** button at the top switches the screens. Kitchen tickets, and the website's order and booking messages, always carry both languages. Dish names stay as printed on the menu.
 - **Settings**, at the top of the script in `waiter/index.html`: `FLOORS` (table counts per floor), `EXTRA` (Takeaway/Parcel), `QUICK_NOTES`, and `KITCHEN_PHONE` (used only on devices without a share menu).
 
 ## Live Google rating
