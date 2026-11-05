@@ -4,7 +4,7 @@ The website for **Food Villa (ফুড ভিলা)**, East Market, Netaji Roa
 It's a single static page (`index.html` plus the `images/` folder) served by GitHub Pages, with no build step.
 
 ## Editing
-- **Menu and prices**: `menu.js`. Each line is `["Dish name", price, "v" or "n"]`, and a line like `"# Veg"` adds a sub-heading. The website and the waiter page both read it. For a new dish, also add its Bengali name to `MENU_BN` at the bottom of the same file. Without one, the English name is shown.
+- **Menu and prices**: `menu.js`. Each line is `["Dish name", price, "v" or "n"]`, and a line like `"# Veg"` adds a sub-heading. The website and the waiter page both read it. For a new dish, also add its Bengali name to `MENU_BN` at the bottom of the same file. Without one, the English name is shown. After editing `menu.js`, raise the number in `menu.js?v=2` (in `index.html` and `waiter/index.html`) so phones don't keep the old prices.
 
 Everything else is inside `index.html`:
 - **Reviews**: the `REVIEWS` list. Copy new ones word for word from Google Maps.

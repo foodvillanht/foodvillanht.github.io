@@ -839,7 +839,7 @@
   <a href="https://www.google.com/maps/dir/?api=1&amp;destination=Food+Villa+Nalhati&amp;destination_place_id=ChIJ10Z-qF4Z-jkRUEddy_uhcok" target="_blank" rel="noopener"><svg><use href="#i-dir"/></svg>Directions</a>
 </div>
 
-<script src="menu.js"></script>
+<script src="menu.js?v=2"></script>
 <script>
 // ===================== SETTINGS =====================
 // Live Google rating: paste a Google Maps Platform API key (Places API (New) enabled,
@@ -911,10 +911,11 @@ const t = k => (OT[LANG] || OT.en)[k];
 const DISH = {};
 Object.entries(MENU).forEach(([cat, rows]) => rows.forEach(r => { if (typeof r !== 'string') DISH[cat + '|' + r[0]] = { cat, name: r[0], price: r[1], veg: r[2] }; }));
 const dupNames = new Set(Object.values(DISH).map(d => d.name).filter((n, i, a) => a.indexOf(n) !== i));
-// Dish names in the current language (Bengali names live in menu.js as MENU_BN)
-const dishName = n => LANG === 'bn' ? (MENU_BN[n] || n) : n;
+// Dish names in the current language (Bengali names live in menu.js as MENU_BN; English if it's missing)
+const NAMES_BN = typeof MENU_BN === 'object' ? MENU_BN : {};
+const dishName = n => LANG === 'bn' ? (NAMES_BN[n] || n) : n;
 const label = d => dupNames.has(d.name) ? `${dishName(d.name)} (${LANG === 'bn' ? (TAB_BN[d.cat] || d.cat) : d.cat})` : dishName(d.name);
-const labelBoth = d => (dupNames.has(d.name) ? `${d.name} (${d.cat})` : d.name) + (MENU_BN[d.name] ? ` / ${MENU_BN[d.name]}` : '');
+const labelBoth = d => (dupNames.has(d.name) ? `${d.name} (${d.cat})` : d.name) + (NAMES_BN[d.name] ? ` / ${NAMES_BN[d.name]}` : '');
 
 let cart = {};
 try { cart = JSON.parse(localStorage.getItem('fv-cart') || '{}'); } catch (e) {}

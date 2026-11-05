@@ -180,7 +180,7 @@
 
 <div class="toast" id="toast" hidden></div>
 
-<script src="../menu.js"></script>
+<script src="../menu.js?v=2"></script>
 <script>
 // ===================== SETTINGS =====================
 // Tables on each floor. Change the numbers (or add a floor) to match the restaurant.
@@ -257,9 +257,10 @@ Object.entries(MENU).forEach(([cat, rows]) => rows.forEach(r => {
   const k = cat + '|' + r[0]; DISH[k] = { cat, name: r[0], price: r[1], veg: r[2] }; ORDER.push(k);
 }));
 const dup = new Set(Object.values(DISH).map(d => d.name).filter((n, i, a) => a.indexOf(n) !== i));
-const dishName = n => LANG === 'bn' ? (MENU_BN[n] || n) : n;
+const NAMES_BN = typeof MENU_BN === 'object' ? MENU_BN : {};   // Bengali dish names from menu.js; English if missing
+const dishName = n => LANG === 'bn' ? (NAMES_BN[n] || n) : n;
 const label = d => dup.has(d.name) ? `${dishName(d.name)} (${catName(d.cat)})` : dishName(d.name);       // on screen
-const labelBoth = d => (dup.has(d.name) ? `${d.name} (${d.cat})` : d.name) + (MENU_BN[d.name] ? ` / ${MENU_BN[d.name]}` : '');   // on tickets
+const labelBoth = d => (dup.has(d.name) ? `${d.name} (${d.cat})` : d.name) + (NAMES_BN[d.name] ? ` / ${NAMES_BN[d.name]}` : '');   // on tickets
 const rs = n => '₹' + n.toLocaleString('en-IN');
 const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const timeNow = (loc = T('locale')) => new Date().toLocaleTimeString(loc, { hour: 'numeric', minute: '2-digit' });
@@ -348,7 +349,7 @@ function paintList() {
   if (q) {
     // Every word typed must appear in the dish name or category: "chi ric" → Chicken Fried Rice
     const words = q.split(/\s+/);
-    const hits = ORDER.filter(k => { const s = (DISH[k].name + ' ' + (MENU_BN[DISH[k].name] || '') + ' ' + DISH[k].cat + ' ' + (CAT_BN[DISH[k].cat] || '')).toLowerCase(); return words.every(w => s.includes(w)); });
+    const hits = ORDER.filter(k => { const s = (DISH[k].name + ' ' + (NAMES_BN[DISH[k].name] || '') + ' ' + DISH[k].cat + ' ' + (CAT_BN[DISH[k].cat] || '')).toLowerCase(); return words.every(w => s.includes(w)); });
     $('list').innerHTML = hits.length ? `<div class="sec">${hits.map(k => itemRow(k, true)).join('')}</div>` : `<p class="none">${T('noMatch')(esc(q))}</p>`;
   } else {
     $('list').innerHTML = cats.map(c => `<div class="sec" data-c="${esc(c)}"><h3>${esc(catName(c))}</h3>${
