@@ -76,7 +76,7 @@ const MENU = {
     ["Masala Dosa",79,"v"],["Cheese Dosa",89,"v"],["Butter Dosa",89,"v"],["Ghee Dosa",99,"v"]
   ],
   "Beverages": [
-    ["Hot Coffee",49,"v"],["Lassi",69,"v"],["Dry Fruit & Butterscotch Lassi",99,"v"],["Fresh Lime Soda",79,"v"],["Masala Cold Drink",79,"v"],
+    ["Water",20,"v"],["Hot Coffee",49,"v"],["Lassi",69,"v"],["Dry Fruit & Butterscotch Lassi",99,"v"],["Fresh Lime Soda",79,"v"],["Masala Cold Drink",79,"v"],
     ["Mojito",109,"v"],["3 in 1 Mojito",149,"v"],["Blue Lagoon",149,"v"],["Couple Dance",149,"v"],["Buttermilk",149,"v"],
     ["Cold Coffee",149,"v"],["Chocolate Shake",149,"v"],["Chocolate Shake (Special)",149,"v"],["Oreo Milkshake",149,"v"],
     ["Strawberry Shake",149,"v"],["Vanilla Shake",149,"v"],["Vanilla Milk Shake",149,"v"]
@@ -149,7 +149,7 @@ const MENU_BN = {
   "Egg Roll": "এগ রোল", "Chicken Roll": "চিকেন রোল", "Mutton Roll": "মটন রোল", "Special Roll": "স্পেশাল রোল",
   "Masala Dosa": "মশলা দোসা", "Cheese Dosa": "চিজ দোসা", "Butter Dosa": "বাটার দোসা", "Ghee Dosa": "ঘি দোসা",
   // Beverages
-  "Hot Coffee": "হট কফি", "Lassi": "লস্যি", "Dry Fruit & Butterscotch Lassi": "ড্রাই ফ্রুট ও বাটারস্কচ লস্যি",
+  "Water": "জল", "Hot Coffee": "হট কফি", "Lassi": "লস্যি", "Dry Fruit & Butterscotch Lassi": "ড্রাই ফ্রুট ও বাটারস্কচ লস্যি",
   "Fresh Lime Soda": "ফ্রেশ লাইম সোডা", "Masala Cold Drink": "মশলা কোল্ড ড্রিংক", "Mojito": "মোহিতো",
   "3 in 1 Mojito": "থ্রি-ইন-ওয়ান মোহিতো", "Blue Lagoon": "ব্লু লেগুন", "Couple Dance": "কাপল ড্যান্স",
   "Buttermilk": "বাটারমিল্ক (ঘোল)", "Cold Coffee": "কোল্ড কফি", "Chocolate Shake": "চকোলেট শেক",
