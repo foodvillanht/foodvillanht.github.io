@@ -871,7 +871,7 @@ function show(cat) {
   [...tabs.children].forEach(b => b.setAttribute('aria-selected', b.dataset.cat === cat));
   panel.innerHTML = MENU[cat].map(row => typeof row === 'string'
     ? `<div class="menu-sub">${LANG === 'bn' ? (SUB_BN[row.slice(2)] || row.slice(2)) : row.slice(2)}</div>`
-    : `<div class="menu-item"><span class="n"><span class="veg ${row[2] === 'n' ? 'nv' : ''}" title="${row[2] === 'n' ? 'Non-veg' : 'Veg'}"></span>${row[0]}</span><span class="dots"></span><span class="p">₹${row[1]}</span>${qtyCtl(cat + '|' + row[0])}</div>`
+    : `<div class="menu-item"><span class="n"><span class="veg ${row[2] === 'n' ? 'nv' : ''}" title="${row[2] === 'n' ? 'Non-veg' : 'Veg'}"></span>${dishName(row[0])}</span><span class="dots"></span><span class="p">₹${row[1]}</span>${qtyCtl(cat + '|' + row[0])}</div>`
   ).join('');
 }
 Object.keys(MENU).forEach(cat => {
@@ -911,7 +911,10 @@ const t = k => (OT[LANG] || OT.en)[k];
 const DISH = {};
 Object.entries(MENU).forEach(([cat, rows]) => rows.forEach(r => { if (typeof r !== 'string') DISH[cat + '|' + r[0]] = { cat, name: r[0], price: r[1], veg: r[2] }; }));
 const dupNames = new Set(Object.values(DISH).map(d => d.name).filter((n, i, a) => a.indexOf(n) !== i));
-const label = d => dupNames.has(d.name) ? `${d.name} (${d.cat})` : d.name;
+// Dish names in the current language (Bengali names live in menu.js as MENU_BN)
+const dishName = n => LANG === 'bn' ? (MENU_BN[n] || n) : n;
+const label = d => dupNames.has(d.name) ? `${dishName(d.name)} (${LANG === 'bn' ? (TAB_BN[d.cat] || d.cat) : d.cat})` : dishName(d.name);
+const labelBoth = d => (dupNames.has(d.name) ? `${d.name} (${d.cat})` : d.name) + (MENU_BN[d.name] ? ` / ${MENU_BN[d.name]}` : '');
 
 let cart = {};
 try { cart = JSON.parse(localStorage.getItem('fv-cart') || '{}'); } catch (e) {}
@@ -973,7 +976,7 @@ oform.addEventListener('submit', e => {
   const how = f.type === 'dine' ? 'Dine-in / বসে খাবেন' + (f.table.trim() ? ` · Table / টেবিল ${f.table.trim()}` : '')
             : f.type === 'take' ? 'Takeaway / নিয়ে যাবেন' + (f.pickup ? ` · Pickup / নেবেন ${fmtTime(f.pickup)}` : '')
             : 'Home delivery / হোম ডেলিভারি · ' + (f.dtime ? `Deliver at / ডেলিভারি ${fmtTime(f.dtime)}` : 'As soon as possible / যত তাড়াতাড়ি সম্ভব');
-  const lines = Object.entries(cart).map(([k, q], i) => `${i + 1}. ${label(DISH[k])} × ${q} = ${rupees(q * DISH[k].price)}`);
+  const lines = Object.entries(cart).map(([k, q], i) => `${i + 1}. ${labelBoth(DISH[k])} × ${q} = ${rupees(q * DISH[k].price)}`);
   const msg = [
     '*New order · Food Villa website*', '*নতুন অর্ডার · ফুড ভিলা ওয়েবসাইট*', '',
     `Order type / অর্ডারের ধরন: ${how}`,
@@ -1185,6 +1188,7 @@ const BN = [
     'রেশমি, হরিয়ালি, বানজারা, শিক আর তাংরি — শিকে গেঁথে তন্দুরে গ্রিল করা।',
     'নরম পনিরের টুকরো, মশলা মাখিয়ে ক্যাপসিকাম আর পেঁয়াজের সঙ্গে গ্রিল করা। নিরামিষপ্রেমীদের প্রিয়।',
     'ব্লু লেগুন, থ্রি-ইন-ওয়ান মোহিতো, কাপল ড্যান্স, ফ্রেশ লাইম সোডা — আর ₹149 থেকে ঘন শেক।'], 't'],
+  ['.dish h3', ['তন্দুরি চিকেন', 'চিলি চিকেন', 'ফুড ভিলা স্পেশাল পিৎজা', 'টিক্কা ও কাবাব', 'পনির টিক্কা', 'মোহিতো ও মকটেল'], 't'],
   ['.dish .tag', ['কাবাব', 'স্টার্টার', 'পিৎজা', 'কাবাব', 'ভেজ · কাবাব', 'পানীয়'], 't'],
   ['.dish .price', [null, null, null, '₹239 থেকে', null, '₹79 থেকে'], 't'],
 

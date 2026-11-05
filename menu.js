@@ -86,3 +86,75 @@ const MENU = {
     ["Pure Veg Starter",299,"v"],["Pure Veg (Veg)",249,"v"],["Pure Veg (Paneer)",349,"v"]
   ]
 };
+
+// Bengali dish names, shown when the site or the waiter page is switched to বাংলা.
+// Keyed by the English name above. A dish missing here just shows its English name.
+const MENU_BN = {
+  // Starters
+  "Chicken 65": "চিকেন ৬৫", "Chicken KFC Boneless": "চিকেন কেএফসি বোনলেস", "Chicken Lollipop": "চিকেন ললিপপ",
+  "Chicken Popcorn": "চিকেন পপকর্ন", "Chicken Pakoda": "চিকেন পকোড়া", "Chicken Nuggets": "চিকেন নাগেটস",
+  "Chicken Manchurian": "চিকেন মাঞ্চুরিয়ান", "Chilli Chicken": "চিলি চিকেন", "Drums of Heaven": "ড্রামস অফ হেভেন",
+  "Hariali Chicken": "হরিয়ালি চিকেন", "Fish Finger (6 pcs)": "ফিশ ফিঙ্গার (৬ পিস)", "Fish Fry (2 pcs)": "ফিশ ফ্রাই (২ পিস)",
+  "Pomfret Fry": "পমফ্রেট ফ্রাই", "Chilli Fish Dry": "চিলি ফিশ ড্রাই", "Garlic Prawns": "গার্লিক প্রন",
+  "French Fry": "ফ্রেঞ্চ ফ্রাই", "Paneer Pakoda": "পনির পকোড়া", "Paneer 65": "পনির ৬৫", "Paneer Tikka": "পনির টিক্কা",
+  "Paneer Chilli Dry": "পনির চিলি ড্রাই", "Paneer Jhal Fry": "পনির ঝাল ফ্রাই", "Veg Manchurian": "ভেজ মাঞ্চুরিয়ান",
+  "Crispy Chilli Baby Corn": "ক্রিসপি চিলি বেবি কর্ন",
+  // Kabab
+  "Tandoori Chicken (Half)": "তন্দুরি চিকেন (হাফ)", "Tandoori Chicken (Full)": "তন্দুরি চিকেন (ফুল)",
+  "Chicken Reshmi Kabab": "চিকেন রেশমি কাবাব", "Chicken Tikka": "চিকেন টিক্কা", "Chicken Hariali": "চিকেন হরিয়ালি",
+  "Chicken Banjara": "চিকেন বানজারা", "Chicken Seekh Kabab": "চিকেন শিক কাবাব", "Tangri Kabab (2 pcs)": "তাংরি কাবাব (২ পিস)",
+  "Fish Tikka": "ফিশ টিক্কা",
+  // Main course
+  "Dal Fry": "ডাল ফ্রাই", "Dal Makhani": "ডাল মাখানি", "Tarka": "তড়কা", "Chole (Kabuli Chana)": "ছোলে (কাবুলি ছোলা)",
+  "Paneer Butter Masala": "পনির বাটার মশলা", "Paneer Kadhai": "পনির কড়াই", "Tawa Paneer": "তাওয়া পনির",
+  "Handi Paneer": "হান্ডি পনির", "Special Paneer": "স্পেশাল পনির", "Chicken Bharta": "চিকেন ভর্তা", "Chicken Kosha": "চিকেন কষা",
+  "Chicken Butter Masala (4 pcs)": "চিকেন বাটার মশলা (৪ পিস)", "Chicken Kadhai": "চিকেন কড়াই",
+  "Chicken Dopyaza (4 pcs)": "চিকেন দোপেঁয়াজা (৪ পিস)", "Chicken Handi (4 pcs)": "চিকেন হান্ডি (৪ পিস)",
+  "Chicken Korma": "চিকেন কোরমা", "Chicken Tawa": "চিকেন তাওয়া", "Chicken Hyderabadi": "চিকেন হায়দরাবাদি",
+  "Chicken Angara": "চিকেন আঙ্গারা", "Mutton Kosha": "মটন কষা", "Mutton Dopyaza (4 pcs)": "মটন দোপেঁয়াজা (৪ পিস)",
+  "Fish Tikka Masala": "ফিশ টিক্কা মশলা",
+  // Biryani & rice
+  "Veg Biryani (Aloo)": "ভেজ বিরিয়ানি (আলু)", "Egg Biryani": "এগ বিরিয়ানি", "Chicken Biryani": "চিকেন বিরিয়ানি",
+  "Mutton Biryani": "মটন বিরিয়ানি", "Steam Rice": "স্টিম রাইস", "Jeera Rice": "জিরা রাইস", "Pulao": "পোলাও",
+  "Basanti Pulao": "বাসন্তী পোলাও", "Veg Fried Rice": "ভেজ ফ্রায়েড রাইস", "Veg Schezwan Rice": "ভেজ সেজওয়ান রাইস",
+  "Veg Hong Kong Rice": "ভেজ হংকং রাইস", "Egg Fried Rice": "এগ ফ্রায়েড রাইস", "Chicken Fried Rice": "চিকেন ফ্রায়েড রাইস",
+  "Mixed Fried Rice": "মিক্সড ফ্রায়েড রাইস", "Chicken Schezwan Rice": "চিকেন সেজওয়ান রাইস",
+  "Chicken Hong Kong Rice": "চিকেন হংকং রাইস",
+  // Roti & naan
+  "Hat Roti": "হাত রুটি", "Butter Roti": "বাটার রুটি", "Butter Naan": "বাটার নান", "Lachha Paratha": "লাচ্ছা পরোটা",
+  "Masala Kulcha": "মশলা কুলচা", "Garlic Naan": "গার্লিক নান", "Cheese Garlic Naan": "চিজ গার্লিক নান",
+  // Noodles & momo
+  "Veg Noodles": "ভেজ নুডলস", "Egg Noodles": "এগ নুডলস", "Chicken Noodles": "চিকেন নুডলস", "Mix Noodles": "মিক্স নুডলস",
+  "Schezwan Noodles": "সেজওয়ান নুডলস", "Hong Kong Noodles": "হংকং নুডলস", "Veg Momo": "ভেজ মোমো",
+  "Veg Fry Momo": "ভেজ ফ্রাই মোমো", "Veg Pan Fry Momo": "ভেজ প্যান ফ্রাই মোমো", "Veg White Sauce Momo": "ভেজ হোয়াইট সস মোমো",
+  "Chicken Momo": "চিকেন মোমো", "Chicken Fry Momo": "চিকেন ফ্রাই মোমো", "Chicken Pan Fry Momo": "চিকেন প্যান ফ্রাই মোমো",
+  // Pizza & burger
+  "Margherita Pizza": "মার্গারিটা পিৎজা", "Margherita Pizza (Special)": "মার্গারিটা পিৎজা (স্পেশাল)",
+  "Paneer Corn Pizza": "পনির কর্ন পিৎজা", "Veg Pizza": "ভেজ পিৎজা", "Paneer Tikka Pizza": "পনির টিক্কা পিৎজা",
+  "Chicken BBQ Pizza": "চিকেন বিবিকিউ পিৎজা", "Chicken Tikka Pizza": "চিকেন টিক্কা পিৎজা",
+  "Food Villa Special": "ফুড ভিলা স্পেশাল", "Bhoot Bangla Special": "ভূত বাংলা স্পেশাল",
+  "Veg Burger": "ভেজ বার্গার", "Paneer Burger": "পনির বার্গার", "Chicken Burger": "চিকেন বার্গার", "KFC Burger": "কেএফসি বার্গার",
+  // Pasta & sizzler
+  "Red Sauce Pasta (Veg)": "রেড সস পাস্তা (ভেজ)", "White Sauce Pasta (Veg)": "হোয়াইট সস পাস্তা (ভেজ)",
+  "Mix Sauce Pasta (Veg)": "মিক্স সস পাস্তা (ভেজ)", "Red Sauce Pasta (Non-veg)": "রেড সস পাস্তা (নন-ভেজ)",
+  "White Sauce Pasta (Non-veg)": "হোয়াইট সস পাস্তা (নন-ভেজ)", "Mix Sauce Pasta (Non-veg)": "মিক্স সস পাস্তা (নন-ভেজ)",
+  "Veg Sizzler": "ভেজ সিজলার", "Chicken Sizzler": "চিকেন সিজলার", "Food Villa Special Sizzler": "ফুড ভিলা স্পেশাল সিজলার",
+  // Soup & salad
+  "Veg Hot & Sour": "ভেজ হট অ্যান্ড সাওয়ার", "Veg Manchow": "ভেজ মানচাও", "Veg Sweet Corn": "ভেজ সুইট কর্ন",
+  "Cream of Tomato": "ক্রিম অফ টমেটো", "Cream of Mushroom": "ক্রিম অফ মাশরুম", "Chicken Manchow Soup": "চিকেন মানচাও স্যুপ",
+  "Chicken Hot & Sour Soup": "চিকেন হট অ্যান্ড সাওয়ার স্যুপ", "Chicken Sweet Corn Soup": "চিকেন সুইট কর্ন স্যুপ",
+  "Green Salad": "গ্রিন স্যালাড", "Onion Salad": "পেঁয়াজ স্যালাড", "Cucumber Salad": "শসা স্যালাড",
+  "Carrot Salad": "গাজর স্যালাড", "Tomato Salad": "টমেটো স্যালাড",
+  // Rolls & dosa
+  "Egg Roll": "এগ রোল", "Chicken Roll": "চিকেন রোল", "Mutton Roll": "মটন রোল", "Special Roll": "স্পেশাল রোল",
+  "Masala Dosa": "মশলা দোসা", "Cheese Dosa": "চিজ দোসা", "Butter Dosa": "বাটার দোসা", "Ghee Dosa": "ঘি দোসা",
+  // Beverages
+  "Hot Coffee": "হট কফি", "Lassi": "লস্যি", "Dry Fruit & Butterscotch Lassi": "ড্রাই ফ্রুট ও বাটারস্কচ লস্যি",
+  "Fresh Lime Soda": "ফ্রেশ লাইম সোডা", "Masala Cold Drink": "মশলা কোল্ড ড্রিংক", "Mojito": "মোহিতো",
+  "3 in 1 Mojito": "থ্রি-ইন-ওয়ান মোহিতো", "Blue Lagoon": "ব্লু লেগুন", "Couple Dance": "কাপল ড্যান্স",
+  "Buttermilk": "বাটারমিল্ক (ঘোল)", "Cold Coffee": "কোল্ড কফি", "Chocolate Shake": "চকোলেট শেক",
+  "Chocolate Shake (Special)": "চকোলেট শেক (স্পেশাল)", "Oreo Milkshake": "ওরিও মিল্কশেক", "Strawberry Shake": "স্ট্রবেরি শেক",
+  "Vanilla Shake": "ভ্যানিলা শেক", "Vanilla Milk Shake": "ভ্যানিলা মিল্ক শেক",
+  // Pure veg
+  "Pure Veg Starter": "পিওর ভেজ স্টার্টার", "Pure Veg (Veg)": "পিওর ভেজ (ভেজ)", "Pure Veg (Paneer)": "পিওর ভেজ (পনির)"
+};

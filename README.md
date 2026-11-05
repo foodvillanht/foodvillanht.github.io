@@ -4,7 +4,7 @@ The website for **Food Villa (ফুড ভিলা)**, East Market, Netaji Roa
 It's a single static page (`index.html` plus the `images/` folder) served by GitHub Pages, with no build step.
 
 ## Editing
-- **Menu and prices**: `menu.js`. Each line is `["Dish name", price, "v" or "n"]`, and a line like `"# Veg"` adds a sub-heading. The website and the waiter page both read it.
+- **Menu and prices**: `menu.js`. Each line is `["Dish name", price, "v" or "n"]`, and a line like `"# Veg"` adds a sub-heading. The website and the waiter page both read it. For a new dish, also add its Bengali name to `MENU_BN` at the bottom of the same file. Without one, the English name is shown.
 
 Everything else is inside `index.html`:
 - **Reviews**: the `REVIEWS` list. Copy new ones word for word from Google Maps.
@@ -29,7 +29,7 @@ Prices come from `menu.js`, so a price change there updates ordering too.
 - A second order for the same table is sent as **ADD-ON #1, #2…** with the table's running total.
 - Green tables already have orders. **Send bill summary** sends one combined list with the total for the counter, and **Close table (paid)** clears the table.
 - Running totals are kept on that waiter's phone only, and reset after 16 hours.
-- **বাংলা / English** button at the top switches the screens. Kitchen tickets, and the website's order and booking messages, always carry both languages. Dish names stay as printed on the menu.
+- **বাংলা / English** button at the top switches the screens. Kitchen tickets, and the website's order and booking messages, always carry both languages, with dish names written as "Chicken 65 / চিকেন ৬৫".
 - **Settings**, at the top of the script in `waiter/index.html`: `FLOORS` (table counts per floor), `EXTRA` (Takeaway/Parcel), `QUICK_NOTES`, and `KITCHEN_PHONE` (used only on devices without a share menu).
 
 ## Live Google rating

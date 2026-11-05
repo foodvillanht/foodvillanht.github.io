@@ -257,7 +257,9 @@ Object.entries(MENU).forEach(([cat, rows]) => rows.forEach(r => {
   const k = cat + '|' + r[0]; DISH[k] = { cat, name: r[0], price: r[1], veg: r[2] }; ORDER.push(k);
 }));
 const dup = new Set(Object.values(DISH).map(d => d.name).filter((n, i, a) => a.indexOf(n) !== i));
-const label = d => dup.has(d.name) ? `${d.name} (${d.cat})` : d.name;
+const dishName = n => LANG === 'bn' ? (MENU_BN[n] || n) : n;
+const label = d => dup.has(d.name) ? `${dishName(d.name)} (${catName(d.cat)})` : dishName(d.name);       // on screen
+const labelBoth = d => (dup.has(d.name) ? `${d.name} (${d.cat})` : d.name) + (MENU_BN[d.name] ? ` / ${MENU_BN[d.name]}` : '');   // on tickets
 const rs = n => '₹' + n.toLocaleString('en-IN');
 const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const timeNow = (loc = T('locale')) => new Date().toLocaleTimeString(loc, { hour: 'numeric', minute: '2-digit' });
@@ -333,7 +335,7 @@ function qtyCtl(k) {
 function itemRow(k, showCat) {
   const d = DISH[k], o = draft()[k];
   return `<div class="it" data-k="${esc(k)}"><div class="row">
-      <span class="nm"><span class="veg ${d.veg === 'n' ? 'nv' : ''}"></span>${esc(d.name)}<small>${rs(d.price)}${showCat ? ' · ' + esc(catName(d.cat)) : ''}</small></span>
+      <span class="nm"><span class="veg ${d.veg === 'n' ? 'nv' : ''}"></span>${esc(dishName(d.name))}<small>${rs(d.price)}${showCat ? ' · ' + esc(catName(d.cat)) : ''}</small></span>
       ${o ? `<button class="notebtn ${o.note ? 'has' : ''}" type="button" data-note="${esc(k)}">✎ ${T('note')}</button>` : ''}
       ${qtyCtl(k)}
     </div>
@@ -346,7 +348,7 @@ function paintList() {
   if (q) {
     // Every word typed must appear in the dish name or category: "chi ric" → Chicken Fried Rice
     const words = q.split(/\s+/);
-    const hits = ORDER.filter(k => { const s = (DISH[k].name + ' ' + DISH[k].cat + ' ' + (CAT_BN[DISH[k].cat] || '')).toLowerCase(); return words.every(w => s.includes(w)); });
+    const hits = ORDER.filter(k => { const s = (DISH[k].name + ' ' + (MENU_BN[DISH[k].name] || '') + ' ' + DISH[k].cat + ' ' + (CAT_BN[DISH[k].cat] || '')).toLowerCase(); return words.every(w => s.includes(w)); });
     $('list').innerHTML = hits.length ? `<div class="sec">${hits.map(k => itemRow(k, true)).join('')}</div>` : `<p class="none">${T('noMatch')(esc(q))}</p>`;
   } else {
     $('list').innerHTML = cats.map(c => `<div class="sec" data-c="${esc(c)}"><h3>${esc(catName(c))}</h3>${
@@ -451,13 +453,13 @@ $('sendBtn').onclick = async () => {
     head('en'), head('bn'),
     [who && `${both('kWaiter')}: ${who}`, timeNow('en-IN'), guests && `${both('kGuests')}: ${guests}`].filter(Boolean).join(' · '),
     '',
-    ...keys.flatMap(k => { const o = drafts[table][k]; return [`*${o.q} ×* ${label(DISH[k])}`, ...(o.note ? [`      ↳ _${noteBoth(o.note)}_`] : [])]; }),
+    ...keys.flatMap(k => { const o = drafts[table][k]; return [`*${o.q} ×* ${labelBoth(DISH[k])}`, ...(o.note ? [`      ↳ _${noteBoth(o.note)}_`] : [])]; }),
     ...(gnote ? ['', `📝 ${gnote}`] : []),
     '',
     `${TXT.en.items(n)} / ${TXT.bn.items(n)} · ${rs(sum)}${prev.length ? `  (${both('tableTotal')} ${rs(sentTotal(table) + sum)})` : ''}`
   ].join('\n');
   if (!(await share(msg))) return;
-  (sent[table] ||= []).push({ at: Date.now(), time: timeNow(), who, total: sum, lines: keys.map(k => [label(DISH[k]), drafts[table][k].q, DISH[k].price, drafts[table][k].note || '']) });
+  (sent[table] ||= []).push({ at: Date.now(), time: timeNow(), who, total: sum, lines: keys.map(k => [labelBoth(DISH[k]), drafts[table][k].q, DISH[k].price, drafts[table][k].note || '']) });
   store.set('fvw-sent', sent);
   const t = table; delete drafts[table]; saveDrafts();
   $('guests').value = ''; $('gnote').value = '';
