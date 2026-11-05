@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
+Disallow: /waiter/
 
 Sitemap: https://foodvillanht.github.io/sitemap.xml
