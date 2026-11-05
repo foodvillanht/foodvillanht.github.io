@@ -304,6 +304,8 @@
   .odlg footer { padding: 16px 22px 22px; border-top: 1px solid var(--line); display: grid; gap: 10px; }
   .odlg .send { justify-content: center; background: #1f8a4c; color: #fff; padding: 16px; font-size: 15px; }
   .odlg .send:hover { background: #197a42; }
+  .odlg .ono { margin: 0; text-align: center; font-size: 13px; color: var(--muted); background: #eef8f1; border: 1px solid #b9e2c7; border-radius: 8px; padding: 10px; }
+  .odlg .ono b { display: block; font-size: 18px; letter-spacing: .06em; color: #1f8a4c; }
   .odlg .clear { justify-self: center; border: 0; background: transparent; color: var(--muted); font-size: 13px; text-decoration: underline; cursor: pointer; }
   .odlg .fine { font-size: 12px; color: var(--muted); text-align: center; margin: 0; }
   .empty { text-align: center; color: var(--muted); padding: 40px 0; }
@@ -827,6 +829,7 @@
     </div>
     <footer>
       <button class="btn send" type="submit" form="oform"><svg><use href="#i-wa"/></svg><span data-t="send">Send order on WhatsApp</span></button>
+      <p class="ono" id="ono" hidden></p>
       <p class="fine" data-t="fine">Opens WhatsApp with your order filled in. We'll confirm it there. Prices as per menu; delivery subject to area.</p>
       <button class="clear" type="button" id="oclear" data-t="clear">Clear order</button>
     </footer>
@@ -892,6 +895,7 @@ const ORDER_PHONE = '918942804671';
 const OT = {
   en: { add: 'Add', item: 'item', items: 'items', view: 'View order', title: 'Your order', total: 'Total', dine: 'Dine-in', take: 'Takeaway', deliver: 'Delivery',
         table: 'Table number (if seated)', pickup: 'Pickup time', address: 'Delivery address', name: 'Your name', notes: 'Notes (spice level, no onion…)',
+        onoLbl: 'Your order number', onoHint: 'Mention it if you call us about this order.',
         send: 'Send order on WhatsApp', fine: "Opens WhatsApp with your order filled in. We'll confirm it there. Prices as per menu; delivery subject to area.",
         clear: 'Clear order', empty: 'Your order is empty. Tap Add on any dish in the menu.', needAddr: 'Please enter your delivery address, or share your location.',
         dtime: 'Delivery time (leave blank for ASAP)', location: 'Location for the rider', useLoc: 'Use my current location', pasteMap: '…or paste a Google Maps link',
@@ -899,6 +903,7 @@ const OT = {
         locDenied: 'Location permission was blocked. Allow it in your browser, or paste a Google Maps link below.', locFail: "Couldn't get your location. Try again, or paste a Google Maps link below.", locNo: 'Your browser does not support location. Please paste a Google Maps link below.' },
   bn: { add: 'যোগ', item: 'টি পদ', items: 'টি পদ', view: 'অর্ডার দেখুন', title: 'আপনার অর্ডার', total: 'মোট', dine: 'বসে খাব', take: 'নিয়ে যাব', deliver: 'ডেলিভারি',
         table: 'টেবিল নম্বর (বসে থাকলে)', pickup: 'কখন নিতে আসবেন', address: 'ডেলিভারির ঠিকানা', name: 'আপনার নাম', notes: 'বিশেষ অনুরোধ (ঝাল কম, পেঁয়াজ ছাড়া…)',
+        onoLbl: 'আপনার অর্ডার নম্বর', onoHint: 'এই অর্ডার নিয়ে ফোন করলে নম্বরটি বলুন।',
         send: 'হোয়াটসঅ্যাপে অর্ডার পাঠান', fine: 'আপনার অর্ডার লেখা অবস্থায় হোয়াটসঅ্যাপ খুলবে, আমরা সেখানেই কনফার্ম করব। দাম মেনু অনুযায়ী; ডেলিভারি এলাকা সাপেক্ষে।',
         clear: 'অর্ডার মুছুন', empty: 'অর্ডার খালি। মেনু থেকে যে কোনো পদে "যোগ" চাপুন।', needAddr: 'ডেলিভারির ঠিকানা লিখুন, অথবা আপনার লোকেশন শেয়ার করুন।',
         dtime: 'ডেলিভারির সময় (যত তাড়াতাড়ি সম্ভব হলে ফাঁকা রাখুন)', location: 'রাইডারের জন্য লোকেশন', useLoc: 'আমার বর্তমান লোকেশন দিন', pasteMap: '…অথবা Google Maps লিংক পেস্ট করুন',
@@ -928,6 +933,7 @@ function qtyCtl(key) {
 function setQty(key, q) {
   if (q > 0) cart[key] = Math.min(q, 99); else delete cart[key];
   try { localStorage.setItem('fv-cart', JSON.stringify(cart)); } catch (e) {}
+  document.getElementById('ono').hidden = true;   // last order's number goes away once the basket changes
   document.querySelectorAll('.qty[data-key]').forEach(el => { if (el.dataset.key === key) el.outerHTML = qtyCtl(key); });
   renderCart();
 }
@@ -978,8 +984,12 @@ oform.addEventListener('submit', e => {
             : f.type === 'take' ? 'Takeaway / নিয়ে যাবেন' + (f.pickup ? ` · Pickup / নেবেন ${fmtTime(f.pickup)}` : '')
             : 'Home delivery / হোম ডেলিভারি · ' + (f.dtime ? `Deliver at / ডেলিভারি ${fmtTime(f.dtime)}` : 'As soon as possible / যত তাড়াতাড়ি সম্ভব');
   const lines = Object.entries(cart).map(([k, q], i) => `${i + 1}. ${labelBoth(DISH[k])} × ${q} = ${rupees(q * DISH[k].price)}`);
+  // Order number: TYPE-DDMM-HHMM + a letter, e.g. HD-0511-2047K (home delivery, 5 Nov, 8:47 pm)
+  const now = new Date(), p2 = x => String(x).padStart(2, '0');
+  const ono = `${{ dine: 'DI', take: 'TA', deliver: 'HD' }[f.type]}-${p2(now.getDate())}${p2(now.getMonth() + 1)}-${p2(now.getHours())}${p2(now.getMinutes())}${'ABCDEFGHJKMNPQRSTUVWXYZ'[Math.floor(Math.random() * 23)]}`;
   const msg = [
-    '*New order · Food Villa website*', '*নতুন অর্ডার · ফুড ভিলা ওয়েবসাইট*', '',
+    '*New order · Food Villa website*', '*নতুন অর্ডার · ফুড ভিলা ওয়েবসাইট*',
+    `*Order No. / অর্ডার নং: ${ono}*`, '',
     `Order type / অর্ডারের ধরন: ${how}`,
     f.name.trim() ? `Name / নাম: ${f.name.trim()}` : null,
     f.type === 'deliver' && f.address.trim() ? `Address / ঠিকানা: ${f.address.trim()}` : null,
@@ -989,6 +999,8 @@ oform.addEventListener('submit', e => {
     f.notes.trim() ? `Notes / নোট: ${f.notes.trim()}` : null
   ].filter(x => x !== null).join('\n');
   window.open(`https://wa.me/${ORDER_PHONE}?text=${encodeURIComponent(msg)}`, '_blank', 'noopener');
+  const box = document.getElementById('ono');
+  box.innerHTML = `${t('onoLbl')}<b>${ono}</b>${t('onoHint')}`; box.hidden = false;
 });
 
 // Live location for delivery (needs HTTPS, which GitHub Pages provides)

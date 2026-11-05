@@ -420,7 +420,7 @@ function openSheet() {
   const prev = sent[table] || [];
   $('addon').checked = prev.length > 0;
   $('prev').hidden = !prev.length;
-  $('prevList').innerHTML = prev.map((o, i) => `<div class="p"><b>${i ? T('addN')(i) : T('first')}</b> · ${o.time}${o.who ? ' · ' + esc(o.who) : ''} · ${rs(o.total)}<br>${o.lines.map(l => `${l[1]} × ${esc(l[0])}`).join(', ')}</div>`).join('');
+  $('prevList').innerHTML = prev.map((o, i) => `<div class="p"><b>${o.no ? esc(o.no) : (i ? T('addN')(i) : T('first'))}</b> · ${o.time}${o.who ? ' · ' + esc(o.who) : ''} · ${rs(o.total)}<br>${o.lines.map(l => `${l[1]} × ${esc(l[0])}`).join(', ')}</div>`).join('');
   $('prevTot').textContent = rs(sentTotal(table));
   $('sheet').hidden = false;
 }
@@ -445,13 +445,26 @@ async function share(text) {
   return confirm(T('wasSent'));
 }
 
+// Order numbers: WHERE-DDMM-WHO+COUNT, e.g. G5-0511-RA03 = table G5, 5 Nov, Raju's 3rd order today.
+// Add-ons keep the table's number with -A1, -A2… so one visit = one number. Takeaway = TA, Parcel = PC.
+const ddmm = () => { const d = new Date(); return String(d.getDate()).padStart(2, '0') + String(d.getMonth() + 1).padStart(2, '0'); };
+const whoCode = () => { const lat = who.replace(/[^A-Za-z]/g, ''); return (lat ? lat.slice(0, 2) : Array.from(who.replace(/\s/g, '')).slice(0, 2).join('') || 'W').toUpperCase(); };
+function newOrderNo(t) {   // returns the number and a commit() to call once it's really sent
+  const day = ddmm(), c = store.get('fvw-count', {}), n = (c.day === day ? c.n : 0) + 1;
+  const where = isTable(t) ? t : ({ Takeaway: 'TA', Parcel: 'PC' }[t] || t.slice(0, 2).toUpperCase());
+  return { no: `${where}-${day}-${whoCode()}${String(n).padStart(2, '0')}`, commit: () => store.set('fvw-count', { day, n }) };
+}
+
 $('sendBtn').onclick = async () => {
   const keys = keysInOrder(); if (!keys.length) return;
-  const { n, sum } = totals(), prev = sent[table] || [], addon = $('addon').checked;
+  const { n, sum } = totals(), prev = sent[table] || [], addon = $('addon').checked && prev.length > 0;
   const guests = $('guests').value.trim(), gnote = $('gnote').value.trim();
-  const head = L => `*${L === 'en' ? (addon ? '➕ ' : '🍽️ ') : ''}${tableName(table, L)} · ${addon ? TXT[L].ADDON + (prev.length ? ' #' + prev.length : '') : TXT[L].NEW}*`;
+  const last = prev[prev.length - 1], fresh = addon ? null : newOrderNo(table);
+  const base = addon ? (last.base || last.no || '') : fresh.no;
+  const no = addon ? `${base}-A${prev.filter(o => o.base === base).length}` : base;
+  const head = L => `*${L === 'en' ? (addon ? '➕ ' : '🍽️ ') : ''}${tableName(table, L)} · ${addon ? TXT[L].ADDON + ' #' + prev.filter(o => o.base === base).length : TXT[L].NEW}*`;
   const msg = [
-    head('en'), head('bn'),
+    head('en'), head('bn'), `*Order No. / অর্ডার নং: ${no}*`,
     [who && `${both('kWaiter')}: ${who}`, timeNow('en-IN'), guests && `${both('kGuests')}: ${guests}`].filter(Boolean).join(' · '),
     '',
     ...keys.flatMap(k => { const o = drafts[table][k]; return [`*${o.q} ×* ${labelBoth(DISH[k])}`, ...(o.note ? [`      ↳ _${noteBoth(o.note)}_`] : [])]; }),
@@ -460,11 +473,12 @@ $('sendBtn').onclick = async () => {
     `${TXT.en.items(n)} / ${TXT.bn.items(n)} · ${rs(sum)}${prev.length ? `  (${both('tableTotal')} ${rs(sentTotal(table) + sum)})` : ''}`
   ].join('\n');
   if (!(await share(msg))) return;
-  (sent[table] ||= []).push({ at: Date.now(), time: timeNow(), who, total: sum, lines: keys.map(k => [labelBoth(DISH[k]), drafts[table][k].q, DISH[k].price, drafts[table][k].note || '']) });
+  fresh?.commit();
+  (sent[table] ||= []).push({ no, base, at: Date.now(), time: timeNow(), who, total: sum, lines: keys.map(k => [labelBoth(DISH[k]), drafts[table][k].q, DISH[k].price, drafts[table][k].note || '']) });
   store.set('fvw-sent', sent);
   const t = table; delete drafts[table]; saveDrafts();
   $('guests').value = ''; $('gnote').value = '';
-  toast(T('toastSent')(shortName(t)));
+  toast(T('toastSent')(`${shortName(t)} · ${no}`));
   $('sheet').hidden = true; history.back();
 };
 
@@ -472,7 +486,9 @@ $('sendBtn').onclick = async () => {
 $('billBtn').onclick = async () => {
   const all = {};
   (sent[table] || []).forEach(o => o.lines.forEach(([nm, q, p]) => { all[nm] ||= { q: 0, p }; all[nm].q += q; }));
-  const msg = [`*🧾 ${TXT.en.BILL} · ${tableName(table, 'en')}*`, `*${TXT.bn.BILL} · ${tableName(table, 'bn')}*`, timeNow('en-IN') + (who ? ` · ${who}` : ''), '',
+  const nos = [...new Set((sent[table] || []).map(o => o.base).filter(Boolean))];
+  const msg = [`*🧾 ${TXT.en.BILL} · ${tableName(table, 'en')}*`, `*${TXT.bn.BILL} · ${tableName(table, 'bn')}*`,
+    ...(nos.length ? [`*Order No. / অর্ডার নং: ${nos.join(', ')}*`] : []), timeNow('en-IN') + (who ? ` · ${who}` : ''), '',
     ...Object.entries(all).map(([nm, o]) => `${o.q} × ${nm} = ${rs(o.q * o.p)}`), '', `*${both('total')}: ${rs(sentTotal(table))}*`].join('\n');
   await share(msg);
 };
