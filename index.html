@@ -171,6 +171,16 @@
   .floor.hunter { background: linear-gradient(135deg, #1a0d10, #2a1015); border-color: rgba(180,40,40,.35); }
   .floor.hunter .lvl { color: #e0574a; }
   .floor.hunter h3 { font-family: var(--serif); letter-spacing: .04em; }
+  /* Inside Hunter House: swipeable photo strip */
+  .hh { margin-top: 28px; }
+  .hh-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; margin-bottom: 14px; }
+  .hh-head h3 { font-size: clamp(26px, 3vw, 32px); color: #fff; }
+  .hh-head span { font-size: 13px; color: rgba(255,255,255,.6); }
+  .hh-strip { display: flex; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 10px; scrollbar-width: thin; scrollbar-color: rgba(224,87,74,.5) transparent; }
+  .hh-strip figure { flex: none; margin: 0; height: 320px; border-radius: 8px; overflow: hidden; scroll-snap-align: start; cursor: zoom-in; background: #000; border: 1px solid rgba(180,40,40,.35); }
+  .hh-strip img { height: 100%; width: auto; transition: transform .5s; }
+  .hh-strip figure:hover img { transform: scale(1.04); }
+  @media (max-width: 600px) { .hh-strip figure { height: 240px; } }
   @media (max-width: 820px) { .floor { grid-template-columns: 1fr; } .floor .ph { min-height: 260px; } .floor:nth-child(even) .ph { order: 0; } }
 
   /* ---------- Celebrations ---------- */
@@ -557,7 +567,7 @@
         </div>
       </article>
       <article class="floor hunter reveal">
-        <div class="ph"><img loading="lazy" src="images/stock-hunter.jpg" alt="Spooky themed interior"><span class="note">Illustrative photo</span></div>
+        <div class="ph"><img loading="lazy" src="images/hunter-kankal-booths.webp" alt="Hunter House booths under the glowing KANKAL wall, with hanging skeleton décor" style="object-position:center 55%"></div>
         <div class="txt">
           <div class="lvl">Enter if you dare</div>
           <h3>Hunter House</h3>
@@ -566,6 +576,23 @@
           <a class="btn btn-gold" href="#book" data-floor="Hunter House · Horror theme">Book a Table</a>
         </div>
       </article>
+    </div>
+
+    <div class="hh reveal">
+      <div class="hh-head"><h3>Inside Hunter House</h3><span>Swipe · tap to enlarge</span></div>
+      <div class="hh-strip" id="hhStrip">
+        <figure><img loading="lazy" src="images/hunter-hall-long-sm.webp" data-full="images/hunter-hall-long.webp" width="480" height="640" alt="The full Hunter House hall in green light, skeletons along the walls"></figure>
+        <figure><img loading="lazy" src="images/hunter-wall-skeletons-sm.webp" data-full="images/hunter-wall-skeletons.webp" width="640" height="480" alt="Skeleton murals and hanging chains above the booths"></figure>
+        <figure><img loading="lazy" src="images/hunter-hall-sm.webp" data-full="images/hunter-hall.webp" width="480" height="640" alt="Rows of tables beside the KANKAL wall"></figure>
+        <figure><img loading="lazy" src="images/hunter-mural-tin-bhai-sm.webp" data-full="images/hunter-mural-tin-bhai.webp" width="640" height="480" alt="Three skeletons mural: Haam tin bhai, tino tavhai"></figure>
+        <figure><img loading="lazy" src="images/hunter-mural-nun-sm.webp" data-full="images/hunter-mural-nun.webp" width="480" height="640" alt="Glowing nun mural above a booth"></figure>
+        <figure><img loading="lazy" src="images/hunter-hanging-skeletons-sm.webp" data-full="images/hunter-hanging-skeletons.webp" width="640" height="480" alt="A skeleton hanging among chained skulls"></figure>
+        <figure><img loading="lazy" src="images/hunter-mural-bengali-sm.webp" data-full="images/hunter-mural-bengali.webp" width="480" height="640" alt="Skeleton on the moon mural with a Bengali line about life and death"></figure>
+        <figure><img loading="lazy" src="images/hunter-mural-teri-ex-sm.webp" data-full="images/hunter-mural-teri-ex.webp" width="640" height="480" alt="Mural: Teri ex konsi hai?"></figure>
+        <figure><img loading="lazy" src="images/hunter-hall-ceiling-sm.webp" data-full="images/hunter-hall-ceiling.webp" width="480" height="640" alt="Hanging skulls and ghosts over the tables"></figure>
+        <figure><img loading="lazy" src="images/hunter-mural-dushman-sm.webp" data-full="images/hunter-mural-dushman.webp" width="640" height="480" alt="Mural: Main tera dushman, with a snake"></figure>
+        <figure><img loading="lazy" src="images/hunter-nun-booth-sm.webp" data-full="images/hunter-nun-booth.webp" width="480" height="640" alt="Booth seating under the nun mural"></figure>
+      </div>
     </div>
   </div>
 </section>
@@ -1117,11 +1144,12 @@ document.querySelectorAll('.vcard').forEach(card => {
 
 // ===================== GALLERY LIGHTBOX =====================
 const lb = document.getElementById('lb');
-document.getElementById('grid').addEventListener('click', e => {
+// Gallery and the Hunter House strip; a data-full image is the large version of a small preview
+['grid', 'hhStrip'].forEach(id => document.getElementById(id).addEventListener('click', e => {
   const img = e.target.closest('figure')?.querySelector('img');
   if (!img) return;
-  lb.querySelector('img').src = img.src; lb.querySelector('img').alt = img.alt; lb.classList.add('on');
-});
+  lb.querySelector('img').src = img.dataset.full || img.src; lb.querySelector('img').alt = img.alt; lb.classList.add('on');
+}));
 lb.addEventListener('click', () => lb.classList.remove('on'));
 addEventListener('keydown', e => { if (e.key === 'Escape') lb.classList.remove('on'); });
 
@@ -1190,7 +1218,8 @@ const BN = [
     'আমাদের হরর-থিমের ফ্লোর। আবছা আলো, গা-ছমছমে সাজ আর এমন এক ডিনার যা ভুলবেন না। যে বন্ধুরা স্টার্টারের সঙ্গে একটু ভয়ও চান, তাঁদের জন্য একদম ঠিক।'], 't'],
   ['.floor ul', ['<li>সরাসরি চলে আসুন</li><li>ফ্যামিলি সিটিং</li><li>কাপল ও বন্ধুরা</li>', '<li>জন্মদিন</li><li>বিবাহবার্ষিকী</li><li>মিটিং</li><li>গ্রুপ বুকিং</li>', '<li>হরর থিম</li><li>বন্ধু ও গ্রুপ</li><li>থিম জন্মদিন</li>'], 'h'],
   ['.floor .btn', ['টেবিল বুক করুন', 'মেনু দেখুন', 'টেবিল বুক করুন', 'টেবিল বুক করুন'], 't'],
-  ['.floor .note', 'প্রতীকী ছবি', 't'],
+  ['.hh-head h3', 'হান্টার হাউসের ভেতরে', 't'],
+  ['.hh-head span', 'সোয়াইপ করুন · বড় করে দেখতে ট্যাপ করুন', 't'],
 
   ['#signature .eyebrow', 'শেফের সেরা পদ', 't'],
   ['#signature h2', 'যে পদের টানে অতিথিরা বারবার ফেরেন', 't'],
